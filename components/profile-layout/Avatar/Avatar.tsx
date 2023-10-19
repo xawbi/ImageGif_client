@@ -1,5 +1,5 @@
 'use client'
-import {ChangeEvent, FC, useState} from 'react'
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import {delAvatar, saveAvatar} from "@/api/avatar"
 import Cropper from "react-easy-crop";
 import {AvatarDto} from "@/api/dto/avatar.dto";
@@ -22,7 +22,7 @@ const Avatars: FC<profileLayoutProps> = ({avatar, user}) => {
   }
 
   const [saveAvatarOpen, setSaveAvatarOpen] = useState(false)
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [modalIsOpen, setModalIsOpen] = useState(false)
   const [isEditVisible, setIsEditVisible] = useState(false)
   const [uploadedImageUrl, setUploadedImageUrl] = useState('')
 
@@ -40,11 +40,13 @@ const Avatars: FC<profileLayoutProps> = ({avatar, user}) => {
     setIsEditVisible(false)
   }
 
-  if (isModalOpen) {
-    document.body.classList.add('overflow-hidden')
-  } else {
-    document.body.classList.remove('overflow-hidden')
-  }
+  useEffect(() => {
+    if (modalIsOpen) {
+      document.body.classList.add('overflow-hidden')
+    } else {
+      document.body.classList.remove('overflow-hidden')
+    }
+  }, [modalIsOpen])
 
   const handleImageUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -52,22 +54,20 @@ const Avatars: FC<profileLayoutProps> = ({avatar, user}) => {
       const file = files[0];
       const imageUrl = URL.createObjectURL(file);
       setUploadedImageUrl(imageUrl); // Сохраните URL изображения в состоянии
-      setIsModalOpen(true); // Откройте модальное окно
+      setModalIsOpen(true); // Откройте модальное окно
     }
   }
 
   const closeCropModal = () => {
-    setIsModalOpen(false)
+    setModalIsOpen(false)
     setCrop({x: 0, y: 0})
     setZoom(1)
     closeDialog()
   }
 
   const handleRemoveAvatar = async () => {
-    if (avatar) {
-      if (window.confirm('Are you sure you want to remove this photo?')) {
-        await delAvatar(avatar.id)
-      }
+    if (avatar && typeof window !== 'undefined' && window.confirm('Are you sure you want to remove this photo?')) {
+      await delAvatar(avatar.id);
     }
   }
 
@@ -135,7 +135,7 @@ const Avatars: FC<profileLayoutProps> = ({avatar, user}) => {
                   readOnly
                 />
               }
-              {isModalOpen && (
+              {modalIsOpen && (
                 <>
                   <InvisibleOverlay onClick={closeCropModal} z={15} setIsEditVisible={setIsEditVisible}/>
                   <div

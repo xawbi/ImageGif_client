@@ -1,48 +1,18 @@
 'use client'
-import {FC, useEffect, useState} from 'react'
+import { FC, useEffect } from "react";
 import {FileDTO} from "@/api/dto/file.dto";
 import Image from "next/image";
 import {updateReject} from "@/api/admin";
 import {UserDTO} from "@/api/dto/user.dto";
-import Masonry, {ResponsiveMasonry} from "react-responsive-masonry"
 
 interface HomeProps {
   file: FileDTO
   user: UserDTO
 }
 
-const PublicFile: FC<HomeProps> = ({file, user}) => {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState('');
+const PublicFiles: FC<HomeProps> = ({file, user}) => {
   const fileUrl = process.env.NEXT_PUBLIC_HOST + '/uploads/' + `${file.user.id}/` + file.fileName
   const downloadFileUrl = process.env.NEXT_PUBLIC_HOST + '/public/download/' + `${file.user.id}/` + file.fileName
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  const handleResize = () => {
-    setWindowWidth(window.innerWidth);
-  }
-
-  useEffect(() => {
-    window.addEventListener('resize', handleResize)
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-  }, [])
-  if (modalIsOpen) {
-    document.body.classList.add('overflow-hidden')
-  } else {
-    document.body.classList.remove('overflow-hidden')
-  }
-
-  const handleImageClick = (imageUrl: string) => {
-    setSelectedImage(imageUrl);
-    setModalIsOpen(true);
-  }
-
-  const handleCloseImageClick = () => {
-    setSelectedImage('')
-    setModalIsOpen(false)
-  }
 
   const handleBan = (fileId: number[]) => {
     updateReject && updateReject(fileId, 'public')
@@ -75,7 +45,7 @@ const PublicFile: FC<HomeProps> = ({file, user}) => {
                  alt={`${file.originalName}`}
                  loading={"lazy"}
                  className='rounded-sm'
-                 onClick={() => handleImageClick(fileUrl)}
+                 onLoadingComplete={(img) => console.log(img.naturalWidth)}
           />
           <div className='w-[100%] flex justify-around px-4 border-t-2 border-gray-500'>
             <button className='text-center py-[3px] z-50 hover:text-fuchsia-600 text-[#B3B3B3]'>
@@ -103,48 +73,8 @@ const PublicFile: FC<HomeProps> = ({file, user}) => {
             </button>
           </div>
         </div>
-      {modalIsOpen &&
-        <>
-          <div
-            className={`${modalIsOpen ? 'model open' : 'model'}`}
-            onClick={handleCloseImageClick}
-          >
-            <svg onClick={handleCloseImageClick} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                 strokeWidth={1.5} stroke="currentColor"
-                 className="w-10 h-10 fixed top-10 right-10 p-1 text-white cursor-pointer">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-            <a onClick={(e) => e.stopPropagation()} href={fileUrl} download={`${file.originalName}`} target="_blank"
-               className='absolute hover:text-fuchsia-600 transition truncate overflow-hidden whitespace-nowrap bottom-3 right-3 bg-black text-white text-center p-1 pt-[5px] px-[5px] z-50 rounded border-2 border-gray-500'>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                   stroke="currentColor" className="w-6 h-6 mb-1">
-                <path strokeLinecap="round" strokeLinejoin="round"
-                      d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
-              </svg>
-            </a>
-            <a onClick={(e) => e.stopPropagation()} href={downloadFileUrl} download={`${file.originalName}`}
-               target="_blank"
-               className='absolute hover:text-fuchsia-600 transition truncate overflow-hidden whitespace-nowrap bottom-3 right-[58px] bg-black text-white text-center p-1 pt-[5px] px-[5px] z-50 rounded border-2 border-gray-500'>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                   stroke="currentColor" className="inline-block w-6 h-6 mr-1 mb-1">
-                <path strokeLinecap="round" strokeLinejoin="round"
-                      d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/>
-              </svg>
-              <p className='inline-block'>Download</p>
-            </a>
-            <div className={`${window.innerWidth > 1470 && 'img_open'} ${window.innerWidth < 980 && 'h-auto'}`}>
-              <Image
-                src={selectedImage}
-                width={2000}
-                height={2000}
-                alt={`${file.originalName}`}
-              />
-            </div>
-          </div>
-        </>
-      }
     </>
   )
 }
 
-export default PublicFile
+export default PublicFiles

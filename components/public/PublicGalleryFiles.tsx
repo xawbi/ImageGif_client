@@ -1,9 +1,9 @@
 'use client'
-import {FC} from 'react'
+import { FC, useEffect } from "react";
 import {FileDTO} from "@/api/dto/file.dto";
 import {UserDTO} from "@/api/dto/user.dto";
 import Masonry, {ResponsiveMasonry} from "react-responsive-masonry";
-import PublicFile from "@/components/public/PublicFile";
+import PublicFiles from "@/components/public/PublicFiles";
 
 interface HomePageProps {
   filesPublic: FileDTO[]
@@ -11,6 +11,7 @@ interface HomePageProps {
 }
 
 const PublicGalleryFiles: FC<HomePageProps> = ({filesPublic, user}) => {
+
   return (
     <>
       <div className='py-5 px-3 md:px-0'>
@@ -19,7 +20,7 @@ const PublicGalleryFiles: FC<HomePageProps> = ({filesPublic, user}) => {
         >
           <Masonry gutter='12px'>
             {filesPublic && filesPublic.map((file) =>
-              <PublicFile key={file.id} file={file} user={user}/>
+              <PublicFiles key={file.id} file={file} user={user}/>
             )}
           </Masonry>
         </ResponsiveMasonry>

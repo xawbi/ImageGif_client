@@ -11,10 +11,9 @@ import {UserDTO} from "@/api/dto/user.dto";
 interface LayoutProps {
   avatar: AvatarDto
   user: UserDTO
-  delAvatar: () => void
 }
 
-const LayoutsInProfile: FC<LayoutProps> = ({avatar, delAvatar, user}) => {
+const LayoutsInProfile: FC<LayoutProps> = ({avatar, user}) => {
 
   const pathName = usePathname()
   const navItems = [
@@ -25,7 +24,10 @@ const LayoutsInProfile: FC<LayoutProps> = ({avatar, delAvatar, user}) => {
     {label: 'Public', href: '/profile/public'},
   ]
 
-  let localBgProfileClient = localStorage.getItem('bgProfileClient')
+  let localBgProfileClient = null
+  if (typeof localStorage !== 'undefined') {
+    localBgProfileClient = localStorage.getItem('bgProfileClient')
+  }
   let bgProfileId: number | undefined
   if (localBgProfileClient !== null) {
     localBgProfileClient = JSON.parse(localBgProfileClient)

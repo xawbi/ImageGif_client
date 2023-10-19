@@ -13,10 +13,12 @@ const UserFiles: FC<ProfileProps> = ({file}) => {
   const [selectedImage, setSelectedImage] = useState('')
   const fileUrl = process.env.NEXT_PUBLIC_HOST + '/uploads/' + `${file.user.id}/` + file.fileName
   const downloadFileUrl = process.env.NEXT_PUBLIC_HOST + '/public/download/' + `${file.user.id}/` + file.fileName
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ?  window.innerWidth : 0);
 
   const handleResize = () => {
-    setWindowWidth(window.innerWidth);
+    if (typeof window !== 'undefined') {
+      setWindowWidth(window.innerWidth);
+    }
   }
 
   useEffect(() => {
@@ -26,11 +28,13 @@ const UserFiles: FC<ProfileProps> = ({file}) => {
     }
   }, [])
 
-  if (modalIsOpen) {
-    document.body.classList.add('overflow-hidden')
-  } else {
-    document.body.classList.remove('overflow-hidden')
-  }
+  useEffect(() => {
+    if (modalIsOpen) {
+      document.body.classList.add('overflow-hidden')
+    } else {
+      document.body.classList.remove('overflow-hidden')
+    }
+  }, [modalIsOpen])
 
   const handleImageClick = (imageUrl: string) => {
     setSelectedImage(imageUrl);
@@ -48,7 +52,7 @@ const UserFiles: FC<ProfileProps> = ({file}) => {
 
   const handleRemoveFile = async () => {
     if (file) {
-      if (window.confirm('Are you sure you want to remove this file?')) {
+      if (typeof window !== 'undefined' && window.confirm('Are you sure you want to remove this file?')) {
         await delFile(file.id)
       }
     }
@@ -153,12 +157,13 @@ const UserFiles: FC<ProfileProps> = ({file}) => {
               </svg>
               <p className='inline-block'>Download</p>
             </a>
-            <div className={`${window.innerWidth > 1470 && 'img_open'} ${window.innerWidth < 980 && 'h-auto'}`}>
+            <div className={`${windowWidth > 1470 && 'img_open'} ${windowWidth < 980 && 'h-auto'}`}>
               <Image
                 src={selectedImage}
                 width={2000}
                 height={2000}
                 alt={`${fileOriginalName}`}
+                priority={true}
               />
             </div>
           </div>

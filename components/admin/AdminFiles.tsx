@@ -1,5 +1,5 @@
 'use client'
-import {FC, useState} from 'react'
+import {FC, useState, useEffect} from 'react';
 import {FileDTO} from "@/api/dto/file.dto";
 import Image from "next/image";
 import {updatePublic, updateReject} from "@/api/admin";
@@ -13,11 +13,13 @@ const AdminFiles: FC<AdminProps> = ({file}) => {
   const [selectedImage, setSelectedImage] = useState('');
   const fileUrl = process.env.NEXT_PUBLIC_HOST + '/uploads/' + `${file.user.id}/` + file.fileName
 
-  if (modalIsOpen) {
-    document.body.classList.add('overflow-hidden')
-  } else {
-    document.body.classList.remove('overflow-hidden')
-  }
+  useEffect(() => {
+    if (modalIsOpen) {
+      document.body.classList.add('overflow-hidden')
+    } else {
+      document.body.classList.remove('overflow-hidden')
+    }
+  }, [modalIsOpen])
 
   const handleImageClick = (imageUrl: string) => {
     setSelectedImage(imageUrl);

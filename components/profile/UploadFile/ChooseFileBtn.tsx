@@ -1,18 +1,24 @@
 'use client'
-import {FC, useState} from 'react'
+import { FC, useEffect, useState } from "react";
 import FileUploadForm from "@/components/profile/UploadFile/FileUploadForm";
 import InvisibleOverlay from "@/components/profile-layout/Avatar/InvisibleOverlay";
 
 const ChooseFileBtn: FC = () => {
   const [fileUploadFormVisible, setFileUploadFormVisible] = useState(false)
 
+  useEffect(() => {
+    if (fileUploadFormVisible) {
+      document.body.classList.add('overflow-hidden')
+    } else {
+      document.body.classList.remove('overflow-hidden')
+    }
+  }, [fileUploadFormVisible])
+
   const handleOpenUploadForm = () => {
-    document.body.classList.add('overflow-hidden')
     setFileUploadFormVisible(true)
   }
 
   const handleCloseUploadForm = () => {
-    document.body.classList.remove('overflow-hidden')
     setFileUploadFormVisible(false)
   }
 

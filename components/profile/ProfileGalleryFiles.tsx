@@ -18,9 +18,9 @@ const ProfileGalleryFiles: FC<ProfilePageProps> = ({userFiles}) => {
           <Masonry gutter='12px'>
             {userFiles && userFiles.map((file) => {
               return (
-                <>
+                <div key={file.id}>
                   <UserFiles file={file}/>
-                </>
+                </div>
               )
             })}
           </Masonry>

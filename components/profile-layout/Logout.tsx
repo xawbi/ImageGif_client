@@ -5,7 +5,7 @@ import {logout} from "@/api/auth";
 const Logout: FC = () => {
 
   const handleLogout = async () => {
-    if (window.confirm('Are you sure you want to log out?')) {
+    if (typeof window !== 'undefined' && window.confirm('Are you sure you want to log out?')) {
       await logout()
     }
   }

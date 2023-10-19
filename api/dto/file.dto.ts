@@ -8,6 +8,8 @@ export interface FileDTO {
   mimetype: string
   user: UserDTO
   restricted: string
+  totalLike: string
+  totalDislike: string
   reject: boolean
   deleteAt: string | null
 }
