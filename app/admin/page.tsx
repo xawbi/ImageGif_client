@@ -11,7 +11,7 @@ export default async function Admin() {
 
   return (
     <>
-      <ul className='grid pt-5 px-3 sm:px-2 md:px-0 lg:px-0 grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-3'>
+      <div className='grid pt-5 px-3 sm:px-2 md:px-0 lg:px-0 grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-3'>
         {filesPending && filesPending.map((file) => {
           return (
             <>
@@ -19,7 +19,7 @@ export default async function Admin() {
             </>
           )
         })}
-      </ul>
+      </div>
     </>
   )
 }

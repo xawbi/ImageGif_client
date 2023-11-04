@@ -4,7 +4,8 @@ import {getUserFile} from "@/api/file";
 import {FileDTO} from "@/api/dto/file.dto";
 import ChooseFileBtn from "@/components/profile/UploadFile/ChooseFileBtn";
 import SearchButton from "@/components/profile/SearchButton";
-import ProfileGalleryFiles from "@/components/profile/ProfileGalleryFiles";
+import MasonryClient from "@/components/MasonryClient";
+import UserFiles from "@/components/profile/UserFiles";
 
 export default async function Profile() {
   if (!checkVerify()) redirect('/auth')
@@ -17,7 +18,17 @@ export default async function Profile() {
         <SearchButton/>
         <ChooseFileBtn/>
       </div>
-      <ProfileGalleryFiles userFiles={userFiles}/>
+      <div>
+        <MasonryClient>
+          {userFiles && userFiles.map((file) => {
+            return (
+              <div key={file.id}>
+                <UserFiles file={file}/>
+              </div>
+            )
+          })}
+        </MasonryClient>
+      </div>
     </>
   )
 }
