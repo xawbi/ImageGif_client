@@ -1,5 +1,5 @@
 'use client'
-import {FC, useState} from 'react'
+import { ChangeEvent, FC, useState } from "react";
 import PasswordField from "@/components/auth/PasswordField";
 import Snackbar from "@/components/auth/snackbar/Snackbar";
 
@@ -12,11 +12,11 @@ const LoginTab: FC<PropsAuthForm> = ({showSnackbar, setShowSnackbar}) => {
   const [emailValue, setEmailValue] = useState('')
   const [passwordValue, setPasswordValue] = useState('')
 
-  const handleChangeEmail = (event) => {
+  const handleChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
     setEmailValue(event.target.value);
   }
 
-  const handleChangePassword = (event) => {
+  const handleChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
     setPasswordValue(event.target.value);
   }
 
@@ -34,7 +34,7 @@ const LoginTab: FC<PropsAuthForm> = ({showSnackbar, setShowSnackbar}) => {
 
   return (
     <>
-      <div className="flex flex-col text-gray-200 text-gray-400 py-6 relative">
+      <div className="flex flex-col text-gray-400 py-6 relative">
         <input
           type="text"
           name="email"

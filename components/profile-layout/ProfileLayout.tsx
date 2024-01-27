@@ -3,7 +3,7 @@ import Avatars from "@/components/profile-layout/Avatar/Avatar";
 import {AvatarDto} from "@/api/dto/avatar.dto";
 import Logout from "@/components/profile-layout/Logout";
 import BgProfile from "@/components/profile-layout/BgProfile";
-import {FC, useState} from "react";
+import { FC, useEffect, useState } from "react";
 import {usePathname} from "next/navigation";
 import Link from "next/link";
 import {UserDTO} from "@/api/dto/user.dto";
@@ -14,8 +14,8 @@ interface LayoutProps {
 }
 
 const LayoutsInProfile: FC<LayoutProps> = ({avatar, user}) => {
-
   const pathName = usePathname()
+
   const navItems = [
     {label: 'All files', href: '/profile'},
     {label: 'Photos', href: '/profile/photos'},
@@ -24,21 +24,23 @@ const LayoutsInProfile: FC<LayoutProps> = ({avatar, user}) => {
     {label: 'Public', href: '/profile/public'},
   ]
 
-  let localBgProfileClient = null
-  if (typeof localStorage !== 'undefined') {
-    localBgProfileClient = localStorage.getItem('bgProfileClient')
-  }
-  let bgProfileId: number | undefined
-  if (localBgProfileClient !== null) {
-    localBgProfileClient = JSON.parse(localBgProfileClient)
-    let localBgProfileClientSpit: string[]
-    if (localBgProfileClient !== null) {
-      localBgProfileClientSpit = localBgProfileClient.split(',')
-      bgProfileId = parseInt(localBgProfileClientSpit[0], 10)
-    }
-  }
+  const [bgProfileId, setBgProfileId] = useState<number | undefined>(undefined);
+  const [bgProfileClient, setBgProfileClient] = useState<string>('bg-black');
 
-  const [bgProfileClient, setBgProfileClient] = useState(localBgProfileClient ? localBgProfileClient : 'bg-black')
+  useEffect(() => {
+      const localBgProfileClient = localStorage.getItem('bgProfileClient');
+
+      if (localBgProfileClient !== null) {
+        const localBgProfileClientParsed = JSON.parse(localBgProfileClient);
+        const localBgProfileClientSplit = localBgProfileClientParsed.split(',');
+
+        if (localBgProfileClientSplit.length > 0) {
+          const parsedId = parseInt(localBgProfileClientSplit[0], 10);
+          setBgProfileId(parsedId);
+          setBgProfileClient(localBgProfileClientParsed);
+        }
+      }
+  }, []);
 
   return (
     <>
@@ -49,7 +51,7 @@ const LayoutsInProfile: FC<LayoutProps> = ({avatar, user}) => {
         <Logout/>
         </div>
       </div>
-      <div className='bg-[#202330] py-4 pt-3 rounded-b-2xl mb-4'>
+      <div className='bg-gray-900 py-4 pt-3 rounded-b-2xl mb-4'>
       <ul className='flex items-center justify-center'>
         {navItems.map(link => {
           const isActive = pathName === link.href

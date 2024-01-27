@@ -4,6 +4,9 @@ import { UserDTO } from "@/api/dto/user.dto";
 import { getUser } from "@/api/user";
 import PublicFiles from "@/components/public/PublicFiles";
 import MasonryClient from "@/components/MasonryClient";
+import Link from "next/link";
+import { HandleLink, SetScroll } from "@/components/public/ScrollComponents";
+import React from "react";
 
 export default async function Home() {
 
@@ -12,10 +15,12 @@ export default async function Home() {
 
   return (
     <>
-      <div className='pt-5'>
+      <div className="pt-5">
         <MasonryClient>
           {filesPublic && filesPublic.map((file) =>
-            <PublicFiles key={file.id} file={file} user={user} />
+            // <HandleLink>
+                <PublicFiles key={file.id} file={file} user={user} />
+            // </HandleLink>
           )}
         </MasonryClient>
       </div>

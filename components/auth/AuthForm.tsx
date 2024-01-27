@@ -24,7 +24,7 @@ const AuthForm: FC = () => {
     }
   }, [showSnackbar]);
 
-  const handleTabChange = (tab) => {
+  const handleTabChange = (tab: string) => {
     if (activeTab !== tab)
     setActiveTab(tab)
   }

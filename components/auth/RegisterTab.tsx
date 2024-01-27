@@ -1,5 +1,5 @@
 'use client'
-import {FC, useState} from 'react'
+import { ChangeEvent, FC, useState } from "react";
 import PasswordField from "@/components/auth/PasswordField";
 import Snackbar from "@/components/auth/snackbar/Snackbar";
 
@@ -17,22 +17,22 @@ const RegisterTab: FC<PropsAuthForm> = ({activeTab, setActiveTab, showSnackbar, 
   const [passwordValue, setPasswordValue] = useState('')
   const [activateCodeValue, setActivateCodeValue] = useState('')
 
-  const handleChangeEmail = (e) => {
+  const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setActiveTab('register')
     setEmailValue(e.target.value);
   }
 
-  const handleChangeUsername = (e) => {
+  const handleChangeUsername = (e: ChangeEvent<HTMLInputElement>) => {
     setActiveTab('register')
     setUsernameValue(e.target.value);
   }
 
-  const handleChangePassword = (e) => {
+  const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setActiveTab('register')
     setPasswordValue(e.target.value);
   }
 
-  const handleChangeActivateCode = (e) => {
+  const handleChangeActivateCode = (e: ChangeEvent<HTMLInputElement>) => {
     if (/^\d*$/.test(e.target.value)) {
       setActivateCodeValue(e.target.value)
     } else return
@@ -40,7 +40,7 @@ const RegisterTab: FC<PropsAuthForm> = ({activeTab, setActiveTab, showSnackbar, 
 
   return (
     <>
-      <div className="flex flex-col text-gray-200 text-gray-400 pt-6 pb-2 relative">
+      <div className="flex flex-col text-gray-400 pt-6 pb-2 relative">
         <input
           type="text"
           name="username"
@@ -53,7 +53,7 @@ const RegisterTab: FC<PropsAuthForm> = ({activeTab, setActiveTab, showSnackbar, 
             Username
         </span>)}
       </div>
-      <div className="flex flex-col text-gray-200 text-gray-400 py-6 relative">
+      <div className="flex flex-col text-gray-400 py-6 relative">
         <input
           type="text"
           name="email"
@@ -71,7 +71,7 @@ const RegisterTab: FC<PropsAuthForm> = ({activeTab, setActiveTab, showSnackbar, 
       </div>
 
       {activeTab === 'active' &&
-        <div className="flex flex-col text-gray-200 text-gray-400 pt-6 relative">
+        <div className="flex flex-col text-gray-400 pt-6 relative">
           <div className="text-center mb-2">Confirmation code sent to email</div>
           <input
             inputMode="numeric"

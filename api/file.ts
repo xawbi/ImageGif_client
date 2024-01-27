@@ -1,7 +1,6 @@
 'use server'
 import {cookies} from "next/headers";
 import {revalidatePath} from "next/cache";
-import fs from 'fs';
 
 const host: string | undefined = process.env.NEXT_PUBLIC_HOST
 

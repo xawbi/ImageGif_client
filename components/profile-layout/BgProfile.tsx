@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { FC, useState } from "react";
 
 export const bgProfile = [
@@ -42,7 +42,7 @@ const BgProfile: FC<ProfileLayoutProps> = ({ bgProfileId, setBgProfileClient, bg
       setBgProfileClient(`${selectedBg.id}, ${selectedBg.bgUrl}`);
       const newBgProfileClient = `${selectedBg.id}, ${selectedBg.bgUrl}`;
       if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-        localStorage.setItem("bgProfileClient", JSON.stringify(newBgProfileClient));
+        localStorage.setItem('bgProfileClient', JSON.stringify(newBgProfileClient));
       }
     }
   };

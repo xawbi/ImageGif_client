@@ -1,12 +1,12 @@
 import {cookies, headers} from "next/headers";
-import jwt from 'jsonwebtoken'
+import jwt, { GetPublicKeyOrSecret, Secret } from "jsonwebtoken";
 import {UserDTO} from "@/api/dto/user.dto";
 
 export function checkVerify() {
   const token = cookies().get("_token")?.value
   if (token !== undefined) {
     try {
-      return jwt.verify(token, process.env.NEXT_PUBLIC_SECRET_KEY);
+      return jwt.verify(token, process.env.NEXT_PUBLIC_SECRET_KEY  as Secret | GetPublicKeyOrSecret);
     } catch (error) {
       return null; // Возвращаем null в случае ошибки или невалидного токена
     }

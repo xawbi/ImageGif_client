@@ -1,5 +1,5 @@
 'use client'
-import {FC, useState} from "react";
+import React, { FC, useState } from "react";
 
 interface PropsRegLogTab {
   handleChangePassword: (event: any) => void
@@ -9,12 +9,12 @@ interface PropsRegLogTab {
 const PasswordField: FC<PropsRegLogTab> = ({handleChangePassword, passwordValue}) => {
   const [showPassword, setShowPassword] = useState(false)
 
-  const togglePasswordVisibility = (e) => {
+  const togglePasswordVisibility = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     setShowPassword(!showPassword);
   }
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
     }

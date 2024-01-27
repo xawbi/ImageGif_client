@@ -6,6 +6,7 @@ import UserFiles from "@/components/profile/UserFiles";
 import SearchButton from "@/components/profile/SearchButton";
 import ChooseFileBtn from "@/components/profile/UploadFile/ChooseFileBtn";
 import MasonryClient from "@/components/MasonryClient";
+import { getDevicePixels } from "@/components/getDeviceType";
 
 export default async function Public() {
   if (!checkVerify()) redirect('/auth')

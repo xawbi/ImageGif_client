@@ -1,3 +1,5 @@
+import { AvatarDto } from "@/api/dto/avatar.dto";
+
 export interface UserDTO {
   id: number
   email: string
@@ -5,4 +7,5 @@ export interface UserDTO {
   activationCode: string
   username: string
   role: string
+  avatar: AvatarDto[]
 }
