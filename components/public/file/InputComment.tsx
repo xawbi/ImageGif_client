@@ -11,11 +11,18 @@ interface filePageProps {
   file: FileDTO;
   commentParent?: CommentType
   onCancelComment?: () => void
+  isReplying: boolean
 }
 
-const InputComment: FC<filePageProps> = ({ user, file, commentParent, onCancelComment }) => {
+const InputComment: FC<filePageProps> = ({ user, file, commentParent, onCancelComment, isReplying }) => {
   const [comment, setComment] = useState("");
   const commentTextareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (isReplying && commentTextareaRef.current) {
+      commentTextareaRef.current.focus();
+    }
+  }, [isReplying]);
 
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newComment = e.target.value;
@@ -41,7 +48,7 @@ const InputComment: FC<filePageProps> = ({ user, file, commentParent, onCancelCo
         commentTextareaRef.current.blur();
       }
     }
-  };
+  }
 
   const disabled = comment.length > 500 || comment.trim().length == 0
 
@@ -60,7 +67,7 @@ const InputComment: FC<filePageProps> = ({ user, file, commentParent, onCancelCo
               value={comment}
               onChange={handleTextareaChange}
               onKeyDown={async (e) => {
-                if (e.key === 'Enter') {
+                if (e.key === 'Enter' && !e.ctrlKey && !e.shiftKey && !e.altKey) {
                   e.preventDefault();
                   await handlePostButtonClick();
                 }

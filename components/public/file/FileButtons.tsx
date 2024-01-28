@@ -149,7 +149,7 @@ const FileButtons: FC<filePageProps> = ({ file, user }) => {
         )}
       </div>
       <a href={downloadFileUrl}
-         className={`text-center py-[3px] px-[5px] hover:text-fuchsia-600 z-50 text-[#B3B3B3]`}>
+         className={`text-center py-[3px] px-[5px] hover:text-fuchsia-600 text-[#B3B3B3]`}>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
              className="w-6 h-6">
           <path strokeLinecap="round" strokeLinejoin="round"

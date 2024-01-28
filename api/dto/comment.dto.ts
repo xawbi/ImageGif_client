@@ -14,6 +14,6 @@ export type CommentType = {
   rating: RatingType[]
   createAt: string
   childComments: CommentType[]
-  parentComment: {id: number}
+  parentComment: {id: number, user: UserDTO}
   childCommentsCount: number
 }
