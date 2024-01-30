@@ -30,7 +30,7 @@ export default async function PostPage({ params: { slug } }: Props) {
     return comments.reduce(
       (totalCount, comment) => totalCount + 1 + countComments(comment.childComments || []),
       0
-    );
+    )
   }
 
   return (
@@ -46,7 +46,7 @@ export default async function PostPage({ params: { slug } }: Props) {
               loading="lazy"
               className="object-contain w-full max-h-[calc(100vh-170px)]"
             />
-            <div className="w-[100%] flex justify-around bg-gray-900 py-1">
+            <div className="flex justify-around bg-gray-900 py-1">
               <FileButtons user={user} file={file} />
             </div>
           </div>

@@ -1,8 +1,9 @@
 import { FileDTO } from "@/api/dto/file.dto";
 import Image from "next/image";
 import { UserDTO } from "@/api/dto/user.dto";
-import { BanButton, RatingButtons } from "@/components/public/PublicButtons";
+import { BanButton } from "@/components/public/BanButtons";
 import Link from "next/link";
+import LikeAndDislikeButtons from "@/components/public/LikeAndDislikeButtons";
 
 interface HomeProps {
   file: FileDTO;
@@ -16,10 +17,10 @@ function PublicFiles({ file, user }: HomeProps) {
   return (
     <>
       <div
-        className={`relative mb-3 cursor-pointer border-2 border-gray-500 group transform hover:scale-[1.02] sm:hover:scale-[1.04] transition-transform duration-250`}>
+        className={`mb-3 cursor-pointer border-2 border-gray-500 group transform hover:scale-[1.02] sm:hover:scale-[1.04] transition-transform duration-250`}>
         <BanButton user={user} file={file} />
         <button
-          className="absolute truncate overflow-hidden whitespace-nowrap top-1 right-1 text-center p-1 pt-[5px] px-[5px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50">
+          className="absolute truncate overflow-hidden whitespace-nowrap top-1 right-1 text-center p-1 pt-[5px] px-[5px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-40">
           <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24" strokeWidth={1.5}
                stroke="currentColor" className="w-6 h-6 hover:text-fuchsia-600 transition">
             <path strokeLinecap="round" strokeLinejoin="round"
@@ -35,8 +36,8 @@ function PublicFiles({ file, user }: HomeProps) {
                  className="rounded-sm"
           />
         </Link>
-        <div className="w-[100%] flex justify-around px-4 border-t-2 border-gray-500">
-          <RatingButtons file={file} user={user} />
+        <div className="flex justify-around px-4 border-t-2 border-gray-500">
+          <LikeAndDislikeButtons user={user} file={file} pagesType={'homePageFile'}/>
         </div>
       </div>
     </>

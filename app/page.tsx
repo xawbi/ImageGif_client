@@ -18,9 +18,7 @@ export default async function Home() {
       <div className="pt-5">
         <MasonryClient>
           {filesPublic && filesPublic.map((file) =>
-            // <HandleLink>
-                <PublicFiles key={file.id} file={file} user={user} />
-            // </HandleLink>
+            <PublicFiles key={file.id} file={file} user={user} />
           )}
         </MasonryClient>
       </div>

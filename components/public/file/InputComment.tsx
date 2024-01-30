@@ -11,28 +11,28 @@ interface filePageProps {
   file: FileDTO;
   commentParent?: CommentType
   onCancelComment?: () => void
-  isReplying: boolean
+  isReplying?: boolean
 }
 
 const InputComment: FC<filePageProps> = ({ user, file, commentParent, onCancelComment, isReplying }) => {
-  const [comment, setComment] = useState("");
-  const commentTextareaRef = useRef<HTMLTextAreaElement>(null);
+  const [comment, setComment] = useState("")
+  const commentTextareaRef = useRef<HTMLTextAreaElement>(null)
 
   useEffect(() => {
     if (isReplying && commentTextareaRef.current) {
-      commentTextareaRef.current.focus();
+      commentTextareaRef.current.focus()
     }
-  }, [isReplying]);
+  }, [isReplying])
 
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newComment = e.target.value;
-    const lineBreaks = (newComment.match(/\n/g) || []).length;
+    const newComment = e.target.value
+    const lineBreaks = (newComment.match(/\n/g) || []).length
     if (lineBreaks <= 5) {
-      setComment(newComment);
-      e.target.style.height = "auto";
-      e.target.style.height = e.target.scrollHeight + "px";
+      setComment(newComment)
+      e.target.style.height = "auto"
+      e.target.style.height = e.target.scrollHeight + "px"
     }
-  };
+  }
 
   const handlePostButtonClick = async () => {
     if (comment.length <= 500) {
@@ -40,12 +40,13 @@ const InputComment: FC<filePageProps> = ({ user, file, commentParent, onCancelCo
         text: comment.trim(),
         fileId: file.id,
         parentCommentId: commentParent && commentParent.id as number | undefined
-      };
-      await postComment(obj);
+      }
+      await postComment(obj)
       setComment('')
       onCancelComment && onCancelComment()
       if (commentTextareaRef.current) {
-        commentTextareaRef.current.blur();
+        commentTextareaRef.current.style.height = "auto"
+        commentTextareaRef.current.blur()
       }
     }
   }
