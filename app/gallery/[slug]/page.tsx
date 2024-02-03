@@ -21,10 +21,10 @@ export type TypeRatingFile = {
 }
 
 export default async function PostPage({ params: { slug } }: Props) {
-  const file: FileDTO = await getFile(+slug)
-  const comments: CommentType[] = await getPublicComments(+slug)
-  const user: UserDTO = await getUser()
-  const fileUrl = process.env.NEXT_PUBLIC_HOST + "/uploads/" + `${file.user.id}/` + file.fileName
+  const file: FileDTO = await getFile(+slug);
+  const comments: CommentType[] = await getPublicComments(+slug);
+  const user: UserDTO = await getUser();
+  const fileUrl = process.env.NEXT_PUBLIC_HOST + "/uploads/" + `${file.user.id}/` + file.fileName;
 
   function countComments(comments: any[]): number {
     return comments.reduce(
@@ -37,26 +37,34 @@ export default async function PostPage({ params: { slug } }: Props) {
     <>
       <SetScroll>
         <div className="flex flex-wrap">
-          <div className="flex-shrink-0 w-full xl:w-1/2 mb-5 xl:mb-0" style={{ background: 'linear-gradient(to bottom, #1a1a1a, #000007 90%, #00000f)', height: '100%' }}>
+          <div
+            className="flex-shrink-0 w-full xl:w-1/2 mb-5 xl:mb-0 bg-gradient-to-b from-[#000007] via-[#000007] to-[#00000f]">
             <Image
               width={file.width}
               height={file.height}
               src={fileUrl}
               alt={`${file.fileName}`}
               loading="lazy"
-              className="object-contain w-full max-h-[calc(100vh-170px)]"
+              className="object-contain w-full max-h-[calc(100svh-170px)]"
             />
             <div className="flex justify-around bg-gray-900 py-1">
               <FileButtons user={user} file={file} />
             </div>
+            {file.postDescription &&
+              <>
+                <div className="whitespace-pre-line pt-5 pb-10 px-2 bg-black break-words">
+                  {file.postDescription}
+                </div>
+              </>
+            }
           </div>
           {/* Блок с комментариями */}
           <div className="flex-shrink-0 w-full xl:w-1/2 pl-4 xl:pr-0 pr-4">
-            <p className='text-2xl font-medium'>{countComments(comments)} COMMENTS</p>
-            <InputComment user={user} file={file}/>
-              {comments.map(comment => (
-                  <FileComment key={comment.id} comment={comment} user={user} file={file}/>
-              ))}
+            <p className="text-2xl font-medium">{countComments(comments)} COMMENTS</p>
+            <InputComment user={user} file={file} />
+            {comments.map(comment => (
+              <FileComment key={comment.id} comment={comment} user={user} file={file} />
+            ))}
           </div>
         </div>
       </SetScroll>

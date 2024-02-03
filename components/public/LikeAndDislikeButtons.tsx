@@ -81,12 +81,12 @@ const LikeAndDislikeButtons: FC<PagesProps> = ({ user, file, comment, pagesType 
           </button>
         </div>
       </>
-    );
-  };
+    )
+  }
 
   return (
     <>
-      <div className={`relative flex ${pagesType !== 'comment' && 'flex-1 justify-center'}`}>
+      <div className={`flex ${pagesType !== 'comment' && 'flex-1 justify-center'}`}>
         <button
           onClick={() => handleUserRating("like", pagesType, file)}
           className={`${likeClicked && "text-fuchsia-600"} hover:text-fuchsia-600 text-[#B3B3B3]`}
@@ -99,10 +99,10 @@ const LikeAndDislikeButtons: FC<PagesProps> = ({ user, file, comment, pagesType 
           </svg>
           <span className={`${pagesType == "slugPageFile" && "ml-0.5"}`}>{likes}</span>
         </button>
-        {modal === "like" && pagesType !== "homePageFile" && modalOpen()}
+        {modal === "like" && pagesType !== "homePageFile" && pagesType !== 'comment' && modalOpen()}
       </div>
       {pagesType == "homePageFile" &&
-        <div className="relative flex flex-1 justify-center">
+        <div className="flex flex-1 justify-center">
           <Link href={`gallery/${file.id}`} scroll={false}
                 className="text-center py-[3px] px-[5px] hover:text-fuchsia-600 text-[#B3B3B3] text-sm">
             <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24" strokeWidth={1.5}
@@ -113,7 +113,7 @@ const LikeAndDislikeButtons: FC<PagesProps> = ({ user, file, comment, pagesType 
           </Link>
         </div>
       }
-      <div className={`relative flex ${pagesType !== 'comment' && 'flex-1 justify-center'}`}>
+      <div className={`flex ${pagesType !== 'comment' && 'flex-1 justify-center'}`}>
         <button
           onClick={() => handleUserRating("dislike", pagesType, file)}
           className={`${dislikeClicked && "text-fuchsia-600"} hover:text-fuchsia-600 text-[#B3B3B3]`}
@@ -125,7 +125,7 @@ const LikeAndDislikeButtons: FC<PagesProps> = ({ user, file, comment, pagesType 
           </svg>
           <span className={`${pagesType == "slugPageFile" && "ml-0.5"}`}>{dislikes}</span>
         </button>
-        {modal === "dislike" && pagesType !== "homePageFile" && modalOpen()}
+        {modal === "dislike" && pagesType !== "homePageFile" && pagesType !== 'comment' && modalOpen()}
       </div>
     </>
   );

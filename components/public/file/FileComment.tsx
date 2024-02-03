@@ -75,11 +75,10 @@ const FileComment: FC<filePageProps> = ({ comment, user, file, level }) => {
             />
           }
         </div>
-        <div className="flex-grow bg-gray-900 p-3 py-2 rounded hover:bg-gray-800"
-             style={{ overflow: "hidden", wordWrap: "break-word" }}>
+        <div className="flex-grow bg-gray-900 pl-3 pr-1 py-1.5 rounded hover:bg-gray-800 break-words overflow-hidden">
           <div className="flex items-center">
             <p className="text-white font-bold mr-2 cursor-pointer">{comment.user.username}</p>
-            <p className="text-gray-500 mr-1">{timeAgo} ago</p>
+            <p className="text-gray-500">{timeAgo} ago</p>
             {level && level == 2 && <>
               <svg className="w-4 h-4 text-gray-400" aria-hidden="true"
                    xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
@@ -98,7 +97,7 @@ const FileComment: FC<filePageProps> = ({ comment, user, file, level }) => {
               </button>
             }
           </div>
-          <p className="text-white mb-1 mt-1 whitespace-pre-line">
+          <p className="text-white my-1 whitespace-pre-line">
             {comment.text}
           </p>
           <div className="flex space-x-2 text-sm">

@@ -172,8 +172,8 @@ const Avatars: FC<profileLayoutProps> = ({avatar, user}) => {
                       <output className="text-white text-sm mt-4">{zoom}</output>
                     </div>
                     <div className='mx-2 flex justify-around'>
-                      <button onClick={closeCropModal}>Close</button>
-                      <button type='submit'>Send</button>
+                      <button className='w-full hover:text-gray-300 transition' onClick={closeCropModal}>Close</button>
+                      <button className='w-full hover:text-fuchsia-600 transition' type='submit'>Send</button>
                     </div>
                   </div>
                 </>

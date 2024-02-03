@@ -3,11 +3,14 @@ import {notFound} from "next/navigation";
 import {FileDTO} from "@/api/dto/file.dto";
 import {getFilePending} from "@/api/admin";
 import AdminFiles from "@/components/admin/AdminFiles";
+import { UserDTO } from "@/api/dto/user.dto";
+import { getUser } from "@/api/user";
 
 export default async function Admin() {
   if (!await checkAdmin()) notFound()
 
   const filesPending: FileDTO[] = await getFilePending()
+  const user: UserDTO = await getUser();
 
   return (
     <>
@@ -15,7 +18,7 @@ export default async function Admin() {
         {filesPending && filesPending.map((file) => {
           return (
             <>
-              <AdminFiles file={file}/>
+              <AdminFiles file={file} user={user}/>
             </>
           )
         })}

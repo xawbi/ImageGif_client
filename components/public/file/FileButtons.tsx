@@ -25,7 +25,7 @@ const FileButtons: FC<filePageProps> = ({ file, user }) => {
   return (
     <>
       <LikeAndDislikeButtons user={user} file={file} pagesType={'slugPageFile'}/>
-      <div className='relative flex flex-1 justify-center'>
+      <div className='flex flex-1 justify-center'>
       <button onClick={() => handleFavorites("favorite")}
               className={`hover:text-fuchsia-600 text-[#B3B3B3] pt-0.5`}>
         <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24" strokeWidth={1.5}
@@ -49,7 +49,7 @@ const FileButtons: FC<filePageProps> = ({ file, user }) => {
         </>
       )}
       </div>
-      <div className='relative flex flex-1 justify-center'>
+      <div className='flex flex-1 justify-center'>
       <a href={downloadFileUrl}
          className={`py-[3px] px-[5px] hover:text-fuchsia-600 text-[#B3B3B3] pt-0.5`}>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"

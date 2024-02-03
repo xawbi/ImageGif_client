@@ -94,7 +94,7 @@ const InputComment: FC<filePageProps> = ({ user, file, commentParent, onCancelCo
           <>
             <input
               type="text"
-              placeholder="Sign in to leave a comment"
+              placeholder={`Sign in to leave a ${isReplying ? 'reply' : 'comment'}`}
               className="w-full p-2 border-2 border-gray-500 rounded bg-gray-950"
               disabled
             />

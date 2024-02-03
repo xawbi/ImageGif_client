@@ -2,13 +2,14 @@
 import { FC } from "react";
 import { updatePublic, updateReject } from "@/api/admin";
 import { FileDTO } from "@/api/dto/file.dto";
+import { useModalProfilePost } from "@/store/useModalProfilePost";
 
 interface AdminFilesProps {
   file: FileDTO;
 }
 
 const AdminFilesButton: FC<AdminFilesProps> = ({file}) => {
-
+  const setPostModal = useModalProfilePost(state => state.setPostModal)
   const handleRestricted = (fileId: number[]) => {
     updatePublic && updatePublic(fileId);
   };
@@ -19,6 +20,7 @@ const AdminFilesButton: FC<AdminFilesProps> = ({file}) => {
 
   return (
     <>
+      <div onClick={() => setPostModal && setPostModal({ postModal: true, file: file, checkModal: 'admin' })} className='absolute w-full h-full z-10'/>
       <button onClick={() => handleBan([file.id])}
               className="absolute truncate overflow-hidden whitespace-nowrap top-1 left-1 bg-black text-white text-center p-1 pt-[5px] px-[5px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 rounded border-2 border-gray-500">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}

@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import ButtonNext from "@/app/gallery/[slug]/buttonNext";
 import { FileDTO } from "@/api/dto/file.dto";
-import { getPublicFiles } from "@/api/public";
+import { getFile, getPublicFiles } from "@/api/public";
 
 interface BlogLayoutProps {
   children: ReactNode;
@@ -13,6 +13,7 @@ interface BlogLayoutProps {
 export default async function blogLayout({ children, params: { slug } }: BlogLayoutProps) {
 
   const files: FileDTO[] = await getPublicFiles();
+  const file: FileDTO = await getFile(+slug)
   const currentPostIndex = files.findIndex((file) => String(file.id) === slug)
   const nextFile = files[(+currentPostIndex + 1) % files.length]
   const prevFile = files[(+currentPostIndex - 1 + files.length) % files.length]
@@ -20,7 +21,7 @@ export default async function blogLayout({ children, params: { slug } }: BlogLay
   return <>
     <div className="flex items-center justify-between py-3 px-1">
       <div className="flex items-center">
-        <p className="mr-2 text-2xl font-medium">Collapse from England</p>
+        <p className="mr-2 text-2xl font-medium">{file.postName}</p>
       </div>
       <div className="flex items-center">
         <ButtonNext files={files} nextFile={nextFile} prevFile={prevFile} />

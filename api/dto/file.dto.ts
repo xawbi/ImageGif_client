@@ -6,6 +6,11 @@ export type RatingType = {
   dislike: number
 }
 
+export interface PostFileDTO {
+  postName: string
+  postDescription: string | null
+}
+
 export interface FileDTO {
   id: number
   fileName: string
@@ -14,9 +19,10 @@ export interface FileDTO {
   size: number
   user: UserDTO
   restricted: string
-  totalLike: number[]
   totalDislike: number[]
   rating: RatingType[]
   reject: boolean
   deleteAt: string | null
+  postName: string
+  postDescription: string
 }

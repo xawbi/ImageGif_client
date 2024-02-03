@@ -2,28 +2,34 @@
 import { FC } from "react";
 import { delFile, updateUserRestricted } from "@/api/file";
 import { FileDTO } from "@/api/dto/file.dto";
+import { useStore } from "@/store/useStore";
+import { useModalProfilePost } from "@/store/useModalProfilePost";
+import Link from "next/link";
 
 interface UserFileProps {
   file: FileDTO
 }
 
 const StatusButton: FC<UserFileProps> = ({file}) => {
-
-  const handleRestricted = (fileId: number) => {
-    updateUserRestricted && updateUserRestricted(fileId)
-  }
+  const setPostModal = useModalProfilePost(state => state.setPostModal)
 
   const handleRemoveFile = async () => {
     if (file) {
       if (typeof window !== 'undefined' && window.confirm('Are you sure you want to remove this file?')) {
-        await delFile(file.id)
+        await delFile(file.id);
       }
     }
   }
 
+  //() => handleRestricted(file.id)
+
   return (
     <>
-      {file.restricted !== 'public' &&
+      {file.restricted !== 'public' ?
+        <div onClick={() => setPostModal && setPostModal({ postModal: true, file: file, checkModal: 'user' })} className='absolute w-full h-full z-10'/>
+        : <Link href={`gallery/${file.id}`} scroll={true} className='absolute w-full h-full z-10'/>
+      }
+            {file.restricted !== 'public' &&
         <button onClick={handleRemoveFile}
                 className='absolute truncate overflow-hidden whitespace-nowrap top-1 left-1 bg-black text-white text-center p-1 pt-[5px] px-[5px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 rounded border-2 border-gray-500'>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
@@ -34,7 +40,7 @@ const StatusButton: FC<UserFileProps> = ({file}) => {
         </button>
       }
       {!file.reject && <>
-        <button disabled={file.restricted !== 'private' && true} onClick={() => handleRestricted(file.id)}
+        <button disabled={file.restricted !== 'private' && true} onClick={() => setPostModal && setPostModal({ postModal: true, file: file })}
                 className={`absolute truncate overflow-hidden whitespace-nowrap top-1 right-1 bg-black text-white text-center p-1 pt-[5px] px-[5px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 rounded border-2 border-gray-500 ${file.restricted === 'pending' && 'text-yellow-500'}`}>
           {file.restricted === 'private' &&
             <>

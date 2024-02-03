@@ -1,6 +1,8 @@
 'use server'
 import {cookies} from "next/headers";
 import {revalidatePath} from "next/cache";
+import { PostFileDTO } from "@/api/dto/file.dto";
+import { json } from "stream/consumers";
 
 const host: string | undefined = process.env.NEXT_PUBLIC_HOST
 
@@ -10,8 +12,8 @@ export async function getUserFile(type: string) {
   const res = await fetch(`${url}`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
     }
   })
   if (!res.ok) {
@@ -21,13 +23,15 @@ export async function getUserFile(type: string) {
   }
 }
 
-export async function updateUserRestricted(id: number) {
+export async function updateUserRestricted(id: number, obj: PostFileDTO ) {
   const token = cookies().get("_token")?.value
   const res = await fetch(`${host}/files/${id}/updateRestricted`, {
     method: 'PATCH',
     headers: {
-      'Authorization': `Bearer ${token}`
-    }
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(obj)
   })
   revalidatePath('/profile')
   if (!res.ok) {
