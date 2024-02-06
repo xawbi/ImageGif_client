@@ -21,8 +21,15 @@ export interface FileDTO {
   restricted: string
   totalDislike: number[]
   rating: RatingType[]
+  favorites: FavoritesDTO[]
   reject: boolean
   deleteAt: string | null
   postName: string
   postDescription: string
+}
+
+export interface FavoritesDTO {
+  id: number
+  file: FileDTO
+  user: UserDTO
 }

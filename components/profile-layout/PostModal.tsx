@@ -17,7 +17,7 @@ const PostModal: FC<ProfileLayoutProps> = ({ user }) => {
   const [postDescription, setPostDescription] = useState("");
   const file = modalState?.file;
   const checkModal = modalState?.checkModal;
-  const fileUrl = file && process.env.NEXT_PUBLIC_HOST + "/uploads/" + `${user.id}/` + file.fileName;
+  const fileUrl = file && process.env.NEXT_PUBLIC_HOST + "/uploads/" + `${file.user?.id}/` + file.fileName;
   const downloadFileUrl = file && process.env.NEXT_PUBLIC_HOST + "/public/download/" + `${file.user?.id}/` + file.fileName;
 
   const handleRestricted = async (fileId: number | undefined) => {
@@ -41,8 +41,8 @@ const PostModal: FC<ProfileLayoutProps> = ({ user }) => {
   };
 
   useEffect(() => {
-    modalState?.postModal ? document.body.style.overflow = "hidden" : document.body.style.overflow = "auto";
-  }, [modalState?.postModal]);
+    (modalState?.postModal && checkModal !== "admin") ? document.body.style.overflow = "hidden" : document.body.style.overflow = "";
+  }, [modalState?.postModal, checkModal]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPostName(e.target.value);
@@ -59,7 +59,7 @@ const PostModal: FC<ProfileLayoutProps> = ({ user }) => {
           <div className="fixed inset-0 bg-black opacity-70 z-20"
                onClick={closeModal} />
           <div
-            className={`fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30 overflow-auto ${(checkModal === "" || checkModal === "admin") && "bg-black border-2 border-gray-500 w-[360px] lg:w-[410px] xl:w-[500px] rounded-2xl p-2"}`}>
+            className={`fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30 overflow-auto ${(checkModal === "" || checkModal === "admin") && `bg-black ${checkModal !== 'admin' && 'border-2'} border-gray-500 w-[360px] lg:w-[410px] xl:w-[500px] rounded-2xl p-2`}`}>
             {checkModal == "" &&
               <input
                 type="text"
@@ -73,7 +73,7 @@ const PostModal: FC<ProfileLayoutProps> = ({ user }) => {
 
             <div
               className={`group transform ${(checkModal === "" || checkModal === "admin") && "w-full bg-gradient-to-b from-[#000007] via-[#000007] to-[#00000f] my-4"}`}>
-              {checkModal === 'admin' &&
+              {checkModal === "admin" &&
                 <div className="whitespace-pre-line break-words mb-2">
                   <h2>{file?.postName}</h2>
                 </div>

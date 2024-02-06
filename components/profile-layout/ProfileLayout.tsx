@@ -29,7 +29,8 @@ const LayoutsInProfile: FC<LayoutProps> = ({ avatar, user }) => {
     { label: "Photos", href: "/profile/photos" },
     { label: "Gifs", href: "/profile/gifs" },
     { label: "Pending", href: "/profile/pending" },
-    { label: "Public", href: "/profile/public" }
+    { label: "Public", href: "/profile/public" },
+    { label: "Favorites", href: "/profile/favorites" }
   ];
 
   const [bgProfileId, setBgProfileId] = useState<number | undefined>(undefined);

@@ -1,7 +1,7 @@
 import {FC} from 'react'
 import {AvatarDto} from "@/api/dto/avatar.dto";
 import Image from "next/image";
-import defaultAvatar from "@/public/defautAvatar.png";
+import defaultAvatar from "@/public/defaultAvatar.png";
 
 interface AvatarProps {
   avatarParams: AvatarDto

@@ -8,6 +8,7 @@ import { getUser } from "@/api/user";
 import { CommentType } from "@/api/dto/comment.dto";
 import FileComment from "@/components/public/file/FileComment";
 import InputComment from "@/components/public/file/InputComment";
+import defaultChat from "@/public/defaultChat.png";
 
 export type Props = {
   params: {
@@ -30,7 +31,7 @@ export default async function PostPage({ params: { slug } }: Props) {
     return comments.reduce(
       (totalCount, comment) => totalCount + 1 + countComments(comment.childComments || []),
       0
-    )
+    );
   }
 
   return (
@@ -38,15 +39,17 @@ export default async function PostPage({ params: { slug } }: Props) {
       <SetScroll>
         <div className="flex flex-wrap">
           <div
-            className="flex-shrink-0 w-full xl:w-1/2 mb-5 xl:mb-0 bg-gradient-to-b from-[#000007] via-[#000007] to-[#00000f]">
-            <Image
-              width={file.width}
-              height={file.height}
-              src={fileUrl}
-              alt={`${file.fileName}`}
-              loading="lazy"
-              className="object-contain w-full max-h-[calc(100svh-170px)]"
-            />
+            className="w-full xl:w-1/2 xl:mb-0">
+            <div className='bg-gradient-to-b from-[#000007] via-[#000007] to-[#00000f]'>
+              <Image
+                width={file.width}
+                height={file.height}
+                src={fileUrl}
+                alt={`${file.fileName}`}
+                loading="eager"
+                className="object-contain w-full max-h-[calc(100svh-170px)]"
+              />
+            </div>
             <div className="flex justify-around bg-gray-900 py-1">
               <FileButtons user={user} file={file} />
             </div>
@@ -59,9 +62,15 @@ export default async function PostPage({ params: { slug } }: Props) {
             }
           </div>
           {/* Блок с комментариями */}
-          <div className="flex-shrink-0 w-full xl:w-1/2 pl-4 xl:pr-0 pr-4">
+          <div className="flex-shrink-0 w-full xl:w-1/2 xl:pr-0 px-4">
             <p className="text-2xl font-medium">{countComments(comments)} COMMENTS</p>
             <InputComment user={user} file={file} />
+            {countComments(comments) === 0 &&
+              <div className="text-[#132637] text-center my-20">
+                <Image alt="chat" src={defaultChat} width={150} height={150} className="mx-auto"/>
+                <p className='text-2xl font-medium'>Be the first to comment</p>
+              </div>
+            }
             {comments.map(comment => (
               <FileComment key={comment.id} comment={comment} user={user} file={file} />
             ))}

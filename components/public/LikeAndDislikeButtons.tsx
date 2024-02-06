@@ -70,13 +70,13 @@ const LikeAndDislikeButtons: FC<PagesProps> = ({ user, file, comment, pagesType 
   const modalOpen = () => {
     return (
       <>
-        <div className="fixed inset-0 z-50" onClick={() => setModal("")} />
+        <div className="fixed inset-0 z-10" onClick={() => setModal("")} />
         <div
-          className="absolute bg-black border-2 border-gray-500 p-4 rounded-md text-white top-[-160px] left-[50%] transform translate-x-[-50%] w-50 z-50">
-          <h1 className="text-xl font-bold mb-2 text-center">Log in</h1>
-          <p className="text-center">Log in to upvote the posts you like</p>
+          className="absolute text-center bg-black border-2 text-xs sm:text-sm border-gray-500 p-1 rounded-md text-white bottom-8 transform max-w-[160px] z-50">
+          <h2 className="sm:text-xl font-bold mb-1">Log in</h2>
+          <p>Log in to upvote the posts you like</p>
           <button
-            className="ml-[calc(50%-25px)] mt-2 px-2 py-1 bg-gray-700 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:border-gray-700 focus:ring focus:ring-gray-300">
+            className="mt-2 px-2 py-1 bg-gray-700 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:border-gray-700 focus:ring focus:ring-gray-300">
             Go!
           </button>
         </div>
@@ -86,7 +86,7 @@ const LikeAndDislikeButtons: FC<PagesProps> = ({ user, file, comment, pagesType 
 
   return (
     <>
-      <div className={`flex ${pagesType !== 'comment' && 'flex-1 justify-center'}`}>
+      <div className={`flex relative ${pagesType !== 'comment' && 'flex-1 justify-center'}`}>
         <button
           onClick={() => handleUserRating("like", pagesType, file)}
           className={`${likeClicked && "text-fuchsia-600"} hover:text-fuchsia-600 text-[#B3B3B3]`}
@@ -102,18 +102,19 @@ const LikeAndDislikeButtons: FC<PagesProps> = ({ user, file, comment, pagesType 
         {modal === "like" && pagesType !== "homePageFile" && pagesType !== 'comment' && modalOpen()}
       </div>
       {pagesType == "homePageFile" &&
-        <div className="flex flex-1 justify-center">
+        <div className="flex flex-1 items-center justify-center">
           <Link href={`gallery/${file.id}`} scroll={false}
-                className="text-center py-[3px] px-[5px] hover:text-fuchsia-600 text-[#B3B3B3] text-sm">
+                className="text-center py-[3px] px-[5px] hover:text-fuchsia-600 text-[#B3B3B3]">
             <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24" strokeWidth={1.5}
-                 stroke="currentColor" className="w-[22px] h-[22px] mt-0.5">
+                 stroke="currentColor" className="inline-block w-[22px] h-[22px] mt-0.5">
               <path strokeLinecap="round" strokeLinejoin="round"
                     d="M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
             </svg>
+            <span></span>
           </Link>
         </div>
       }
-      <div className={`flex ${pagesType !== 'comment' && 'flex-1 justify-center'}`}>
+      <div className={`flex relative ${pagesType !== 'comment' && 'flex-1 justify-center'}`}>
         <button
           onClick={() => handleUserRating("dislike", pagesType, file)}
           className={`${dislikeClicked && "text-fuchsia-600"} hover:text-fuchsia-600 text-[#B3B3B3]`}
