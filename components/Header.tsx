@@ -23,7 +23,7 @@ export default async function Header() {
 
   return (
     <>
-      <header className="bg-gray-900 py-3 px-6 flex justify-between items-center">
+      <header className="bg-gray-900 py-2 px-6 flex justify-between items-center">
         <Navigation navLinks={navItems}/>
       </header>
     </>

@@ -2,25 +2,30 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 import { FileDTO } from "@/api/dto/file.dto";
+import { updateView } from "@/api/public";
 
 type ButtonNextProps = {
   files: FileDTO[]
-  nextFile: FileDTO
-  prevFile: FileDTO
+  fileId: number
 }
 
-const ButtonNext: React.FC<ButtonNextProps> = React.memo(function ButtonNextComponent({ files, nextFile, prevFile }) {
-  const router = useRouter();
+const ButtonNext: React.FC<ButtonNextProps> = React.memo(function ButtonNextComponent({ files, fileId }) {
+  const router = useRouter()
+  const currentPostIndex = files.findIndex((file) => String(file.id) === fileId.toString())
+  const nextFile = files[(+currentPostIndex + 1) % files.length]
+  const prevFile = files[(+currentPostIndex - 1 + files.length) % files.length]
 
-  const goToNextFile = () => {
+  const goToNextFile = async () => {
     const nextFileId = nextFile.id || files[0].id;
-    router.push(`/gallery/${nextFileId}`);
-  };
+    router.push(`/gallery/${nextFileId}`)
+    await updateView(nextFileId)
+  }
 
-  const goToPrevFile = () => {
+  const goToPrevFile = async () => {
     const prevFileId = prevFile.id || files[files.length - 1].id;
-    router.push(`/gallery/${prevFileId}`);
-  };
+    router.push(`/gallery/${prevFileId}`)
+    await updateView(prevFileId)
+  }
 
   return (
     <>

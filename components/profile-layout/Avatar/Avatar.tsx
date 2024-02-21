@@ -41,6 +41,10 @@ const Avatars: FC<profileLayoutProps> = ({avatar, user}) => {
   }
 
   useEffect(() => {
+    window.addEventListener('scroll', closeDialog);
+  }, []);
+
+  useEffect(() => {
     if (modalIsOpen) {
       document.body.classList.add('overflow-hidden')
     } else {
@@ -107,17 +111,10 @@ const Avatars: FC<profileLayoutProps> = ({avatar, user}) => {
           <div
             className={`absolute left-34 ${avatar ? 'top-[140px]' : 'top-[162px]'} xl:left-94 ${avatar ? 'xl:top-44' : 'xl:top-[202px]'} lg:left-74 ${avatar ? 'lg:top-44' : 'lg:top-[202px]'} md:left-[246px] sm:left-[166px] ${avatar ? 'sm:top-[156px]' : 'sm:top-[180px]'} lg:text-base text-sm z-[16]`}>
             <form action={saveAvatar} onSubmit={closeCropModal}>
-              {avatar ?
                 <label htmlFor="avatarInput"
-                       className="p-1 px-2 bg-black border-2 border-b-0 border-gray-500 cursor-pointer rounded-t-md hover:bg-blue-950">
+                       className={`p-2 bg-black border-2 border-gray-500 cursor-pointer rounded-md hover:bg-blue-950 ${avatar && 'rounded-t-md border-b-0 p-1 px-2'}`}>
                   Upload a photo...
                 </label>
-                :
-                <label htmlFor="avatarInput"
-                       className="p-2 bg-black border-2 border-gray-500 cursor-pointer rounded-md hover:bg-blue-950">
-                  Upload a photo...
-                </label>
-              }
               <input
                 accept='image/jpeg, image/png, image/gif'
                 type="file"

@@ -19,9 +19,7 @@ const StatusButton: FC<UserFileProps> = ({ file, favorites }) => {
         await delFile(file.id);
       }
     }
-  };
-
-  //() => handleRestricted(file.id)
+  }
 
   return (
     <>

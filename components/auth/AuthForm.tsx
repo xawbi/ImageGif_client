@@ -5,8 +5,7 @@ import RegisterTab from "@/components/auth/RegisterTab"
 import {setCookie} from "nookies";
 import {ActivateFormDTO, LoginFormDTO, RegistrationFormDTO} from "@/api/dto/auth.dto";
 import * as Api from '@/api'
-import {redirect, useRouter} from "next/navigation";
-import {checkVerify} from "@/api/checkVerify";
+import {useRouter} from "next/navigation";
 
 const AuthForm: FC = () => {
 

@@ -1,13 +1,9 @@
 "use client";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { UserDTO } from "@/api/dto/user.dto";
 import { FileDTO } from "@/api/dto/file.dto";
 import { updateReject } from "@/api/admin";
-import { RatingDto } from "@/api/dto/rating.dto";
-import { postRating } from "@/api/rating";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import LikeAndDislikeButtons from "@/components/public/LikeAndDislikeButtons";
 import { postFavorites } from "@/api/file";
 
 interface PublicFileProps {
@@ -55,5 +51,5 @@ export const BanAndFavoriteButtons: FC<PublicFileProps> = ({ user, file }) => {
         </svg>
       </button>
     </>
-  );
-};
+  )
+}

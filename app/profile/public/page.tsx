@@ -1,9 +1,8 @@
 import {redirect} from "next/navigation";
 import {checkVerify} from "@/api/checkVerify";
 import {FileDTO} from "@/api/dto/file.dto";
-import {getUserFile} from "@/api/file";
+import {getUserFiles} from "@/api/file";
 import UserFiles from "@/components/profile/UserFiles";
-import SearchButton from "@/components/profile/SearchButton";
 import ChooseFileBtn from "@/components/profile/UploadFile/ChooseFileBtn";
 import MasonryClient from "@/components/MasonryClient";
 import { getDevicePixels } from "@/components/getDeviceType";
@@ -11,12 +10,11 @@ import { getDevicePixels } from "@/components/getDeviceType";
 export default async function Public() {
   if (!checkVerify()) redirect('/auth')
 
-  const userFiles: FileDTO[] = await getUserFile('public')
+  const userFiles: FileDTO[] = await getUserFiles('public')
 
   return (
     <>
-      <div className='flex mb-4 justify-between px-3 sm:px-2 md:px-0 lg:px-0'>
-        <SearchButton/>
+      <div className='flex m-2 justify-end'>
         <ChooseFileBtn/>
       </div>
       <div className='px-3 md:px-0'>

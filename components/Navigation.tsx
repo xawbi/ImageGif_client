@@ -20,14 +20,14 @@ const Navigation: FC<PropsHeader> = ({ navLinks }) => {
 
   const handleScroll = () => {
     return setScroll(0);
-  };
+  }
 
   return (
     <>
       <Link href="/" className="flex items-center" onClick={handleScroll}>
-        <Image width={100} height={100} src="https://cdn-icons-png.flaticon.com/512/1400/1400487.png" alt=""
-               className="w-8" />
-        <span className="ml-2 text-xl">ImageGif</span>
+        <Image width={80} height={80} src="https://cdn-icons-png.flaticon.com/512/1400/1400487.png" alt=""
+               className="w-[28px]" />
+        <span className="ml-1 text-xl">ImageGif</span>
       </Link>
       <ul className="flex items-center">
         {navLinks.map(link => {

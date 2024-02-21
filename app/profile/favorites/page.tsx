@@ -1,10 +1,8 @@
 import {redirect} from "next/navigation";
 import {checkVerify} from "@/api/checkVerify";
-import { FavoritesDTO, FileDTO } from "@/api/dto/file.dto";
+import { FavoritesDTO } from "@/api/dto/file.dto";
 import UserFiles from "@/components/profile/UserFiles";
-import { getFavorites, getUserFile } from "@/api/file";
-import SearchButton from "@/components/profile/SearchButton";
-import ChooseFileBtn from "@/components/profile/UploadFile/ChooseFileBtn";
+import { getFavorites } from "@/api/file";
 import MasonryClient from "@/components/MasonryClient";
 import { getUser } from "@/api/user";
 import { UserDTO } from "@/api/dto/user.dto";
@@ -17,10 +15,7 @@ export default async function Gifs() {
 
   return (
     <>
-      <div className='flex mb-4 justify-between px-3 sm:px-2 md:px-0 lg:px-0'>
-        <SearchButton/>
-      </div>
-      <div className='px-3 md:px-0'>
+      <div className='px-3 md:px-0 mt-2'>
         <MasonryClient>
           {favorites && favorites.map((favorite) => {
             return (

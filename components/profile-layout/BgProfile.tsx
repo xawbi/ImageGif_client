@@ -1,56 +1,29 @@
 'use client';
 import { FC, useState } from "react";
+import { postBgId } from "@/api/bgProfile";
 
-export const bgProfile = [
-  { id: 0, bgUrl: `bg-[url('/bgProfile/0.webp')]` },
-  { id: 1, bgUrl: `bg-[url('/bgProfile/1.webp')]` },
-  { id: 2, bgUrl: `bg-[url('/bgProfile/2.webp')]` },
-  { id: 3, bgUrl: `bg-[url('/bgProfile/3.webp')]` },
-  { id: 4, bgUrl: `bg-[url('/bgProfile/4.webp')]` },
-  { id: 5, bgUrl: `bg-[url('/bgProfile/5.webp')]` },
-  { id: 6, bgUrl: `bg-[url('/bgProfile/6.webp')]` },
-  { id: 7, bgUrl: `bg-[url('/bgProfile/7.webp')]` },
-  { id: 8, bgUrl: `bg-[url('/bgProfile/8.webp')]` },
-  { id: 9, bgUrl: `bg-[url('/bgProfile/9.webp')]` },
-  { id: 10, bgUrl: `bg-[url('/bgProfile/10.webp')]` },
-  { id: 11, bgUrl: `bg-black` }
-];
+const BgProfile: FC = () => {
 
-interface ProfileLayoutProps {
-  bgProfileId: number | undefined;
-  setBgProfileClient: (bgUrl: string) => any;
-  bgProfileClient: any;
-}
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
-const BgProfile: FC<ProfileLayoutProps> = ({ bgProfileId, setBgProfileClient, bgProfileClient }) => {
-  const lastBgProfile = bgProfile.length - 1;
+  const handleUpdateBg = async () => {
+    setIsButtonDisabled(true);
+    setTimeout(async () => {
+      await postBgId();
+      setIsButtonDisabled(false);
+    }, 500);
+  }
 
-  const initialBg = () => {
-    if (bgProfileId && bgProfileId < lastBgProfile) {
-      return bgProfileId + 1;
-    } else if (bgProfileId === lastBgProfile) {
-      return 0;
-    } else return 0;
-  };
-
-  const [currentBgIndex, setCurrentBgIndex] = useState(() => initialBg());
-
-  const handleUpdateBg = () => {
-    setCurrentBgIndex((prevIndex) => (prevIndex + 1) % bgProfile.length);
-    const selectedBg = bgProfile.find((bg) => bg.id === currentBgIndex);
-    if (selectedBg !== undefined) {
-      setBgProfileClient(`${selectedBg.id}, ${selectedBg.bgUrl}`);
-      const newBgProfileClient = `${selectedBg.id}, ${selectedBg.bgUrl}`;
-      if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-        localStorage.setItem('bgProfileClient', JSON.stringify(newBgProfileClient));
-      }
-    }
+  const textStyle = {
+    textShadow:
+      '1px 1px 0 hsl(20,100%,50%),',
+    color: 'hsl(0,100%,40%)'
   };
 
   return (
     <>
-      <button onClick={handleUpdateBg}
-              className="text-fuchsia-700 hover:bg-[#202333] py-2 px-3 rounded-2xl border-2 border-gray-500 lg:text-base text-sm">
+      <button onClick={handleUpdateBg} disabled={isButtonDisabled}
+              className="text-fuchsia-700 bg-gray-900 hover:bg-gray-950 py-2 px-3 rounded-2xl border-2 border-gray-500 lg:text-base text-sm">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
              className="inline-block w-5 h-5 mr-1.5 mb-1">
           <path strokeLinecap="round" strokeLinejoin="round"

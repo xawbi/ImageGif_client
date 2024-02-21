@@ -2,9 +2,10 @@
 import { FC, ReactNode, useEffect } from "react";
 import { useScroll } from "@/store/useScroll";
 import { useStore } from "@/store/useStore";
+import { updateView } from "@/api/public";
 
 interface PageProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 export const HandleLink: FC<PageProps> = ({ children }) => {

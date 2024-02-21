@@ -4,6 +4,7 @@ import { UserDTO } from "@/api/dto/user.dto";
 import { BanAndFavoriteButtons } from "@/components/public/BanAndFavoriteButtons";
 import Link from "next/link";
 import LikeAndDislikeButtons from "@/components/public/LikeAndDislikeButtons";
+import UpdateViewsButton from "@/components/public/UpdateViewsButton";
 
 interface HomeProps {
   file: FileDTO;
@@ -23,7 +24,7 @@ function PublicFiles ({ file, user }: HomeProps) {
           <Image width={file.width}
                  height={file.height}
                  src={fileUrl}
-                 alt={`${file.fileName}`}
+                 alt={`${file.postName}`}
                  loading={"lazy"}
                  className="rounded-sm min-w-[150px] min-h-[150px] justify-center"
           />

@@ -1,14 +1,32 @@
 'use server'
-import {cookies} from "next/headers";
-import {revalidatePath} from "next/cache";
-import { RatingDto } from "@/api/dto/rating.dto";
+
+import { revalidateTag } from "next/cache";
 
 const host = process.env.NEXT_PUBLIC_HOST
 
-export async function getPublicFiles() {
-  const url = `${host}/public/files`
-  const res = await fetch(url, {
-    next: { revalidate: 10 },
+export async function revalidatePublicFiles() {
+  revalidateTag('getPublicFiles')
+}
+
+export async function updateView(fileId: number) {
+  console.log(`${host}/public/file/${fileId}/updateView`)
+  const res = await fetch(`${host}/public/file/${fileId}/updateView`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  })
+  console.log(res)
+  if (!res.ok) {
+    console.error(res.status, res.statusText)
+  } else {
+    return null
+  }
+}
+
+export async function getPublicFiles(type: string, sort?: string) {
+  const res = await fetch(`${host}/public/files?type=${type}&sort=${sort}`, {
+    next: { revalidate: 10, tags: ['getPublicFiles'] },
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'

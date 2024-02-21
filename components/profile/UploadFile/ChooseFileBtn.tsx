@@ -25,13 +25,13 @@ const ChooseFileBtn: FC = () => {
   return (
     <>
       <label onClick={handleOpenUploadForm} htmlFor="fileInput"
-             className='text-blue-600 hover:bg-[#202333] py-2 px-3 border-2 border-gray-500 lg:text-base rounded-2xl text-sm cursor-pointer'>
+             className='text-white hover:bg-green-700 py-1 px-2 lg:text-base rounded cursor-pointer bg-green-800'>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
-             className="inline-block w-5 h-5 mr-1.5 mb-1">
+             className="inline-block w-5 h-5 mr-1.5 mb-0.5">
           <path strokeLinecap="round" strokeLinejoin="round"
                 d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"/>
         </svg>
-        Choose file
+        <span className='text-[14px]'>CHOOSE FILE</span>
       </label>
       {fileUploadFormVisible &&
         <>

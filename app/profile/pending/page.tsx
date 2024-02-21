@@ -1,21 +1,23 @@
 import {redirect} from "next/navigation";
 import {checkVerify} from "@/api/checkVerify";
 import {FileDTO} from "@/api/dto/file.dto";
-import {getUserFile} from "@/api/file";
-import SearchButton from "@/components/profile/SearchButton";
+import {getUserFiles} from "@/api/file";
 import ChooseFileBtn from "@/components/profile/UploadFile/ChooseFileBtn";
 import MasonryClient from "@/components/MasonryClient";
 import UserFiles from "@/components/profile/UserFiles";
+import DropdownSortBtn from "@/components/DropdownSortBtn";
+import { cookies } from "next/headers";
 
 export default async function Sent() {
   if (!checkVerify()) redirect('/auth')
 
-  const userFiles: FileDTO[] = await getUserFile('sent')
+  const selectedSortCookie = cookies().get("selectedSort")?.value;
+  const userFiles: FileDTO[] = await getUserFiles('sent', selectedSortCookie === 'oldest' ? 'oldest' : undefined);
 
   return (
     <>
-      <div className='flex mb-4 justify-between px-3 sm:px-2 md:px-0 lg:px-0'>
-        <SearchButton/>
+      <div className='flex m-2 justify-between'>
+        <DropdownSortBtn pageType='profile' selectedSortCookie={selectedSortCookie}/>
         <ChooseFileBtn/>
       </div>
       <div className='px-3 md:px-0'>

@@ -1,5 +1,5 @@
 import { FileDTO } from "@/api/dto/file.dto";
-import { getFile, getPublicComments, getPublicFileRating } from "@/api/public";
+import { getFile, getPublicComments, updateView } from "@/api/public";
 import Image from "next/image";
 import FileButtons from "@/components/public/file/FileButtons";
 import { SetScroll } from "@/components/public/ScrollComponents";
@@ -22,7 +22,7 @@ export type TypeRatingFile = {
 }
 
 export default async function PostPage({ params: { slug } }: Props) {
-  const file: FileDTO = await getFile(+slug);
+  const file: FileDTO = await getFile(+slug)
   const comments: CommentType[] = await getPublicComments(+slug);
   const user: UserDTO = await getUser();
   const fileUrl = process.env.NEXT_PUBLIC_HOST + "/uploads/" + `${file.user.id}/` + file.fileName;
@@ -31,7 +31,7 @@ export default async function PostPage({ params: { slug } }: Props) {
     return comments.reduce(
       (totalCount, comment) => totalCount + 1 + countComments(comment.childComments || []),
       0
-    );
+    )
   }
 
   return (
@@ -50,12 +50,12 @@ export default async function PostPage({ params: { slug } }: Props) {
                 className="object-contain w-full max-h-[calc(100svh-170px)]"
               />
             </div>
-            <div className="flex justify-around bg-gray-900 py-1">
+            <div className="flex justify-around bg-gray-900 py-1 mb-5">
               <FileButtons user={user} file={file} />
             </div>
             {file.postDescription &&
               <>
-                <div className="whitespace-pre-line pt-5 pb-10 px-2 bg-black break-words">
+                <div className="whitespace-pre-line pb-10 px-2 bg-black break-words">
                   {file.postDescription}
                 </div>
               </>

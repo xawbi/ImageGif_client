@@ -1,6 +1,5 @@
 "use client";
 import { FC, useState } from "react";
-import { postRating } from "@/api/rating";
 import { FileDTO } from "@/api/dto/file.dto";
 import { UserDTO } from "@/api/dto/user.dto";
 import LikeAndDislikeButtons from "@/components/public/LikeAndDislikeButtons";
@@ -15,7 +14,7 @@ const FileButtons: FC<filePageProps> = ({ file, user }) => {
   const downloadFileUrl = process.env.NEXT_PUBLIC_HOST + "/public/download/" + `${file.user.id}/` + file.fileName;
   const [modal, setModal] = useState("")
   const [favoriteClicked, setFavoriteClicked] = useState(
-    file && file.favorites && file.favorites.some((el) => el.user.id === user.id && el.file.id === file.id)
+    user ? file && file.favorites && file.favorites.some((el) => el.user.id === user.id && el.file.id === file.id) : false
   )
 
   const handleFavorites = async (favorite: string, fileId: number) => {

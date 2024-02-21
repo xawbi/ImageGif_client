@@ -2,19 +2,23 @@
 import {cookies} from "next/headers";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { PostFileDTO } from "@/api/dto/file.dto";
-import { json } from "stream/consumers";
 
 const host: string | undefined = process.env.NEXT_PUBLIC_HOST
 
-export async function getUserFile(type: string) {
+export async function revalidateUserFiles() {
+  revalidateTag('getUserFiles')
+}
+
+export async function getUserFiles(type: string, sort?: string) {
   const token = cookies().get("_token")?.value
-  const url = `${host}/files?type=${type}`
+  const url = `${host}/files?type=${type}&sort=${sort}`
   const res = await fetch(`${url}`, {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
-    }
+    },
+    next: { tags: ['getUserFiles'] },
   })
   if (!res.ok) {
     console.error(res.status, res.statusText)

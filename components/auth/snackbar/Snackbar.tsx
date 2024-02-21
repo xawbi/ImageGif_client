@@ -1,5 +1,5 @@
 'use client'
-import {FC} from 'react'
+import { FC, useEffect } from "react";
 
 interface PropsLogRegTab {
   bg: string
@@ -7,10 +7,20 @@ interface PropsLogRegTab {
   setShowSnackbar: (value: string) => void
 }
 
-const renderSnackbar: FC<PropsLogRegTab> = ({bg, message, setShowSnackbar}) => {
+const RenderSnackbar: FC<PropsLogRegTab> = ({bg, message, setShowSnackbar}) => {
+
+  useEffect(() => {
+    if (message.trim().length > 0) {
+      const timer = setTimeout(() => {
+        setShowSnackbar('')
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [message, setShowSnackbar]);
+
   return (
     <>
-      <div className={`${bg} fixed bottom-0 left-0 mb-6 ml-6 border pl-4 border-gray-500 rounded shadow flex items-center`}>
+      <div className={`${bg} fixed bottom-0 left-0 mb-6 ml-6 border pl-4 border-gray-500 rounded shadow flex items-center z-50`}>
         <span className="material-symbols-outlined mr-1">error</span>
         <p className="text-white">{message}</p>
         <button onClick={() => setShowSnackbar('')} className="inline-block pr-4 pl-1.5 py-2">
@@ -21,4 +31,4 @@ const renderSnackbar: FC<PropsLogRegTab> = ({bg, message, setShowSnackbar}) => {
   )
 }
 
-export default renderSnackbar
+export default RenderSnackbar

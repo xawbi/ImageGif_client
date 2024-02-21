@@ -26,6 +26,7 @@ export interface FileDTO {
   deleteAt: string | null
   postName: string
   postDescription: string
+  views: number
 }
 
 export interface FavoritesDTO {
