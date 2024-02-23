@@ -14,7 +14,7 @@ export async function updateView(fileId: number) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
-    },
+    }
   })
   console.log(res)
   if (!res.ok) {

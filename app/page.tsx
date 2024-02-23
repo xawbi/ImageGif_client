@@ -39,5 +39,5 @@ export default async function Home() {
         </MasonryClient>
       </div>
     </>
-  );
+  )
 }
