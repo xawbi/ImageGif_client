@@ -8,7 +8,7 @@ export function checkVerify() {
     try {
       return jwt.verify(token, process.env.NEXT_PUBLIC_SECRET_KEY  as Secret | GetPublicKeyOrSecret);
     } catch (error) {
-      return null; // Возвращаем null в случае ошибки или невалидного токена
+      return null
     }
   } else return null
 }

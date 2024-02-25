@@ -31,12 +31,12 @@ const Navigation: FC<PropsHeader> = ({ navLinks }) => {
       </Link>
       <ul className="flex items-center">
         {navLinks.map(link => {
-          const isActive = pathName === link.href;
+          const isActive = pathName === link.href
           return (
             <li key={link.label}>
               <Link href={link.href} onClick={handleScroll}
-                    className={`text-white ${isActive ? "bg-gray-800 border-b-2 border-gray-500" : ""} hover:text-gray-200 text-20px p-4 rounded-sm`}>
-                {link.label}
+                    className={`text-white ${isActive && "bg-gray-800"} hover:text-gray-200 text-20px p-4 rounded-sm`}>
+                <span style={isActive ? { textShadow: '0 0.5px 0.5px rgb(162 28 175), 0.5px 0.5px 0px rgb(162 28 175)' } : undefined}>{link.label}</span>
               </Link>
             </li>
           );

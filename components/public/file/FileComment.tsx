@@ -7,7 +7,6 @@ import { formatDistanceToNow } from "date-fns";
 import { deleteComment } from "@/api/comment";
 import InputComment from "@/components/public/file/InputComment";
 import { FileDTO } from "@/api/dto/file.dto";
-import iconReply from "@/public/icon/iconReply.png";
 import defaultAvatar from "@/public/defaultAvatar.png";
 import LikeAndDislikeButtons from "@/components/public/LikeAndDislikeButtons";
 

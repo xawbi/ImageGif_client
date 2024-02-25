@@ -44,7 +44,7 @@ const LayoutsInProfile: FC<LayoutProps> = ({ avatar, user, bgId }) => {
   ];
 
   const navItems = [
-    { label: "ALL FILES", href: "/profile" },
+    { label: "ALL", href: "/profile" },
     { label: "PHOTOS", href: "/profile/photos" },
     { label: "GIFS", href: "/profile/gifs" },
     { label: "PENDING", href: "/profile/pending" },
@@ -70,13 +70,15 @@ const LayoutsInProfile: FC<LayoutProps> = ({ avatar, user, bgId }) => {
             <Logout />
           </div>
         </div>
-        <ul className="flex rounded-b-2xl mt-4 mb-2 justify-center">
+        <ul className="flex rounded-b-2xl mt-2 mb-2 justify-center flex-wrap">
           {navItems.map(link => {
             const isActive = pathName === link.href;
             return (
-              <li key={link.label}>
-                <Link href={link.href}
-                      className={`text-sm text-white ${isActive ? "border-b-2 border-white" : ""} hover:text-gray-200 p-3 rounded-sm`}>
+              <li key={link.label} className='mt-2'>
+                <Link
+                  href={link.href}
+                  className={`text-xs min-[500px]:text-sm text-white ${isActive ? "border-b-2 border-white" : ""} hover:text-gray-200 p-3 rounded-sm`}
+                >
                   {link.label}
                 </Link>
               </li>

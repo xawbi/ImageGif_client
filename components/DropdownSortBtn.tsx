@@ -27,7 +27,7 @@ const DropdownSortBtn: FC<PageProps> = ({selectedSortCookie, pageType}) => {
   }
 
   const handleSortClick = async (sort: string) => {
-    if (sort !== selectedSort) {
+    if (sort === 'random' || sort !== selectedSort) {
       setSelectedSort(sort)
       setCookie(`${pageType === 'public' ? 'selectedSortPublic' : 'selectedSort'}`, sort, 30);
       pageType === 'public' ? await revalidatePublicFiles() : await revalidateUserFiles()
@@ -99,6 +99,12 @@ const DropdownSortBtn: FC<PageProps> = ({selectedSortCookie, pageType}) => {
                 onClick={() => handleSortClick('popular')}
               >
                 Popular
+              </button>
+              <button
+                className="block w-full text-left py-1 px-4 lg:text-base cursor-pointer bg-black hover:bg-blue-950"
+                onClick={() => handleSortClick('random')}
+              >
+                Random
               </button>
             </>
           }

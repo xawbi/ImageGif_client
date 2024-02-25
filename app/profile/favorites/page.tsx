@@ -4,13 +4,10 @@ import { FavoritesDTO } from "@/api/dto/file.dto";
 import UserFiles from "@/components/profile/UserFiles";
 import { getFavorites } from "@/api/file";
 import MasonryClient from "@/components/MasonryClient";
-import { getUser } from "@/api/user";
-import { UserDTO } from "@/api/dto/user.dto";
 
 export default async function Gifs() {
   if (!checkVerify()) redirect('/auth')
 
-  const user: UserDTO = await getUser()
   const favorites: FavoritesDTO[] = await getFavorites()
 
   return (

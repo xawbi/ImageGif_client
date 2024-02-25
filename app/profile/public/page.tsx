@@ -6,15 +6,19 @@ import UserFiles from "@/components/profile/UserFiles";
 import ChooseFileBtn from "@/components/profile/UploadFile/ChooseFileBtn";
 import MasonryClient from "@/components/MasonryClient";
 import { getDevicePixels } from "@/components/getDeviceType";
+import DropdownSortBtn from "@/components/DropdownSortBtn";
+import { cookies } from "next/headers";
 
 export default async function Public() {
   if (!checkVerify()) redirect('/auth')
 
-  const userFiles: FileDTO[] = await getUserFiles('public')
+  const selectedSortCookie = cookies().get("selectedSort")?.value;
+  const userFiles: FileDTO[] = await getUserFiles('public', selectedSortCookie === 'oldest' ? 'oldest' : undefined)
 
   return (
     <>
-      <div className='flex m-2 justify-end'>
+      <div className='flex m-2 justify-between'>
+        <DropdownSortBtn selectedSortCookie={selectedSortCookie} pageType='profile'/>
         <ChooseFileBtn/>
       </div>
       <div className='px-3 md:px-0'>

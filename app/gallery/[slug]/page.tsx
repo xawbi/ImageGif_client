@@ -9,23 +9,27 @@ import { CommentType } from "@/api/dto/comment.dto";
 import FileComment from "@/components/public/file/FileComment";
 import InputComment from "@/components/public/file/InputComment";
 import defaultChat from "@/public/defaultChat.png";
+import { formatDistanceToNow } from "date-fns";
 
 export type Props = {
   params: {
     slug: string;
-  };
-};
+  }
+}
 
-export type TypeRatingFile = {
-  likeSum: number
-  dislikeSum: number
+export async function generateMetadata({ params: { slug } }: Props) {
+  const file: FileDTO = await getFile(+slug)
+  return {
+    title: file.postName + ' - ' + 'ImageGif',
+    description: file.postDescription
+  }
 }
 
 export default async function PostPage({ params: { slug } }: Props) {
   const file: FileDTO = await getFile(+slug)
   const comments: CommentType[] = await getPublicComments(+slug);
   const user: UserDTO = await getUser();
-  const fileUrl = process.env.NEXT_PUBLIC_HOST + "/uploads/" + `${file.user.id}/` + file.fileName;
+  const fileUrl = process.env.NEXT_PUBLIC_HOST + "/uploads/" + `${file.user.id}/` + file.fileName
 
   function countComments(comments: any[]): number {
     return comments.reduce(
@@ -47,18 +51,19 @@ export default async function PostPage({ params: { slug } }: Props) {
                 src={fileUrl}
                 alt={`${file.fileName}`}
                 loading="eager"
-                className="object-contain w-full max-h-[calc(100svh-180px)]"
+                className="object-contain w-full max-h-[calc(100svh-185px)]"
               />
             </div>
             <div className="flex justify-around bg-gray-900 py-1">
               <FileButtons user={user} file={file} />
             </div>
-            <div className='mt-1 mb-5 ml-2'>
+            <div className='mt-0.5 mb-4 ml-2'>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-gray-400 inline-block">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
               </svg>
-              <p className='text-sm text-gray-400 inline-block ml-1'>{file.views} Views</p>
+              <span className='text-sm text-gray-400 ml-1'>{file.views} Views • </span>
+              <span className='text-sm text-gray-400'>{formatDistanceToNow(file.restrictedUpdatedAt)}</span>
             </div>
             {file.postDescription &&
               <>

@@ -17,10 +17,9 @@ export default async function Photos() {
   return (
     <>
       <div className='flex m-2 justify-between'>
-        <DropdownSortBtn pageType='profile' selectedSortCookie={selectedSortCookie}/>
+        <DropdownSortBtn selectedSortCookie={selectedSortCookie} pageType='profile'/>
         <ChooseFileBtn/>
       </div>
-      <div className='px-3 md:px-0'>
         <MasonryClient>
           {userFiles && userFiles.map((file) => {
             return (
@@ -30,7 +29,6 @@ export default async function Photos() {
             )
           })}
         </MasonryClient>
-      </div>
     </>
   )
 }

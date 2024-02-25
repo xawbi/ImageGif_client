@@ -33,7 +33,7 @@ export default function MasonryClient({ children }: ScriptProps) {
     1100: 3,
     700: 2,
     400: 1
-  };
+  }
 
   return (
     <>

@@ -20,7 +20,6 @@ export default async function Gifs() {
         <DropdownSortBtn pageType='profile' selectedSortCookie={selectedSortCookie}/>
         <ChooseFileBtn/>
       </div>
-      <div className='px-3 md:px-0'>
         <MasonryClient>
           {userFiles && userFiles.map((file) => {
             return (
@@ -30,7 +29,6 @@ export default async function Gifs() {
             )
           })}
         </MasonryClient>
-      </div>
     </>
   )
 }
