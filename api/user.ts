@@ -17,3 +17,14 @@ export async function getUser() {
     return res.json()
   }
 }
+
+export async function getUserPublic(userId: number) {
+  const res = await fetch(`${host}/users/public/${userId}`, {
+    method: 'GET'
+  })
+  if (!res.ok) {
+    console.error(res.status, res.statusText)
+  } else {
+    return res.json()
+  }
+}

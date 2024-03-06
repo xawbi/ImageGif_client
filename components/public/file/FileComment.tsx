@@ -2,13 +2,13 @@
 import { FC, useState } from "react";
 import { UserDTO } from "@/api/dto/user.dto";
 import { CommentType } from "@/api/dto/comment.dto";
-import Image from "next/image";
 import { formatDistanceToNow } from "date-fns";
 import { deleteComment } from "@/api/comment";
 import InputComment from "@/components/public/file/InputComment";
 import { FileDTO } from "@/api/dto/file.dto";
-import defaultAvatar from "@/public/defaultAvatar.png";
 import LikeAndDislikeButtons from "@/components/public/LikeAndDislikeButtons";
+import CircleAvatar from "@/components/profile-layout/Avatar/CircleAvatar";
+import Link from "next/link";
 
 interface filePageProps {
   comment: CommentType;
@@ -18,13 +18,6 @@ interface filePageProps {
 }
 
 const FileComment: FC<filePageProps> = ({ comment, user, file, level }) => {
-  const commentAvatar = comment.user.avatar?.[0];
-  const avatarUrl = commentAvatar
-    ? process.env.NEXT_PUBLIC_HOST + "/avatars/" + `${comment.user.id}/` + commentAvatar.fileName
-    : "";
-  const scale = 100 / +(commentAvatar?.width || 1);
-  const x = -((commentAvatar?.x || 0) as number) * scale;
-  const y = -((commentAvatar?.y || 0) as number * scale);
   const commentDate = new Date(comment.createAt);
   const timeAgo = formatDistanceToNow(commentDate);
   const [isHoveredComment, setIsHoveredComment] = useState(false);
@@ -43,40 +36,19 @@ const FileComment: FC<filePageProps> = ({ comment, user, file, level }) => {
     if (user.role == "admin" || comment.user.id === user.id) {
       await deleteComment(comment.id);
     }
-  };
+  }
 
   return (
     <div>
       <div key={comment.id} className={`flex items-start mb-4 ${level && 'pl-12'}`}
            onMouseEnter={() => setIsHoveredComment(true)}
            onMouseLeave={() => setIsHoveredComment(false)}>
-        <div className="relative overflow-hidden rounded-full w-10 h-10 mr-2 mt-3 flex-shrink-0">
-          {comment.user.avatar[0] ?
-            <Image
-              draggable="false"
-              src={avatarUrl}
-              alt="Avatar"
-              width={1000}
-              height={1000}
-              loading="lazy"
-              style={{
-                objectFit: "cover",
-                transform: `translate3d(${x}%, ${y}%, 0) scale3d(${scale},${scale},1)`,
-                transformOrigin: "top left"
-              }}
-            />
-            :
-            <Image
-              src={defaultAvatar}
-              fill={true}
-              alt="aa"
-              className={`pointer-events-none`}
-            />
-          }
-        </div>
+        <Link href={`/users/${comment.user.id}/${comment.user.username}`} className="relative overflow-hidden rounded-full w-10 h-10 mr-2 mt-3 flex-shrink-0">
+          <CircleAvatar avatarParams={comment.user.avatar[0]}/>
+        </Link>
         <div className="flex-grow bg-gray-900 pl-3 pr-1 py-1.5 rounded hover:bg-gray-800 break-words overflow-hidden">
           <div className="flex items-center">
-            <p className="text-white font-bold mr-2 cursor-pointer">{comment.user.username}</p>
+            <Link href={`/users/${comment.user.id}/${comment.user.username}`} className="text-white font-bold mr-2">{comment.user.username}</Link>
             <p className="text-gray-500">{timeAgo} ago</p>
             {level && level == 2 && <>
               <svg className="w-4 h-4 text-gray-400" aria-hidden="true"
@@ -115,7 +87,7 @@ const FileComment: FC<filePageProps> = ({ comment, user, file, level }) => {
               <div className="flex">
               <button className="ml-1 text-gray-300 hover:text-white flex items-center p-0.5 rounded pr-1"
                       onClick={() => setShowReplies(!showReplies)}>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width={4}
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                      stroke="currentColor" className="w-4 h-4">
                   <path d={`${!showReplies ? "m19.5 8.25-7.5 7.5-7.5-7.5" : "m4.5 15.75 7.5-7.5 7.5 7.5"}`} />
                 </svg>

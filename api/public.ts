@@ -8,6 +8,10 @@ export async function revalidatePublicFiles() {
   revalidateTag('getPublicFiles')
 }
 
+export async function revalidateUserPublicFiles() {
+  revalidateTag('getUserPublicFiles')
+}
+
 export async function updateView(fileId: number) {
   console.log(`${host}/public/file/${fileId}/updateView`)
   const res = await fetch(`${host}/public/file/${fileId}/updateView`, {
@@ -39,11 +43,37 @@ export async function getPublicFiles(type: string, sort?: string) {
   }
 }
 
+export async function getUserPublicFiles(userId: number, sort?: string) {
+  const res = await fetch(`${host}/public/userFiles/${userId}?sort=${sort}`, {
+    next: { revalidate: 10, tags: ['getUserPublicFiles'] },
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+  if (!res.ok) {
+    console.error(res.status, res.statusText)
+  } else {
+    return res.json()
+  }
+}
+
+export async function getSearchPost(search: string, limit: number = 10) {
+  const encodedSearchValue = encodeURIComponent(search)
+  const res = await fetch(`${host}/public/searchPosts?postNameAndDesc=${encodedSearchValue}&limit=${limit}`, {
+    method: 'POST'
+  });
+  if (!res.ok) {
+    console.error(res.status, res.statusText);
+  } else {
+    return res.json();
+  }
+}
+
 export async function getFile(id: number) {
-  const url = `${host}/public/file/${id}`
-  const res = await fetch(url, {
-    next: { revalidate: 0 },
-    method: 'GET'
+  const res = await fetch(`${host}/public/file/${id}`, {
+    method: 'GET',
+    next: { revalidate: 0 }
   })
   if (!res.ok) {
     console.error(res.status, res.statusText)

@@ -1,23 +1,35 @@
 import {redirect} from "next/navigation";
 import {checkVerify} from "@/api/checkVerify";
 import { FavoritesDTO } from "@/api/dto/file.dto";
-import UserFiles from "@/components/profile/UserFiles";
-import { getFavorites } from "@/api/file";
 import MasonryClient from "@/components/MasonryClient";
+import { UserDTO } from "@/api/dto/user.dto";
+import { getUser } from "@/api/user";
+import { cookies } from "next/headers";
+import DropdownSortBtn from "@/components/DropdownSortBtn";
+import ChooseFileBtn from "@/components/profile/UploadFile/ChooseFileBtn";
+import PublicFiles from "@/components/public/PublicFiles";
+import React from "react";
+import { getFavorites } from "@/api/favorite";
 
 export default async function Gifs() {
   if (!checkVerify()) redirect('/auth')
 
-  const favorites: FavoritesDTO[] = await getFavorites()
+  const selectedSortCookie = cookies().get("selectedProfilePublic")?.value;
+  const favorites: FavoritesDTO[] = await getFavorites(selectedSortCookie)
+  const user: UserDTO = await getUser()
 
   return (
     <>
-      <div className='px-3 md:px-0 mt-2'>
+      <div className='flex m-2 mx-[5px] justify-between'>
+        <DropdownSortBtn selectedSortCookie={selectedSortCookie} pageType='profilePublic'/>
+        <ChooseFileBtn/>
+      </div>
+      <div className='px-3 md:px-0'>
         <MasonryClient>
-          {favorites && favorites.map((favorite) => {
+          {favorites && favorites.map((file) => {
             return (
-              <div key={favorite.id}>
-                <UserFiles file={favorite.file} favorites={true}/>
+              <div key={file.id}>
+                <PublicFiles file={file.file} user={user} favorites={'user'}/>
               </div>
             )
           })}

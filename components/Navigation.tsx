@@ -33,13 +33,13 @@ const Navigation: FC<PropsHeader> = ({ navLinks }) => {
         {navLinks.map(link => {
           const isActive = pathName === link.href
           return (
-            <li key={link.label}>
+            <li key={link.label} className='flex items-center'>
               <Link href={link.href} onClick={handleScroll}
-                    className={`text-white ${isActive && "bg-gray-800"} hover:text-gray-200 text-20px p-4 rounded-sm`}>
+                    className={`text-white ${isActive && "bg-gray-800"} hover:text-gray-200 text-20px p-3 rounded-sm`}>
                 <span style={isActive ? { textShadow: '0 0.5px 0.5px rgb(162 28 175), 0.5px 0.5px 0px rgb(162 28 175)' } : undefined}>{link.label}</span>
               </Link>
             </li>
-          );
+          )
         })}
       </ul>
     </>

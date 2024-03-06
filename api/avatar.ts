@@ -50,6 +50,18 @@ export async function getAvatar() {
   }
 }
 
+export async function getAvatarPublic(userId: number) {
+  const res = await fetch(`${host}/avatars/public/${userId}`, {
+    next: { revalidate: 1 },
+    method: 'GET'
+  })
+  if (!res.ok) {
+    console.error(res.status, res.statusText)
+  } else {
+    return res.json()
+  }
+}
+
 export async function delAvatar(id: number) {
   const token = cookies().get("_token")?.value
   const res = await fetch(`${host}/avatars/${id}/delete`, {

@@ -13,7 +13,6 @@ interface profileLayoutProps {
 }
 
 const Avatars: FC<profileLayoutProps> = ({avatar, user}) => {
-
   interface CroppedAriaInterface {
     x: number
     y: number

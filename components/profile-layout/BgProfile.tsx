@@ -14,16 +14,10 @@ const BgProfile: FC = () => {
     }, 500);
   }
 
-  const textStyle = {
-    textShadow:
-      '1px 1px 0 hsl(20,100%,50%),',
-    color: 'hsl(0,100%,40%)'
-  };
-
   return (
     <>
       <button onClick={handleUpdateBg} disabled={isButtonDisabled}
-              className="text-fuchsia-700 bg-gray-900 hover:bg-gray-950 py-2 px-3 rounded-2xl border-2 border-gray-500 lg:text-base text-sm">
+              className="text-fuchsia-600 bg-gray-900 hover:bg-gray-950 py-[6px] px-2 rounded-2xl border-2 border-gray-500 lg:text-base text-sm">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
              className="inline-block w-5 h-5 mr-1.5 mb-1">
           <path strokeLinecap="round" strokeLinejoin="round"

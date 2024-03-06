@@ -3,7 +3,8 @@ import { FC, useState } from "react";
 import { FileDTO } from "@/api/dto/file.dto";
 import { UserDTO } from "@/api/dto/user.dto";
 import LikeAndDislikeButtons from "@/components/public/LikeAndDislikeButtons";
-import { postFavorites } from "@/api/file";
+import { useRouter } from "next/navigation";
+import { postFavorites } from "@/api/favorite";
 
 interface filePageProps {
   file: FileDTO;
@@ -11,6 +12,7 @@ interface filePageProps {
 }
 
 const FileButtons: FC<filePageProps> = ({ file, user }) => {
+  const router = useRouter()
   const downloadFileUrl = process.env.NEXT_PUBLIC_HOST + "/public/download/" + `${file.user.id}/` + file.fileName;
   const [modal, setModal] = useState("")
   const [favoriteClicked, setFavoriteClicked] = useState(
@@ -24,7 +26,7 @@ const FileButtons: FC<filePageProps> = ({ file, user }) => {
     } else {
       setModal(favorite);
     }
-  };
+  }
 
   return (
     <>
@@ -45,7 +47,7 @@ const FileButtons: FC<filePageProps> = ({ file, user }) => {
             className="absolute text-center bg-black text-xs sm:text-sm border-2 border-gray-500 p-1 rounded-md text-white bottom-8 transform max-w-[160px] z-50">
             <h2 className="text-xl font-bold mb-2">Log in</h2>
             <p>Log in to add an posts you like to favorites</p>
-            <button
+            <button onClick={() => router.push('/auth')}
               className="mt-2 px-2 py-1 bg-gray-700 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:border-gray-700 focus:ring focus:ring-gray-300">
               Go!
             </button>

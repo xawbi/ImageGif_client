@@ -7,7 +7,7 @@ import Link from "next/link";
 
 interface UserFileProps {
   file: FileDTO;
-  favorites?: boolean;
+  favorites?: string;
 }
 
 const StatusButton: FC<UserFileProps> = ({ file, favorites }) => {

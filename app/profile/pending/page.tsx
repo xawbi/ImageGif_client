@@ -16,7 +16,7 @@ export default async function Sent() {
 
   return (
     <>
-      <div className='flex m-2 justify-between'>
+      <div className='flex m-2 mx-[5px] justify-between'>
         <DropdownSortBtn pageType='profile' selectedSortCookie={selectedSortCookie}/>
         <ChooseFileBtn/>
       </div>

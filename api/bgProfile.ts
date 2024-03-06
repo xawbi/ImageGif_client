@@ -21,6 +21,18 @@ export async function getBgId() {
   }
 }
 
+export async function getBgIdPublic(userId: number) {
+  const res = await fetch(`${host}/bgProfile/public/${userId}`, {
+    method: 'GET',
+  })
+  if (!res.ok) {
+    console.error(res.status, res.statusText)
+    return null
+  } else {
+    return res.json()
+  }
+}
+
 export async function postBgId() {
   const token = cookies().get("_token")?.value
   const res = await fetch(`${host}/bgProfile`, {

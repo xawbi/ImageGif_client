@@ -8,4 +8,5 @@ export interface UserDTO {
   username: string
   role: string
   avatar: AvatarDto[]
+  openFavorites: boolean
 }

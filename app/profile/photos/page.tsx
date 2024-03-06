@@ -16,7 +16,7 @@ export default async function Photos() {
 
   return (
     <>
-      <div className='flex m-2 justify-between'>
+      <div className='flex m-2 mx-[5px] justify-between'>
         <DropdownSortBtn selectedSortCookie={selectedSortCookie} pageType='profile'/>
         <ChooseFileBtn/>
       </div>

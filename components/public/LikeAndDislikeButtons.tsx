@@ -12,9 +12,10 @@ interface PagesProps {
   file: FileDTO;
   comment?: CommentType;
   pagesType: "homePageFile" | "slugPageFile" | "comment";
+  host?: string
 }
 
-const LikeAndDislikeButtons: FC<PagesProps> = ({ user, file, comment, pagesType }) => {
+const LikeAndDislikeButtons: FC<PagesProps> = ({ user, file, comment, pagesType, host }) => {
   const router = useRouter();
   const [likes, setLikes] = useState(comment ? comment.rating.reduce((accumulator, el) => accumulator + (el.like || 0), 0) : file.rating.reduce((accumulator, el) => accumulator + (el.like || 0), 0));
   const [dislikes, setDislikes] = useState(comment ? comment.rating.reduce((accumulator, el) => accumulator + (el.dislike || 0), 0) : file.rating.reduce((accumulator, el) => accumulator + (el.dislike || 0), 0));
@@ -75,7 +76,7 @@ const LikeAndDislikeButtons: FC<PagesProps> = ({ user, file, comment, pagesType 
           className="absolute text-center bg-black border-2 text-xs sm:text-sm border-gray-500 p-1 rounded-md text-white bottom-8 transform max-w-[160px] z-50">
           <h2 className="sm:text-xl font-bold mb-1">Log in</h2>
           <p>Log in to upvote the posts you like</p>
-          <button
+          <button onClick={() => router.push('/auth')}
             className="mt-2 px-2 py-1 bg-gray-700 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:border-gray-700 focus:ring focus:ring-gray-300">
             Go!
           </button>
@@ -103,7 +104,7 @@ const LikeAndDislikeButtons: FC<PagesProps> = ({ user, file, comment, pagesType 
       </div>
       {pagesType == "homePageFile" &&
         <div className="flex flex-1 items-center justify-center">
-          <Link href={`gallery/${file.id}`} scroll={false}
+          <Link href={`${host}/gallery/${file.id}`} scroll={false}
                 className="text-center py-[3px] px-[5px] hover:text-fuchsia-600 text-[#B3B3B3]">
             <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24" strokeWidth={1.5}
                  stroke="currentColor" className="inline-block w-[22px] h-[22px] mt-0.5">

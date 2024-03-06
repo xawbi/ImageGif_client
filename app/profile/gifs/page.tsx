@@ -16,8 +16,8 @@ export default async function Gifs() {
 
   return (
     <>
-      <div className='flex m-2 justify-between'>
-        <DropdownSortBtn pageType='profile' selectedSortCookie={selectedSortCookie}/>
+      <div className='flex m-2 mx-[5px] justify-between'>
+        <DropdownSortBtn selectedSortCookie={selectedSortCookie} pageType='profile'/>
         <ChooseFileBtn/>
       </div>
         <MasonryClient>

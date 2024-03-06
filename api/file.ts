@@ -11,8 +11,7 @@ export async function revalidateUserFiles() {
 
 export async function getUserFiles(type: string, sort?: string) {
   const token = cookies().get("_token")?.value
-  const url = `${host}/files?type=${type}&sort=${sort}`
-  const res = await fetch(`${url}`, {
+  const res = await fetch(`${host}/files?type=${type}&sort=${sort}`, {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -64,37 +63,4 @@ export async function delFile(id: number) {
 
 export async function revalidateProfile() {
   revalidatePath('profile')
-}
-
-export async function getFavorites() {
-  const token = cookies().get("_token")?.value
-  const res = await fetch(`${host}/favorites`, {
-    method: 'GET',
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    },
-    next: { tags: ['getFavorites'] },
-  })
-  if (!res.ok) {
-    console.error(res.status, res.statusText)
-  } else {
-    return res.json()
-  }
-}
-
-export async function postFavorites(fileId: number) {
-  const token = cookies().get("_token")?.value
-  const res = await fetch(`${host}/favorites/${fileId}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
-    },
-  })
-  if (res.ok) {
-    revalidateTag('getFavorites')
-  } else {
-    console.error('Ошибка при отправке данных на сервер:', res.status, res.statusText)
-  }
 }
