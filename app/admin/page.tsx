@@ -9,7 +9,7 @@ import { getUser } from "@/api/user";
 export default async function Admin() {
   if (!await checkAdmin()) notFound()
 
-  const filesPending: FileDTO[] = await getFilePending()
+  const filesPending: FileDTO[] = await getFilePending(1)
   const user: UserDTO = await getUser();
 
   return (

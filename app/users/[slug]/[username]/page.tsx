@@ -27,7 +27,7 @@ export async function generateMetadata({ params: { slug, username } }: Props) {
 
 export default async function userPage({ params: { slug } }: Props) {
   // const favoritesPublic: FavoritesDTO[] = await getFavoritesPublic(+slug[0])
-  const userFilesPublic: FileDTO[] = await getUserPublicFiles(+slug, "popular");
+  const userFilesPublic: FileDTO[] = await getUserPublicFiles(+slug, 1, "popular");
   const userPublic: UserDTO = await getUserPublic(+slug);
   const user: UserDTO = await getUser();
 

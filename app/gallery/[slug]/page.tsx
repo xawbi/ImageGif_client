@@ -1,12 +1,13 @@
 import { FileDTO } from "@/api/dto/file.dto";
 import { getFile, getPublicComments } from "@/api/public";
+import dynamic from 'next/dynamic'
 import Image from "next/image";
 import FileButtons from "@/components/public/file/FileButtons";
 import { SetScroll } from "@/components/public/ScrollComponents";
 import { UserDTO } from "@/api/dto/user.dto";
 import { getUser } from "@/api/user";
 import { CommentType } from "@/api/dto/comment.dto";
-import FileComment from "@/components/public/file/FileComment";
+const FileComment = dynamic(() => import("@/components/public/file/FileComment"))
 import InputComment from "@/components/public/file/InputComment";
 import defaultChat from "@/public/defaultChat.png";
 import { formatDistanceToNow } from "date-fns";
@@ -24,7 +25,7 @@ export async function generateMetadata({ params: { slug } }: Props) {
   return {
     title: file.postName + " - " + "ImageGif",
     description: file.postDescription
-  };
+  }
 }
 
 export default async function PostPage({ params: { slug } }: Props) {
@@ -37,7 +38,7 @@ export default async function PostPage({ params: { slug } }: Props) {
     return comments.reduce(
       (totalCount, comment) => totalCount + 1 + countComments(comment.childComments || []),
       0
-    );
+    )
   }
 
   return (
@@ -99,5 +100,5 @@ export default async function PostPage({ params: { slug } }: Props) {
         </div>
       </SetScroll>
     </>
-  );
+  )
 }

@@ -12,7 +12,7 @@ export default async function Sent() {
   if (!checkVerify()) redirect('/auth')
 
   const selectedSortCookie = cookies().get("selectedSort")?.value;
-  const userFiles: FileDTO[] = await getUserFiles('sent', selectedSortCookie === 'oldest' ? 'oldest' : undefined);
+  const userFiles: FileDTO[] = await getUserFiles('sent', 1, selectedSortCookie === 'oldest' ? 'oldest' : undefined);
 
   return (
     <>

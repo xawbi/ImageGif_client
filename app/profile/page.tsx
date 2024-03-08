@@ -12,7 +12,7 @@ export default async function Profile() {
   if (!checkVerify()) redirect('/auth')
 
   const selectedSortCookie = cookies().get("selectedSort")?.value;
-  const userFiles: FileDTO[] = await getUserFiles('', selectedSortCookie);
+  const userFiles: FileDTO[] = await getUserFiles('', 1, selectedSortCookie);
 
   return (
     <>

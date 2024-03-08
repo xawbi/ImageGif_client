@@ -13,7 +13,7 @@ interface BlogLayoutProps {
 
 export default async function blogLayout({ children, params: { slug } }: BlogLayoutProps) {
   const selectedSortCookie = cookies().get("selectedSortPublic")?.value
-  const files: FileDTO[] = await getPublicFiles('', selectedSortCookie)
+  const files: FileDTO[] = await getPublicFiles('', 1, selectedSortCookie)
   const currentFileId = files.findIndex((file) => file.id === +slug)
 
   return <>

@@ -17,7 +17,7 @@ export default async function Public() {
 
   const selectedSortCookie = cookies().get("selectedProfilePublic")?.value;
   const user = await getUser()
-  const userFilesPublic: FileDTO[] = await getUserPublicFiles(user.id, selectedSortCookie);
+  const userFilesPublic: FileDTO[] = await getUserPublicFiles(user.id, 1, selectedSortCookie);
 
   return (
     <>

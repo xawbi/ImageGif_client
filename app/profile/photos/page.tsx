@@ -12,7 +12,7 @@ export default async function Photos() {
   if (!checkVerify()) redirect('/auth')
 
   const selectedSortCookie = cookies().get("selectedSort")?.value;
-  const userFiles: FileDTO[] = await getUserFiles('photos', selectedSortCookie === 'oldest' ? 'oldest' : undefined);
+  const userFiles: FileDTO[] = await getUserFiles('photos', 1, selectedSortCookie === 'oldest' ? 'oldest' : undefined);
 
   return (
     <>

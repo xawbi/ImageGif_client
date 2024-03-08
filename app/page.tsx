@@ -13,7 +13,7 @@ import SearchPost from "@/components/public/SearchPost";
 export default async function Home() {
 
   const selectedSortCookie = cookies().get("selectedSortPublic")?.value
-  const filesPublic: FileDTO[] = await getPublicFiles('', selectedSortCookie)
+  const filesPublic: FileDTO[] = await getPublicFiles('', 1, selectedSortCookie)
   const user: UserDTO = await getUser()
 
   return (

@@ -4,10 +4,9 @@ import {revalidatePath} from "next/cache";
 
 const host = process.env.NEXT_PUBLIC_HOST
 
-export async function getFilePending() {
+export async function getFilePending(page: number) {
   const token = cookies().get("_token")?.value
-  const url = `${host}/admin/files/pending`
-  const res = await fetch(`${url}`, {
+  const res = await fetch(`${host}/admin/files/pending?page=${page}&per_page=${20}`, {
     method: 'GET',
     next: { revalidate: 36 },
     headers: {

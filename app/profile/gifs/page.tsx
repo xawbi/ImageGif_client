@@ -12,7 +12,7 @@ export default async function Gifs() {
   if (!checkVerify()) redirect('/auth')
 
   const selectedSortCookie = cookies().get("selectedSort")?.value;
-  const userFiles: FileDTO[] = await getUserFiles('gifs', selectedSortCookie === 'oldest' ? 'oldest' : undefined);
+  const userFiles: FileDTO[] = await getUserFiles('gifs', 1, selectedSortCookie === 'oldest' ? 'oldest' : undefined);
 
   return (
     <>
