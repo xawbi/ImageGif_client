@@ -1,4 +1,4 @@
-import {cookies, headers} from "next/headers";
+import {cookies} from "next/headers";
 import jwt, { GetPublicKeyOrSecret, Secret } from "jsonwebtoken";
 import {UserDTO} from "@/api/dto/user.dto";
 
@@ -21,4 +21,14 @@ export async function checkAdmin() {
   })
   const user: UserDTO = await res.json()
   return user.role === 'admin';
+}
+
+export async function checkBan() {
+  const host = process.env.NEXT_PUBLIC_HOST
+  const token = cookies().get("_token")?.value
+  const res = await fetch(`${host}/users/me`, {
+    headers: {'Authorization': `Bearer ${token}`}
+  })
+  const user: UserDTO = await res.json()
+  return user.ban;
 }

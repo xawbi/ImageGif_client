@@ -59,19 +59,18 @@ export async function updateReject(ids: number[], page: string) {
   }
 }
 
-export async function delPublicFile(id: number) {
+export async function getUsers() {
   const token = cookies().get("_token")?.value
-  const res = await fetch(`${host}/admin/files/${id}/delete`, {
-    method: 'DELETE',
+  const res = await fetch(`${host}/admin/users`, {
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     }
   })
-  revalidatePath('/')
   if (!res.ok) {
     console.error(res.status, res.statusText)
   } else {
-    return null
+    return res.json()
   }
 }

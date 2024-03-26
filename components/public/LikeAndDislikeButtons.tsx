@@ -8,14 +8,14 @@ import { postRating } from "@/api/rating";
 import Link from "next/link";
 
 interface PagesProps {
-  user: UserDTO;
+  user?: UserDTO;
   file: FileDTO;
   comment?: CommentType;
   pagesType: "homePageFile" | "slugPageFile" | "comment";
-  host?: string
 }
 
-const LikeAndDislikeButtons: FC<PagesProps> = ({ user, file, comment, pagesType, host }) => {
+const LikeAndDislikeButtons: FC<PagesProps> = ({ user, file, comment, pagesType }) => {
+  const host = process.env.NEXT_PUBLIC_IMAGEGIF_HOST
   const router = useRouter();
   const [likes, setLikes] = useState(comment ? comment.rating.reduce((accumulator, el) => accumulator + (el.like || 0), 0) : file.rating.reduce((accumulator, el) => accumulator + (el.like || 0), 0));
   const [dislikes, setDislikes] = useState(comment ? comment.rating.reduce((accumulator, el) => accumulator + (el.dislike || 0), 0) : file.rating.reduce((accumulator, el) => accumulator + (el.dislike || 0), 0));
@@ -104,7 +104,7 @@ const LikeAndDislikeButtons: FC<PagesProps> = ({ user, file, comment, pagesType,
       </div>
       {pagesType == "homePageFile" &&
         <div className="flex flex-1 items-center justify-center">
-          <Link href={`${host}/gallery/${file.id}`} scroll={false}
+          <Link href={`${host}/gallery/${file.id}`}
                 className="text-center py-[3px] px-[5px] hover:text-fuchsia-600 text-[#B3B3B3]">
             <svg xmlns="http://www.w3.org/2000/svg" fill="black" viewBox="0 0 24 24" strokeWidth={1.5}
                  stroke="currentColor" className="inline-block w-[22px] h-[22px] mt-0.5">

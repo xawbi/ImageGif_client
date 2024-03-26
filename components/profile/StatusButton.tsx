@@ -12,6 +12,7 @@ interface UserFileProps {
 
 const StatusButton: FC<UserFileProps> = ({ file, favorites }) => {
   const setPostModal = useModalProfilePost(state => state.setPostModal);
+  const host = process.env.NEXT_PUBLIC_IMAGEGIF_HOST
 
   const handleRemoveFile = async () => {
     if (file) {
@@ -26,7 +27,7 @@ const StatusButton: FC<UserFileProps> = ({ file, favorites }) => {
       {file.restricted !== "public" ?
         <div onClick={() => setPostModal && setPostModal({ postModal: true, file: file, checkModal: "user" })}
              className="absolute w-full h-full z-10" />
-        : <Link href="" as={`/gallery/${file.id}`} scroll={true} className="absolute w-full h-full z-10" passHref />
+        : <Link href={`${host}/gallery/${file.id}`} className="absolute w-full h-full z-10" scroll={false}/>
       }
       {!favorites &&
         <>

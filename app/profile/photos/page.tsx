@@ -7,12 +7,14 @@ import ChooseFileBtn from "@/components/profile/UploadFile/ChooseFileBtn";
 import MasonryClient from "@/components/MasonryClient";
 import { cookies } from "next/headers";
 import DropdownSortBtn from "@/components/DropdownSortBtn";
+import LoadMore from "@/components/load-more";
+import React from "react";
 
 export default async function Photos() {
   if (!checkVerify()) redirect('/auth')
 
   const selectedSortCookie = cookies().get("selectedSort")?.value;
-  const userFiles: FileDTO[] = await getUserFiles('photos', 1, selectedSortCookie === 'oldest' ? 'oldest' : undefined);
+  const userFiles: FileDTO[] = await getUserFiles('photos', 1, selectedSortCookie);
 
   return (
     <>
@@ -20,15 +22,13 @@ export default async function Photos() {
         <DropdownSortBtn selectedSortCookie={selectedSortCookie} pageType='profile'/>
         <ChooseFileBtn/>
       </div>
-        <MasonryClient>
-          {userFiles && userFiles.map((file) => {
-            return (
-              <div key={file.id}>
-                <UserFiles file={file}/>
-              </div>
-            )
-          })}
-        </MasonryClient>
+      {userFiles && userFiles.length > 0 ?
+        <LoadMore page={'profile'} pageFilter={'photos'} selectedSortCookie={selectedSortCookie} initialFilesPublic={userFiles} />
+        :
+        <p className='text-xl sm:text-2xl md:text-3xl lg:text-4xl text-center mt-10 text-gray-400 font-medium'>
+          You don&apos;t have any photos.
+        </p>
+        }
     </>
   )
 }

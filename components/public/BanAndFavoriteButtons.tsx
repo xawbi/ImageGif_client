@@ -45,7 +45,7 @@ export const BanAndFavoriteButtons: FC<PublicFileProps> = ({ user, file, favorit
         <p className="text-sm inline-block ml-0.5"
            style={{ textShadow: "1px 0 1px #000, 0 1px 1px #000, -1px 0 1px #000, 0 -1px 1px #000" }}>{file.views}</p>
       </div>
-      {user && user.role === "admin" && favorites != 'user' &&
+      {user && user.role === "admin" && favorites !== 'user' &&
         <button onClick={() => handleBan([file.id])}
                 className="absolute truncate overflow-hidden whitespace-nowrap top-1 left-1 bg-black text-white text-center p-1 pt-[5px] px-[5px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 rounded border-2 border-gray-500">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
@@ -55,7 +55,7 @@ export const BanAndFavoriteButtons: FC<PublicFileProps> = ({ user, file, favorit
           </svg>
         </button>
       }
-      {favorites && favorites != 'public' ?
+      {favorites && favorites !== 'public' ?
         <button onClick={() => handleFavorite(file.id)}
                 className="absolute truncate overflow-hidden whitespace-nowrap top-1 right-1 bg-black text-white text-center p-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 rounded border-2 border-gray-500">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}

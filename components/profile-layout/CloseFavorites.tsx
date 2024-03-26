@@ -21,7 +21,7 @@ const CloseFavorites: FC<ProfileLayoutProps> = ({ openFavorites }) => {
   return (
     <>
       <button onClick={handleUpdateUserFavorites} disabled={isButtonDisabled}
-              className="text-fuchsia-600 bg-gray-900 hover:bg-gray-950 py-[6px] px-2 my-5 rounded-2xl border-2 border-gray-500 lg:text-base text-sm">
+              className="text-fuchsia-600 bg-gray-900 hover:bg-gray-950 py-[6px] px-2 my-2 sm:my-5 rounded-2xl border-2 border-gray-500 lg:text-base text-sm">
         {openFavorites && openFavorites ?
           <>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}

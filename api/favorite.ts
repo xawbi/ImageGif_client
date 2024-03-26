@@ -4,9 +4,9 @@ import { revalidatePath, revalidateTag } from "next/cache";
 
 const host: string | undefined = process.env.NEXT_PUBLIC_HOST
 
-export async function getFavorites(sort?: string) {
+export async function getFavorites(page: number, sort: string | undefined, per_page = 10) {
   const token = cookies().get("_token")?.value
-  const res = await fetch(`${host}/favorites?sort=${sort}`, {
+  const res = await fetch(`${host}/favorites?sort=${sort}&page=${page}&per_page=${per_page}`, {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${token}`,
@@ -21,8 +21,8 @@ export async function getFavorites(sort?: string) {
   }
 }
 
-export async function getFavoritesPublic(userId: number, sort?: string) {
-  const res = await fetch(`${host}/favorites/public/${userId}?sort=${sort}`, {
+export async function getFavoritesPublic(userId: number, page: number, per_page = 10) {
+  const res = await fetch(`${host}/favorites/public/${userId}?sort=newest&page=${page}&per_page=${per_page}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

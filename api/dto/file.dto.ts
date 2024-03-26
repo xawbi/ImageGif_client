@@ -28,6 +28,7 @@ export interface FileDTO {
   postDescription: string
   views: number
   restrictedUpdatedAt: Date
+  pageNumber?: number
 }
 
 export interface FavoritesDTO {

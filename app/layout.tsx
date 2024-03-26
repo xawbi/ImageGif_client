@@ -2,6 +2,8 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import Header from "@/components/Header";
 import { ReactNode } from "react";
+import { SetScroll } from "@/components/public/ScrollComponents";
+import TanstackProvider from "@/components/providers/TanstackProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,8 +23,10 @@ export default function RootLayout({ children }: {
     </head>
     <body className={inter.className}>
     <div className="xl:px-40 lg:px-30 md:px-20 sm:px-0">
-      <Header />
-      {children}
+      <TanstackProvider>
+        <Header />
+        {children}
+      </TanstackProvider>
     </div>
     </body>
     </html>

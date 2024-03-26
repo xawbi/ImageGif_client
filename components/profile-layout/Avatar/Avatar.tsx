@@ -76,7 +76,7 @@ const Avatars: FC<profileLayoutProps> = ({avatar, user}) => {
 
   return (
     <>
-      <div className="flex flex-row">
+      <div className="flex flex-row items-center">
         <div className='relative rounded-full'>
           <div
             className='relative cursor-pointer border-4 border-gray-500 overflow-hidden rounded-full w-28 h-28 lg:w-40 lg:h-40 sm:w-32 sm:h-32 mr-4'
@@ -102,7 +102,7 @@ const Avatars: FC<profileLayoutProps> = ({avatar, user}) => {
             </div>
           }
         </div>
-        <span className="text-base sm:text-xl font-medium">{user && user.username}</span>
+        <span className="text-xl sm:text-[25px] font-medium pb-2">{user && user.username}</span>
       </div>
       {saveAvatarOpen && (
         <>

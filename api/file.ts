@@ -9,9 +9,8 @@ export async function revalidateUserFiles() {
   revalidateTag('getUserFiles')
 }
 
-export async function getUserFiles(type: string, page: number, sort?: string) {
+export async function getUserFiles(type: string, page: number, sort?: string, per_page = 15) {
   const token = cookies().get("_token")?.value
-  const per_page = 5
   const res = await fetch(`${host}/files?type=${type}&sort=${sort}&page=${page}&per_page=${per_page}`, {
     method: 'GET',
     headers: {
@@ -50,8 +49,8 @@ export async function delFile(id: number) {
   const res = await fetch(`${host}/files/${id}/delete`, {
     method: 'DELETE',
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
     }
   })
   revalidatePath('/profile')

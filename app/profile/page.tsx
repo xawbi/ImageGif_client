@@ -3,10 +3,10 @@ import {checkVerify} from "@/api/checkVerify";
 import {getUserFiles} from "@/api/file";
 import {FileDTO} from "@/api/dto/file.dto";
 import ChooseFileBtn from "@/components/profile/UploadFile/ChooseFileBtn";
-import MasonryClient from "@/components/MasonryClient";
-import UserFiles from "@/components/profile/UserFiles";
 import DropdownSortBtn from "@/components/DropdownSortBtn";
 import { cookies } from "next/headers";
+import LoadMore from "@/components/load-more";
+import React from "react";
 
 export default async function Profile() {
   if (!checkVerify()) redirect('/auth')
@@ -21,15 +21,13 @@ export default async function Profile() {
         <ChooseFileBtn/>
       </div>
       <div>
-        <MasonryClient>
-          {userFiles && userFiles.map((file) => {
-            return (
-              <div key={file.id}>
-                <UserFiles file={file}/>
-              </div>
-            )
-          })}
-        </MasonryClient>
+        {userFiles && userFiles.length > 0 ?
+          <LoadMore page={'profile'} pageFilter={'all'} selectedSortCookie={selectedSortCookie} initialFilesPublic={userFiles} />
+          :
+          <p className='text-xl sm:text-2xl md:text-3xl lg:text-4xl text-center mt-10 text-gray-400 font-medium'>
+            You don&apos;t have any uploaded files.
+          </p>
+          }
       </div>
     </>
   )

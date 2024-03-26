@@ -1,12 +1,10 @@
 import { FileDTO } from "@/api/dto/file.dto";
-import MasonryClient from "@/components/MasonryClient";
 import { UserDTO } from "@/api/dto/user.dto";
 import { getUser, getUserPublic } from "@/api/user";
 import { redirect } from "next/navigation";
-import PublicFiles from "@/components/public/PublicFiles";
-import UpdateViewsButton from "@/components/public/UpdateViewsButton";
 import React from "react";
 import { getUserPublicFiles } from "@/api/public";
+import LoadMore from "@/components/load-more";
 
 export type Props = {
   params: {
@@ -26,8 +24,7 @@ export async function generateMetadata({ params: { slug, username } }: Props) {
 }
 
 export default async function userPage({ params: { slug } }: Props) {
-  // const favoritesPublic: FavoritesDTO[] = await getFavoritesPublic(+slug[0])
-  const userFilesPublic: FileDTO[] = await getUserPublicFiles(+slug, 1, "popular");
+  const userFilesPublic: FileDTO[] = await getUserPublicFiles(+slug, 1, 'newest');
   const userPublic: UserDTO = await getUserPublic(+slug);
   const user: UserDTO = await getUser();
 
@@ -36,15 +33,13 @@ export default async function userPage({ params: { slug } }: Props) {
   return (
     <>
       <div className="px-3 md:px-0 mt-2">
-        <MasonryClient>
-          {userFilesPublic && userFilesPublic.map((file) => {
-            return (
-              <UpdateViewsButton key={file.id} fileId={file.id}>
-                <PublicFiles file={file} user={user} />
-              </UpdateViewsButton>
-            );
-          })}
-        </MasonryClient>
+        {userFilesPublic && userFilesPublic.length > 0 ?
+          <LoadMore page={'userPubic'} initialFilesPublic={userFilesPublic} user={user} userId={userPublic.id} />
+        :
+          <p className='text-xl sm:text-2xl md:text-3xl lg:text-4xl text-center mt-10 text-gray-400 font-medium'>
+            User {userPublic.username} doesn&apos;t have any posts yet.
+          </p>
+        }
       </div>
     </>
   );

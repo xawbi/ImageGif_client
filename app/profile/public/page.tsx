@@ -1,16 +1,13 @@
 import {redirect} from "next/navigation";
 import {checkVerify} from "@/api/checkVerify";
 import {FileDTO} from "@/api/dto/file.dto";
-import {getUserFiles} from "@/api/file";
-import UserFiles from "@/components/profile/UserFiles";
 import ChooseFileBtn from "@/components/profile/UploadFile/ChooseFileBtn";
-import MasonryClient from "@/components/MasonryClient";
 import DropdownSortBtn from "@/components/DropdownSortBtn";
 import { cookies } from "next/headers";
-import PublicFiles from "@/components/public/PublicFiles";
 import React from "react";
 import { getUser } from "@/api/user";
 import { getUserPublicFiles } from "@/api/public";
+import LoadMore from "@/components/load-more";
 
 export default async function Public() {
   if (!checkVerify()) redirect('/auth')
@@ -26,15 +23,13 @@ export default async function Public() {
         <ChooseFileBtn/>
       </div>
       <div className='px-3 md:px-0'>
-        <MasonryClient>
-          {userFilesPublic && userFilesPublic.map((file) => {
-            return (
-              <div key={file.id}>
-                <PublicFiles file={file} user={user}/>
-              </div>
-            )
-          })}
-        </MasonryClient>
+        {userFilesPublic && userFilesPublic.length > 0 ?
+          <LoadMore page={'publicUser'} selectedSortCookie={selectedSortCookie} initialFilesPublic={userFilesPublic} user={user} />
+          :
+          <p className='text-xl sm:text-2xl md:text-3xl lg:text-4xl text-center mt-10 text-gray-400 font-medium'>
+            You don&apos;t have any posts yet.
+          </p>
+        }
       </div>
     </>
   )

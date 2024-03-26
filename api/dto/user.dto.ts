@@ -9,4 +9,7 @@ export interface UserDTO {
   role: string
   avatar: AvatarDto[]
   openFavorites: boolean
+  ban: boolean
+  createAt: string
+  updateAt: string
 }

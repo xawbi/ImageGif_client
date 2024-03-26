@@ -122,7 +122,7 @@ const FileUploadForm: FC<ChooseFileBtnProps> = ({ handleCloseUploadForm }) => {
     <>
       <form encType="multipart/form-data" onSubmit={uploadFile} className="w-full flex flex-col items-center">
         <CustomFileSelector
-          accept="image/png, image/jpeg, image/gif"
+          accept="image/png, image/jpeg, image/gif, image/webp, image/tif, image/bmp"
           onChange={handleFileSelected}
           dragVisible={dragVisible}
         />

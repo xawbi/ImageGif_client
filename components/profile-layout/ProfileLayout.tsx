@@ -3,7 +3,7 @@ import Avatars from "@/components/profile-layout/Avatar/Avatar";
 import { AvatarDto } from "@/api/dto/avatar.dto";
 import Logout from "@/components/profile-layout/Logout";
 import BgProfile from "@/components/profile-layout/BgProfile";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { UserDTO } from "@/api/dto/user.dto";
@@ -19,7 +19,7 @@ interface LayoutProps {
   avatar: AvatarDto;
   user: UserDTO;
   bgId: string | null;
-  userPublic: boolean
+  userPublic?: boolean
 }
 
 const LayoutsInProfile: FC<LayoutProps> = ({ avatar, user, bgId, userPublic }) => {
@@ -27,6 +27,10 @@ const LayoutsInProfile: FC<LayoutProps> = ({ avatar, user, bgId, userPublic }) =
   const modalState = useStore(useModalProfilePost, (state) => state)
   const showSnackbar = useStore(useShowSnackbar, (state) => state)
   const { setShowSnackbar } = useShowSnackbar()
+
+  useEffect(() => {
+    if (sessionStorage) sessionStorage.removeItem('postCache')
+  })
 
   const bgProfile = [
     { id: 0, bgUrl: `bg-[url('/bgProfile/0.webp')]` },
@@ -87,13 +91,13 @@ const LayoutsInProfile: FC<LayoutProps> = ({ avatar, user, bgId, userPublic }) =
               </div>
             </>
             :
-            <div className="flex flex-row">
+            <div className="flex flex-row items-center">
               <div
                 className="relative cursor-pointer border-4 border-gray-500 overflow-hidden rounded-full w-28 h-28 lg:w-40 lg:h-40 sm:w-32 sm:h-32 mr-4"
               >
                 <CircleAvatar avatarParams={avatar} />
               </div>
-              <span className="text-base sm:text-xl font-medium">{user.username}</span>
+              <span className="text-xl sm:text-[25px] font-medium pb-2">{user.username}</span>
             </div>
           }
         </div>

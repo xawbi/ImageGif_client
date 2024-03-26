@@ -38,16 +38,17 @@ const DropdownSortBtn: FC<PageProps> = ({ selectedSortCookie, pageType }) => {
       else if (pageType === "profile") await revalidateUserFiles();
       else if (pageType === "profilePublic") await revalidateUserPublicFiles();
     }
-    setIsOpen(false);
-  };
+    if (sessionStorage) sessionStorage.removeItem('postCache')
+    setIsOpen(false)
+  }
 
   const closeSort = () => {
     setIsOpen(false);
-  };
+  }
 
   useEffect(() => {
     window.addEventListener("scroll", closeSort);
-  }, []);
+  }, [])
 
   return (
     <>
@@ -98,7 +99,7 @@ const DropdownSortBtn: FC<PageProps> = ({ selectedSortCookie, pageType }) => {
             >
               Oldest
             </button>
-            {pageType === "public" || pageType === "profilePublic" &&
+            {(pageType === "public" || pageType === "profilePublic") &&
               <button
                 className="block w-full text-left py-1 px-4 lg:text-base cursor-pointer bg-black hover:bg-blue-950"
                 onClick={() => handleSortClick("popular")}

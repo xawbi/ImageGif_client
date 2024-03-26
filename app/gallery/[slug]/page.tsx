@@ -1,13 +1,13 @@
 import { FileDTO } from "@/api/dto/file.dto";
 import { getFile, getPublicComments } from "@/api/public";
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import FileButtons from "@/components/public/file/FileButtons";
 import { SetScroll } from "@/components/public/ScrollComponents";
 import { UserDTO } from "@/api/dto/user.dto";
 import { getUser } from "@/api/user";
 import { CommentType } from "@/api/dto/comment.dto";
-const FileComment = dynamic(() => import("@/components/public/file/FileComment"))
+const FileComment = dynamic(() => import("@/components/public/file/FileComment"));
 import InputComment from "@/components/public/file/InputComment";
 import defaultChat from "@/public/defaultChat.png";
 import { formatDistanceToNow } from "date-fns";
@@ -25,7 +25,7 @@ export async function generateMetadata({ params: { slug } }: Props) {
   return {
     title: file.postName + " - " + "ImageGif",
     description: file.postDescription
-  }
+  };
 }
 
 export default async function PostPage({ params: { slug } }: Props) {
@@ -38,7 +38,7 @@ export default async function PostPage({ params: { slug } }: Props) {
     return comments.reduce(
       (totalCount, comment) => totalCount + 1 + countComments(comment.childComments || []),
       0
-    )
+    );
   }
 
   return (
@@ -61,8 +61,9 @@ export default async function PostPage({ params: { slug } }: Props) {
               <FileButtons user={user} file={file} />
             </div>
             <div className="mt-2 ml-2 flex items-center">
-              <Link href={`/users/${file.user.id}/${file.user.username}`} className='flex items-center'>
-                <div className="relative overflow-hidden rounded-full w-8 h-8 mr-1 flex-shrink-0 inline-block border border-gray-500">
+              <Link href={`/users/${file.user.id}/${file.user.username}`} className="flex items-center">
+                <div
+                  className="relative overflow-hidden rounded-full w-8 h-8 mr-1 flex-shrink-0 inline-block border border-gray-500">
                   <CircleAvatar avatarParams={file.user.avatar[0]} />
                 </div>
                 <span className="text-sm text-gray-300 mr-3">{file.user.username}</span>
@@ -73,7 +74,8 @@ export default async function PostPage({ params: { slug } }: Props) {
                       d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
               </svg>
-              <span className="text-sm text-gray-400">{file.views} Views • {formatDistanceToNow(file.restrictedUpdatedAt)}</span>
+              <span
+                className="text-sm text-gray-400">{file.views} Views • {formatDistanceToNow(file.restrictedUpdatedAt)}</span>
             </div>
             {file.postDescription &&
               <>
@@ -89,7 +91,7 @@ export default async function PostPage({ params: { slug } }: Props) {
             <InputComment user={user} file={file} />
             {countComments(comments) === 0 &&
               <div className="text-[#132637] text-center my-20">
-                <Image alt="chat" src={defaultChat} width={150} height={150} className="mx-auto" />
+                <Image alt="chat" src={defaultChat} width={100} height={100} className="mx-auto w-auto h-auto" />
                 <p className="text-2xl font-medium">Be the first to comment</p>
               </div>
             }
@@ -100,5 +102,5 @@ export default async function PostPage({ params: { slug } }: Props) {
         </div>
       </SetScroll>
     </>
-  )
+  );
 }

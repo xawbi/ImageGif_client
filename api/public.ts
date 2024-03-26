@@ -28,8 +28,8 @@ export async function updateView(fileId: number) {
   }
 }
 
-export async function getPublicFiles(type: string, page: number, sort?: string) {
-  const res = await fetch(`${host}/public/files?type=${type}&sort=${sort}&page=${page}&per_page=${30}`, {
+export async function getPublicFiles(type: string, page: number, sort?: string, per_page = 10) {
+  const res = await fetch(`${host}/public/files?type=${type}&sort=${sort}&page=${page}&per_page=${per_page}`, {
     next: { revalidate: 10, tags: ['getPublicFiles'] },
     method: 'GET',
     headers: {
@@ -43,8 +43,8 @@ export async function getPublicFiles(type: string, page: number, sort?: string) 
   }
 }
 
-export async function getUserPublicFiles(userId: number, page: number, sort?: string) {
-  const res = await fetch(`${host}/public/userFiles/${userId}?sort=${sort}&page=${page}&per_page=${8}`, {
+export async function getUserPublicFiles(userId: number, page: number, sort: string | undefined, per_page = 10) {
+  const res = await fetch(`${host}/public/userFiles/${userId}?sort=${sort}&page=${page}&per_page=${per_page}`, {
     next: { revalidate: 10, tags: ['getUserPublicFiles'] },
     method: 'GET',
   })
@@ -56,8 +56,9 @@ export async function getUserPublicFiles(userId: number, page: number, sort?: st
 }
 
 export async function getSearchPost(search: string, limit: number = 10) {
-  const encodedSearchValue = encodeURIComponent(search)
-  const res = await fetch(`${host}/public/searchPosts?postNameAndDesc=${encodedSearchValue}&limit=${limit}`, {
+  const encodedSearchValue = encodeURIComponent(search);
+  const url = `${host}/public/searchPosts?postNameAndDesc=${encodedSearchValue}&limit=${limit}`;
+  const res = await fetch(url, {
     method: 'POST'
   });
   if (!res.ok) {
@@ -73,9 +74,9 @@ export async function getFile(id: number) {
     next: { revalidate: 0 }
   })
   if (!res.ok) {
-    console.error(res.status, res.statusText)
+    console.error(res.status, res.statusText);
   } else {
-    return res.json()
+    return res.json();
   }
 }
 

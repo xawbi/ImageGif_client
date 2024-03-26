@@ -9,9 +9,13 @@ interface PageProps {
 
 const UpdateViewsButton: FC<PageProps> = ({children, fileId}) => {
 
+  const handeClick = async () => {
+    await updateView(fileId)
+  }
+
   return (
     <>
-      <div onClick={async () => await updateView(fileId)}>
+      <div onClick={handeClick}>
         {children}
       </div>
     </>
