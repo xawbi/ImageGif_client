@@ -1,5 +1,5 @@
 import {redirect} from "next/navigation";
-import {checkVerify} from "@/api/checkVerify";
+import { checkBan, checkVerify } from "@/api/checkVerify";
 import {FileDTO} from "@/api/dto/file.dto";
 import {getUserFiles} from "@/api/file";
 import UserFiles from "@/components/profile/UserFiles";
@@ -12,6 +12,7 @@ import React from "react";
 
 export default async function Photos() {
   if (!checkVerify()) redirect('/auth')
+  if (await checkBan()) redirect('/ban')
 
   const selectedSortCookie = cookies().get("selectedSort")?.value;
   const userFiles: FileDTO[] = await getUserFiles('photos', 1, selectedSortCookie);

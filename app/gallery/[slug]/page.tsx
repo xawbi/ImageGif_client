@@ -1,18 +1,21 @@
 import { FileDTO } from "@/api/dto/file.dto";
-import { getFile, getPublicComments } from "@/api/public";
+import { getFile, getPublicComments, getPublicCommentsLength } from "@/api/public";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import FileButtons from "@/components/public/file/FileButtons";
 import { SetScroll } from "@/components/public/ScrollComponents";
 import { UserDTO } from "@/api/dto/user.dto";
 import { getUser } from "@/api/user";
-import { CommentType } from "@/api/dto/comment.dto";
+import { CommentLengthType, CommentType } from "@/api/dto/comment.dto";
 const FileComment = dynamic(() => import("@/components/public/file/FileComment"));
 import InputComment from "@/components/public/file/InputComment";
 import defaultChat from "@/public/defaultChat.png";
 import { formatDistanceToNow } from "date-fns";
 import CircleAvatar from "@/components/profile-layout/Avatar/CircleAvatar";
 import Link from "next/link";
+import { checkBan } from "@/api/checkVerify";
+import { redirect } from "next/navigation";
+import LoadMoreComments from "@/components/public/file/LoadMoreComments";
 
 export type Props = {
   params: {
@@ -30,16 +33,10 @@ export async function generateMetadata({ params: { slug } }: Props) {
 
 export default async function PostPage({ params: { slug } }: Props) {
   const file: FileDTO = await getFile(+slug);
-  const comments: CommentType[] = await getPublicComments(+slug);
+  const comments: CommentType[] = await getPublicComments(+slug, 1, 16);
+  const { totalComments, totalMainComments }: CommentLengthType = await getPublicCommentsLength(+slug)
   const user: UserDTO = await getUser();
   const fileUrl = process.env.NEXT_PUBLIC_HOST + "/uploads/" + `${file.user.id}/` + file.fileName;
-
-  function countComments(comments: any[]): number {
-    return comments.reduce(
-      (totalCount, comment) => totalCount + 1 + countComments(comment.childComments || []),
-      0
-    );
-  }
 
   return (
     <>
@@ -87,17 +84,15 @@ export default async function PostPage({ params: { slug } }: Props) {
           </div>
           {/* Блок с комментариями */}
           <div className="flex-shrink-0 w-full xl:w-1/2 xl:pr-0 px-4 mt-4 xl:mt-0">
-            <p className="text-xl sm:text-2xl font-medium">{countComments(comments)} COMMENTS</p>
+            <p className="text-xl sm:text-2xl font-medium">{totalComments} COMMENTS</p>
             <InputComment user={user} file={file} />
-            {countComments(comments) === 0 &&
+            {totalComments === 0 &&
               <div className="text-[#132637] text-center my-20">
                 <Image alt="chat" src={defaultChat} width={100} height={100} className="mx-auto w-auto h-auto" />
                 <p className="text-2xl font-medium">Be the first to comment</p>
               </div>
             }
-            {comments.map(comment => (
-              <FileComment key={comment.id} comment={comment} user={user} file={file} />
-            ))}
+            <LoadMoreComments fileId={+slug} initialComments={comments} user={user} file={file} commentsLength={totalMainComments}/>
           </div>
         </div>
       </SetScroll>

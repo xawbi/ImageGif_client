@@ -5,9 +5,13 @@ import {getAvatar} from "@/api/avatar";
 import {UserDTO} from "@/api/dto/user.dto";
 import {getUser} from "@/api/user"
 import { getBgId } from "@/api/bgProfile";
+import { checkBan, checkVerify } from "@/api/checkVerify";
+import { redirect } from "next/navigation";
 export default async function ProfileLayout({children}: {
   children: ReactNode
 }) {
+  if (!checkVerify()) redirect('/auth')
+  if (await checkBan()) redirect('/ban')
 
   const avatar: AvatarDto = await getAvatar()
   const user: UserDTO = await getUser()

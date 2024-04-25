@@ -1,6 +1,6 @@
 'use server'
 import {cookies} from "next/headers";
-import {revalidatePath} from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 const host = process.env.NEXT_PUBLIC_HOST
 
@@ -66,11 +66,48 @@ export async function getUsers() {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
-    }
+    },
+    next: { tags: ['getAdminUsers'] },
   })
   if (!res.ok) {
     console.error(res.status, res.statusText)
   } else {
     return res.json()
+  }
+}
+
+export async function banUser(ids: number[]) {
+  const token = cookies().get("_token")?.value
+  const idsString = ids.join(',');
+  const res = await fetch(`${host}/admin/user/ban?ids=${idsString}`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ ids })
+  })
+  revalidateTag('getAdminUsers')
+  if (!res.ok) {
+    console.error(res.status, res.statusText)
+  } else {
+    return null
+  }
+}
+
+export async function updateUserRole(userId: number, role: string) {
+  const token = cookies().get("_token")?.value
+  const res = await fetch(`${host}/admin/user/updateRole/${userId}/${role}`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+  })
+  revalidateTag('getAdminUsers')
+  if (!res.ok) {
+    console.error(res.status, res.statusText)
+  } else {
+    return null
   }
 }

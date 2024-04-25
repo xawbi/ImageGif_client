@@ -1,16 +1,18 @@
-'use client'
+"use client";
 import { ColumnDef } from "@tanstack/table-core";
 import { UserDTO } from "@/api/dto/user.dto";
 import {
   DropdownMenu,
   DropdownMenuContent, DropdownMenuItem,
-  DropdownMenuLabel, DropdownMenuSeparator,
+  DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox"
+import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
+import { banUser, updateUserRole } from "@/api/admin";
+import { getUser } from "@/api/user";
 
 export const columns: ColumnDef<UserDTO>[] = [
   {
@@ -33,7 +35,7 @@ export const columns: ColumnDef<UserDTO>[] = [
       />
     ),
     enableSorting: false,
-    enableHiding: false,
+    enableHiding: false
   },
   {
     accessorKey: "id",
@@ -42,21 +44,21 @@ export const columns: ColumnDef<UserDTO>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className='px-1 ml-[-4px]'
+          className="px-1 ml-[-4px]"
         >
           ID
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
-    },
+      );
+    }
   },
   {
     accessorKey: "email",
-    header: "Email",
+    header: "Email"
   },
   {
     accessorKey: "username",
-    header: "Username",
+    header: "Username"
   },
   {
     accessorKey: "role",
@@ -65,13 +67,13 @@ export const columns: ColumnDef<UserDTO>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className='px-1 ml-[-4px]'
+          className="px-1 ml-[-4px]"
         >
           Role
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
-    },
+      );
+    }
   },
   {
     accessorKey: "isEmailConfirmed",
@@ -80,13 +82,13 @@ export const columns: ColumnDef<UserDTO>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className='px-1 ml-[-4px]'
+          className="px-1 ml-[-4px]"
         >
           EmailConfirmed
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
-    },
+      );
+    }
   },
   {
     accessorKey: "ban",
@@ -95,13 +97,13 @@ export const columns: ColumnDef<UserDTO>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className='px-1 ml-[-4px]'
+          className="px-1 ml-[-4px]"
         >
           Ban
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
-    },
+      );
+    }
   },
   {
     accessorKey: "createAt",
@@ -110,23 +112,42 @@ export const columns: ColumnDef<UserDTO>[] = [
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          className='px-1 ml-[-4px]'
+          className="px-1 ml-[-4px]"
         >
           CreateAt
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
     cell: ({ row }) => {
-      const date = new Date(row.getValue("createAt"))
-      const formatted = date.toLocaleDateString()
-      return <div className="font-medium">{formatted}</div>
-    },
+      const date = new Date(row.getValue("createAt"));
+      const formatted = date.toLocaleDateString();
+      return <div className="font-medium">{formatted}</div>;
+    }
   },
   {
     id: "actions",
     cell: ({ row }) => {
-      const user = row.original
+      const user = row.original;
+
+      const makeAndBanFunc = async () => {
+        const me = await getUser();
+        if (me.id !== user.id) {
+          return <>
+            <DropdownMenuItem className={`cursor-pointer ${!user.ban && "text-red-500"}`}
+                              onClick={async () => await banUser([user.id])}>{user.ban ? "Unban user" : "Ban user"}</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={async () => {
+                await updateUserRole(user.id, user.role === "user" ? "admin" : "user");
+              }}
+              className="cursor-pointer"
+            >
+              {user.role === "user" ? "Make admin" : "Make user"}
+            </DropdownMenuItem>
+          </>;
+        }
+      };
 
       return (
         <DropdownMenu>
@@ -139,19 +160,17 @@ export const columns: ColumnDef<UserDTO>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(user.id.toString())}
-              className='cursor-pointer'
+              className="cursor-pointer"
             >
               Copy user ID
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
             <Link href={`/users/${user.id}/${user.username}`}>
-              <DropdownMenuItem className='cursor-pointer'>Go to user</DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">Go to user</DropdownMenuItem>
             </Link>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className='cursor-pointer text-red-500 font-bold'>Ban user</DropdownMenuItem>
+            {makeAndBanFunc()}
           </DropdownMenuContent>
         </DropdownMenu>
-      )
-    },
-  },
-]
+      );
+    }
+  }
+];

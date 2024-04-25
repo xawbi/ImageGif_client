@@ -1,17 +1,14 @@
-import {checkAdmin} from "@/api/checkVerify";
-import {notFound} from "next/navigation";
-import {FileDTO} from "@/api/dto/file.dto";
-import { getFilePending, getUsers } from "@/api/admin";
+import { checkAdmin, checkBan } from "@/api/checkVerify";
+import { notFound, redirect } from "next/navigation";
+import { getUsers } from "@/api/admin";
 import { UserDTO } from "@/api/dto/user.dto";
-import { getUser } from "@/api/user";
 import { columns } from "@/app/admin/users/colums";
 import { DataTable } from "@/app/admin/users/data-table";
 
 export default async function Admin() {
   if (!await checkAdmin()) notFound()
+  if (await checkBan()) redirect('/ban')
 
-  const filesPending: FileDTO[] = await getFilePending(1)
-  const user: UserDTO = await getUser();
   const users: UserDTO[] = await getUsers()
 
   return (

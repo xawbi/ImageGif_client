@@ -1,8 +1,7 @@
 'use server'
 import { cookies } from "next/headers";
 import { CommentDto } from "@/api/dto/comment.dto";
-import { revalidatePath, revalidateTag } from "next/cache";
-import { tag } from "postcss-selector-parser";
+import { revalidateTag } from "next/cache";
 
 const host = process.env.NEXT_PUBLIC_HOST
 
@@ -34,7 +33,6 @@ export async function deleteComment(id: number) {
       'Authorization': `Bearer ${token}`
     }
   })
-  // revalidatePath(`${host}/gallery/${fileId}`)
   revalidateTag('getComments')
   if (!res.ok) {
     console.error(res.status, res.statusText)

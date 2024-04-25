@@ -3,6 +3,8 @@ import ButtonNext from "@/app/gallery/[slug]/buttonNext";
 import { FileDTO } from "@/api/dto/file.dto";
 import { getFile, getPublicFiles } from "@/api/public";
 import { cookies } from "next/headers";
+import { checkBan } from "@/api/checkVerify";
+import { redirect } from "next/navigation";
 
 interface BlogLayoutProps {
   children: ReactNode
@@ -12,8 +14,9 @@ interface BlogLayoutProps {
 }
 
 export default async function blogLayout({ children, params: { slug } }: BlogLayoutProps) {
+  if (await checkBan()) redirect('/ban')
   const selectedSortCookie = cookies().get("selectedSortPublic")?.value
-  const files: FileDTO[] = await getPublicFiles('', 1, selectedSortCookie, 300)
+  const files: FileDTO[] = await getPublicFiles('', 'yes', selectedSortCookie, 1)
   const file: FileDTO = await getFile(+slug)
 
   return <>

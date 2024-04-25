@@ -1,5 +1,5 @@
 import {redirect} from "next/navigation";
-import {checkVerify} from "@/api/checkVerify";
+import { checkBan, checkVerify } from "@/api/checkVerify";
 import {FileDTO} from "@/api/dto/file.dto";
 import UserFiles from "@/components/profile/UserFiles";
 import {getUserFiles} from "@/api/file";
@@ -12,6 +12,7 @@ import LoadMore from "@/components/load-more";
 
 export default async function Gifs() {
   if (!checkVerify()) redirect('/auth')
+  if (await checkBan()) redirect('/ban')
 
   const selectedSortCookie = cookies().get("selectedSort")?.value;
   const userFiles: FileDTO[] = await getUserFiles('gifs', 1, selectedSortCookie);

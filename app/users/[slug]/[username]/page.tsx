@@ -3,8 +3,9 @@ import { UserDTO } from "@/api/dto/user.dto";
 import { getUser, getUserPublic } from "@/api/user";
 import { redirect } from "next/navigation";
 import React from "react";
-import { getUserPublicFiles } from "@/api/public";
+import { getPublicFiles, getUserPublicFiles } from "@/api/public";
 import LoadMore from "@/components/load-more";
+import { checkBan } from "@/api/checkVerify";
 
 export type Props = {
   params: {
@@ -24,7 +25,7 @@ export async function generateMetadata({ params: { slug, username } }: Props) {
 }
 
 export default async function userPage({ params: { slug } }: Props) {
-  const userFilesPublic: FileDTO[] = await getUserPublicFiles(+slug, 1, 'newest');
+  const userFilesPublic: FileDTO[] = await getPublicFiles(slug, '', 'newest', 1);
   const userPublic: UserDTO = await getUserPublic(+slug);
   const user: UserDTO = await getUser();
 

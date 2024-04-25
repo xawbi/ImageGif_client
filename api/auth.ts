@@ -28,11 +28,5 @@ export const activate = async (values: ActivateFormDTO): Promise<ActivateRespons
 export async function logout() {
   await cookies().delete('_token')
   revalidatePath('/')
+  revalidatePath('/profile')
 }
-
-//
-// export async function register(values: RegistrationFormDTO) {
-//   const res = await fetchWithAuth('/auth/register', { method: 'POST', headers: {
-//       'Content-Type': 'application/json;charset=utf-8'}, body: JSON.stringify(values), next: { revalidate: 0 } })
-//   return res.json()
-// }

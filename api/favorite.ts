@@ -4,7 +4,7 @@ import { revalidatePath, revalidateTag } from "next/cache";
 
 const host: string | undefined = process.env.NEXT_PUBLIC_HOST
 
-export async function getFavorites(page: number, sort: string | undefined, per_page = 10) {
+export async function getFavorites(page: number, sort: string | undefined, per_page = 100) {
   const token = cookies().get("_token")?.value
   const res = await fetch(`${host}/favorites?sort=${sort}&page=${page}&per_page=${per_page}`, {
     method: 'GET',
@@ -21,7 +21,7 @@ export async function getFavorites(page: number, sort: string | undefined, per_p
   }
 }
 
-export async function getFavoritesPublic(userId: number, page: number, per_page = 10) {
+export async function getFavoritesPublic(userId: number, page: number, per_page = 100) {
   const res = await fetch(`${host}/favorites/public/${userId}?sort=newest&page=${page}&per_page=${per_page}`, {
     method: 'GET',
     headers: {
@@ -44,9 +44,7 @@ export async function postFavorites(fileId: number) {
       'Authorization': `Bearer ${token}`,
     },
   })
-  if (res.ok) {
-    revalidateTag('getFavorites')
-  } else {
+  if (!res.ok) {
     console.error('Ошибка при отправке данных на сервер:', res.status, res.statusText)
   }
 }

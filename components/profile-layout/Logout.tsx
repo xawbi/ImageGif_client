@@ -1,12 +1,17 @@
 'use client'
 import {FC} from 'react'
 import {logout} from "@/api/auth";
+import { useRouter } from "next/navigation";
 
 const Logout: FC = () => {
+  const router = useRouter();
+  const host = process.env.NEXT_PUBLIC_IMAGEGIF_HOST
 
   const handleLogout = async () => {
     if (typeof window !== 'undefined' && window.confirm('Are you sure you want to log out?')) {
       await logout()
+      router.push(`${host}/auth`)
+      location.reload()
     }
   }
 

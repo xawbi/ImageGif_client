@@ -9,7 +9,7 @@ export async function revalidateUserFiles() {
   revalidateTag('getUserFiles')
 }
 
-export async function getUserFiles(type: string, page: number, sort?: string, per_page = 15) {
+export async function getUserFiles(type: string, page: number, sort?: string, per_page = 10) {
   const token = cookies().get("_token")?.value
   const res = await fetch(`${host}/files?type=${type}&sort=${sort}&page=${page}&per_page=${per_page}`, {
     method: 'GET',
@@ -53,7 +53,7 @@ export async function delFile(id: number) {
       'Content-Type': 'application/json'
     }
   })
-  revalidatePath('/profile')
+  revalidateTag('getUserFiles')
   if (!res.ok) {
     console.error(res.status, res.statusText)
   } else {

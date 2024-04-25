@@ -7,6 +7,7 @@ import React from "react";
 import PublicFiles from "@/components/public/PublicFiles";
 import { getFavoritesPublic } from "@/api/favorite";
 import LoadMore from "@/components/load-more";
+import { checkBan } from "@/api/checkVerify";
 
 export type Props = {
   params: {

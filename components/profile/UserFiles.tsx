@@ -2,10 +2,8 @@ import {FC} from 'react'
 import {FileDTO} from "@/api/dto/file.dto";
 import Image from "next/image";
 import StatusButton from "@/components/profile/StatusButton";
-import { BanAndFavoriteButtons } from "@/components/public/BanAndFavoriteButtons";
 import { UserDTO } from "@/api/dto/user.dto";
 import MasonryClient from "@/components/MasonryClient";
-import Link from "next/link";
 
 interface ProfileProps {
   files: FileDTO[]

@@ -4,7 +4,7 @@ import { FileDTO } from "@/api/dto/file.dto";
 import Image from "next/image";
 import { updateUserRestricted } from "@/api/file";
 import { useStore } from "@/store/useStore";
-import { ActionModal, StateModal, useModalProfilePost } from "@/store/useModalProfilePost";
+import { useModalProfilePost } from "@/store/useModalProfilePost";
 import { UserDTO } from "@/api/dto/user.dto";
 
 interface ProfileLayoutProps {
@@ -59,7 +59,7 @@ const PostModal: FC<ProfileLayoutProps> = ({ user }) => {
           <div className="fixed inset-0 bg-black opacity-70 z-20"
                onClick={closeModal} />
           <div
-            className={`fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-30 overflow-auto ${(checkModal === "" || checkModal === "admin") && `bg-black ${checkModal !== 'admin' && 'border-2'} border-gray-500 w-[360px] lg:w-[410px] xl:w-[500px] rounded-2xl p-2`}`}>
+            className={`fixed top-1/2 left-1/2 transform -translate-x-1/2 ${checkModal && 'w-full lg:w-[610px] xl:w-[700px]'} -translate-y-1/2 z-30 overflow-auto ${(checkModal === "" || checkModal === "admin") && `${checkModal !== 'admin' && 'border-2'} bg-black border-gray-500 w-[360px] lg:w-[410px] xl:w-[500px] rounded-2xl p-2`}`}>
             {checkModal == "" &&
               <input
                 type="text"
@@ -70,9 +70,8 @@ const PostModal: FC<ProfileLayoutProps> = ({ user }) => {
                 className="w-full px-2 pt-2 border border-gray-300 rounded focus:outline-none bg-black border-none"
               />
             }
-
             <div
-              className={`group transform ${(checkModal === "" || checkModal === "admin") && "w-full bg-gradient-to-b from-[#000007] via-[#000007] to-[#00000f] my-4"}`}>
+              className={`relative group transform ${(checkModal === "" || checkModal === "admin") && "bg-gradient-to-b from-[#000007] via-[#000007] to-[#00000f] my-4"}`}>
               {checkModal === "admin" &&
                 <div className="whitespace-pre-line break-words mb-2">
                   <h2>{file?.postName}</h2>

@@ -48,15 +48,15 @@ const LoadMore: FC<pageProps> = ({ selectedSortCookie, initialFilesPublic, user,
     const nextPage = pageLoaded + 1;
     let newFiles: FileDTO[] = []
     if (page === 'userPubic' && userId) {
-      newFiles = await getUserPublicFiles(userId, nextPage, 'newest')
+      newFiles = await getPublicFiles(String(userId), '', 'newest', nextPage);
     } else if (page === 'favoritesPubic' && userId) {
       newFiles = await getFavoritesPublic(userId, nextPage)
     } else if (page === 'favoritesUser' && selectedSortCookie) {
       newFiles = await getFavorites(nextPage, selectedSortCookie)
     } else if (page === 'publicUser' && selectedSortCookie && user) {
-      newFiles = await getUserPublicFiles(user.id, nextPage, selectedSortCookie)
+      newFiles = await getPublicFiles(String(user.id), '', selectedSortCookie, nextPage);
     } else if (page === 'public') {
-      newFiles = await getPublicFiles('', nextPage, selectedSortCookie)
+      newFiles = await getPublicFiles('', '', selectedSortCookie, nextPage)
     } else if (pageFilter === 'all') {
       newFiles = await getUserFiles('', nextPage, selectedSortCookie)
     } else if (pageFilter === 'gifs') {

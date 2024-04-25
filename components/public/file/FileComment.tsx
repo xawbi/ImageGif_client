@@ -24,8 +24,8 @@ const FileComment: FC<filePageProps> = ({ comment, user, file, level }) => {
   const [isReplying, setIsReplying] = useState(false);
   const [showReplies, setShowReplies] = useState(false);
 
-  const renderReplies = (comments: CommentType[], comment: CommentType) => {
-    return comments.map((reply: CommentType) => (
+  const renderReplies = (childComments: CommentType[], comment: CommentType) => {
+    return childComments.map((reply: CommentType) => (
       reply.parentComment.id == comment.id && comment.parentComment == null ?
         <FileComment key={reply.id} comment={reply} user={user} file={file} level={1} />
         : <FileComment key={reply.id} comment={reply} user={user} file={file} level={2} />
@@ -39,8 +39,8 @@ const FileComment: FC<filePageProps> = ({ comment, user, file, level }) => {
   }
 
   return (
-    <div>
-      <div key={comment.id} className={`flex items-start mb-4 ${level && 'pl-12'}`}
+    <div key={comment.id}>
+      <div className={`flex items-start mb-4 ${level && 'pl-12'}`}
            onMouseEnter={() => setIsHoveredComment(true)}
            onMouseLeave={() => setIsHoveredComment(false)}>
         <Link href={`/users/${comment.user.id}/${comment.user.username}`} className="relative overflow-hidden rounded-full w-10 h-10 mr-2 mt-3 flex-shrink-0">

@@ -2,7 +2,7 @@
 import React, { FC, useEffect, useState } from "react";
 import CustomFileSelector from "./CustomFileSelector";
 import ImagePreview from "./ImagePreview";
-import { revalidateProfile } from "@/api/file";
+import { revalidateProfile, revalidateUserFiles } from "@/api/file";
 import { useShowSnackbar } from "@/store/useShowSnackbar";
 
 interface ChooseFileBtnProps {
@@ -103,7 +103,7 @@ const FileUploadForm: FC<ChooseFileBtnProps> = ({ handleCloseUploadForm }) => {
       }
       setUploading(false);
       handleCloseUploadForm();
-      await revalidateProfile();
+      await revalidateUserFiles();
   }
 
   async function uploadFile(e: React.FormEvent<HTMLFormElement>) {

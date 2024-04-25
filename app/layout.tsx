@@ -4,6 +4,8 @@ import Header from "@/components/Header";
 import { ReactNode } from "react";
 import { SetScroll } from "@/components/public/ScrollComponents";
 import TanstackProvider from "@/components/providers/TanstackProvider";
+import { checkBan } from "@/api/checkVerify";
+import { redirect } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 

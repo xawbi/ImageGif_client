@@ -1,20 +1,21 @@
 import {redirect} from "next/navigation";
-import {checkVerify} from "@/api/checkVerify";
+import { checkBan, checkVerify } from "@/api/checkVerify";
 import {FileDTO} from "@/api/dto/file.dto";
 import ChooseFileBtn from "@/components/profile/UploadFile/ChooseFileBtn";
 import DropdownSortBtn from "@/components/DropdownSortBtn";
 import { cookies } from "next/headers";
 import React from "react";
 import { getUser } from "@/api/user";
-import { getUserPublicFiles } from "@/api/public";
+import { getPublicFiles, getUserPublicFiles } from "@/api/public";
 import LoadMore from "@/components/load-more";
 
 export default async function Public() {
   if (!checkVerify()) redirect('/auth')
+  if (await checkBan()) redirect('/ban')
 
   const selectedSortCookie = cookies().get("selectedProfilePublic")?.value;
   const user = await getUser()
-  const userFilesPublic: FileDTO[] = await getUserPublicFiles(user.id, 1, selectedSortCookie);
+  const userFilesPublic: FileDTO[] = await getPublicFiles(user.id, '', selectedSortCookie, 1);
 
   return (
     <>

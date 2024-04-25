@@ -17,3 +17,8 @@ export type CommentType = {
   parentComment: {id: number, user: UserDTO}
   childCommentsCount: number
 }
+
+export type CommentLengthType = {
+  totalComments: number,
+  totalMainComments: number,
+}

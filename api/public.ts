@@ -28,8 +28,8 @@ export async function updateView(fileId: number) {
   }
 }
 
-export async function getPublicFiles(type: string, page: number, sort?: string, per_page = 10) {
-  const res = await fetch(`${host}/public/files?type=${type}&sort=${sort}&page=${page}&per_page=${per_page}`, {
+export async function getPublicFiles(userId: string = '', allType: string = '', sort: string = '', page: number, per_page = 100) {
+  const res = await fetch(`${host}/public/files?userId=${userId}&all=${allType}&sort=${sort}&page=${page}&per_page=${per_page}`, {
     next: { revalidate: 10, tags: ['getPublicFiles'] },
     method: 'GET',
     headers: {
@@ -44,7 +44,7 @@ export async function getPublicFiles(type: string, page: number, sort?: string, 
 }
 
 export async function getUserPublicFiles(userId: number, page: number, sort: string | undefined, per_page = 10) {
-  const res = await fetch(`${host}/public/userFiles/${userId}?sort=${sort}&page=${page}&per_page=${per_page}`, {
+  const res = await fetch(`${host}/public/files/${userId}?sort=${sort}&page=${page}&per_page=${per_page}`, {
     next: { revalidate: 10, tags: ['getUserPublicFiles'] },
     method: 'GET',
   })
@@ -94,8 +94,20 @@ export async function getPublicFileRating (fileId: number) {
   }
 }
 
-export async function getPublicComments (fileId: number) {
-  const res = await fetch(`${host}/public/${fileId}/comments`, {
+export async function getPublicComments (fileId: number, page: number = 1, per_page: number = 16) {
+  const res = await fetch(`${host}/public/${fileId}/comments?page=${page}&per_page=${per_page}`, {
+    method: 'GET',
+    next: { tags: ['getComments'] },
+  })
+  if (!res.ok) {
+    console.error(res.status, res.statusText)
+  } else {
+    return res.json()
+  }
+}
+
+export async function getPublicCommentsLength (fileId: number) {
+  const res = await fetch(`${host}/public/${fileId}/commentsLength`, {
     method: 'GET',
     next: { tags: ['getComments'] },
   })

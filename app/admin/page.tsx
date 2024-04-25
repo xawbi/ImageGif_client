@@ -1,5 +1,5 @@
-import {checkAdmin} from "@/api/checkVerify";
-import {notFound} from "next/navigation";
+import { checkAdmin, checkBan } from "@/api/checkVerify";
+import { notFound, redirect } from "next/navigation";
 import {FileDTO} from "@/api/dto/file.dto";
 import {getFilePending} from "@/api/admin";
 import AdminFiles from "@/components/admin/AdminFiles";
@@ -8,6 +8,7 @@ import { getUser } from "@/api/user";
 
 export default async function Admin() {
   if (!await checkAdmin()) notFound()
+  if (await checkBan()) redirect('/ban')
 
   const filesPending: FileDTO[] = await getFilePending(1)
   const user: UserDTO = await getUser();

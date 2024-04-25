@@ -30,5 +30,7 @@ export async function checkBan() {
     headers: {'Authorization': `Bearer ${token}`}
   })
   const user: UserDTO = await res.json()
-  return user.ban;
+  if (user.id) {
+    return user.ban
+  } else return false
 }

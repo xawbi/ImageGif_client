@@ -1,5 +1,5 @@
 'use client'
-import { FC, ReactNode, useState } from "react";
+import { ReactNode, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const TanstackProvider = ({children}: {children: ReactNode}) => {
