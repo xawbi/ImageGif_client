@@ -3,6 +3,7 @@ import { FC, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import mainIco from "@/public/mainIco.png";
 
 type NavLink = {
   label: string
@@ -27,7 +28,7 @@ const Navigation: FC<PropsHeader> = ({ navLinks }) => {
   return (
     <>
       <Link href="/" className="flex items-center" onClick={() => setLinkClicked(true)}>
-        <Image width={80} height={80} src="https://cdn-icons-png.flaticon.com/512/1400/1400487.png" alt=""
+        <Image width={80} height={80} src={mainIco} alt=""
                className="w-[28px]" />
         <span className="ml-1 text-xl">ImageGif</span>
       </Link>

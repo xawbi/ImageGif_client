@@ -2,15 +2,12 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import Header from "@/components/Header";
 import { ReactNode } from "react";
-import { SetScroll } from "@/components/public/ScrollComponents";
 import TanstackProvider from "@/components/providers/TanstackProvider";
-import { checkBan } from "@/api/checkVerify";
-import { redirect } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "ImageGifGallery",
+  title: "ImageGif",
   description: "Gallery of pictures and gifs"
 };
 

@@ -24,18 +24,12 @@ const LoadMoreComments: FC<galleryProps> = ({ fileId, initialComments, user, fil
   }, [initialComments])
 
   const newFuncInitialComments = async () => {
-    let loadedTotal = 1
-    if (pageLoaded > 1) loadedTotal = 6
-    console.log(pageLoaded)
-    console.log(loadedTotal)
     const newInitialComments = await getPublicComments(fileId, 1, pageLoaded * 16) ?? [];
     setCommentsData(newInitialComments)
   }
 
   const loadMoreComments = async () => {
     const nextPage = pageLoaded + 1
-    let loadedTotal = 1
-    if (nextPage > 1) loadedTotal = 6
     const newComments = await getPublicComments(fileId, nextPage, 16) ?? [];
     setCommentsData((prevComments: CommentType[]) => [...prevComments, ...newComments])
     setPageLoaded(nextPage)

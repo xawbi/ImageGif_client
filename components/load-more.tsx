@@ -3,12 +3,13 @@ import { FC, useEffect, useState } from "react";
 import { FileDTO } from "@/api/dto/file.dto";
 import { useInView } from "react-intersection-observer";
 import { Spinner } from "@/components/ui/spinner";
-import { getPublicFiles, getUserPublicFiles } from "@/api/public";
+import { getPublicFiles } from "@/api/public";
 import PublicFiles from "@/components/public/PublicFiles";
 import { UserDTO } from "@/api/dto/user.dto";
 import { getFavorites, getFavoritesPublic } from "@/api/favorite";
 import { getUserFiles } from "@/api/file";
 import UserFiles from "@/components/profile/UserFiles";
+import { useDelBanLoad } from "@/store/useDelBanLoad";
 
 interface pageProps {
   initialFilesPublic: FileDTO[];
@@ -24,8 +25,10 @@ const LoadMore: FC<pageProps> = ({ selectedSortCookie, initialFilesPublic, user,
   const [pageLoaded, setPageLoaded] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
+  const { block } = useDelBanLoad()
 
-  const { ref, inView } = useInView()
+  const { ref } = useInView()
 
   useEffect(() => {
     const postCacheString = sessionStorage.getItem('postCache');
@@ -39,33 +42,56 @@ const LoadMore: FC<pageProps> = ({ selectedSortCookie, initialFilesPublic, user,
       setPageLoaded(1)
       setHasMore(true)
     }
-  }, [selectedSortCookie, initialFilesPublic])
+  }, [selectedSortCookie])
+
+  useEffect(() => {
+    if (!isFirstLoad) {
+      const postCacheString = sessionStorage.getItem('postCache');
+      if (postCacheString) {
+        const postCache = JSON.parse(postCacheString);
+        if (postCache.posts) {
+          setFiles(postCache.posts);
+        }
+      } else {
+        newFuncInitialFiles();
+      }
+    }
+    setIsFirstLoad(false);
+  }, [block]);
+
+  const newFilesFunc = async (pageLoaded: number, nextPage: number) => {
+    if (page === 'userPubic' && userId) {
+      return await getPublicFiles(String(userId), '', 'newest', nextPage, pageLoaded);
+    } else if (page === 'favoritesPubic' && userId) {
+      return await getFavoritesPublic(userId, nextPage, pageLoaded)
+    } else if (page === 'favoritesUser') {
+      return await getFavorites(nextPage, selectedSortCookie, pageLoaded)
+    } else if (page === 'publicUser' && user) {
+      return await getPublicFiles(String(user.id), '', selectedSortCookie, nextPage, pageLoaded);
+    } else if (page === 'public') {
+      return await getPublicFiles('', '', selectedSortCookie, nextPage, pageLoaded)
+    } else if (pageFilter === 'all') {
+      return await getUserFiles('', nextPage, selectedSortCookie, pageLoaded)
+    } else if (pageFilter === 'gifs') {
+      return await getUserFiles('gifs', nextPage, selectedSortCookie, pageLoaded)
+    } else if (pageFilter === 'pending') {
+      return await getUserFiles('sent', nextPage, selectedSortCookie, pageLoaded)
+    } else if (pageFilter === 'photos') {
+      return await getUserFiles('photos', nextPage, selectedSortCookie, pageLoaded)
+    }
+  }
+
+  const newFuncInitialFiles = async () => {
+    let newInitialFiles: FileDTO[] =  await newFilesFunc(pageLoaded * 100, 1)
+    setFiles(newInitialFiles)
+  }
 
   const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const loadMoreFiles = async () => {
     await delay(300);
     const nextPage = pageLoaded + 1;
-    let newFiles: FileDTO[] = []
-    if (page === 'userPubic' && userId) {
-      newFiles = await getPublicFiles(String(userId), '', 'newest', nextPage);
-    } else if (page === 'favoritesPubic' && userId) {
-      newFiles = await getFavoritesPublic(userId, nextPage)
-    } else if (page === 'favoritesUser' && selectedSortCookie) {
-      newFiles = await getFavorites(nextPage, selectedSortCookie)
-    } else if (page === 'publicUser' && selectedSortCookie && user) {
-      newFiles = await getPublicFiles(String(user.id), '', selectedSortCookie, nextPage);
-    } else if (page === 'public') {
-      newFiles = await getPublicFiles('', '', selectedSortCookie, nextPage)
-    } else if (pageFilter === 'all') {
-      newFiles = await getUserFiles('', nextPage, selectedSortCookie)
-    } else if (pageFilter === 'gifs') {
-      newFiles = await getUserFiles('gifs', nextPage, selectedSortCookie)
-    } else if (pageFilter === 'pending') {
-      newFiles = await getUserFiles('sent', nextPage, selectedSortCookie)
-    } else if (pageFilter === 'photos') {
-      newFiles = await getUserFiles('photos', nextPage, selectedSortCookie)
-    }
+    const newFiles: FileDTO[] = await newFilesFunc(100, nextPage)
     const newFilesAndInitial = [...initialFilesPublic, ...newFiles]
     if (newFiles.length > 0 && hasMore) {
       let updatedPostCache = { streamPage: 4 }

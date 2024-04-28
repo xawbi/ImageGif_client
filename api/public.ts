@@ -43,7 +43,7 @@ export async function getPublicFiles(userId: string = '', allType: string = '', 
   }
 }
 
-export async function getUserPublicFiles(userId: number, page: number, sort: string | undefined, per_page = 10) {
+export async function getUserPublicFiles(userId: number, page: number, sort: string | undefined, per_page = 100) {
   const res = await fetch(`${host}/public/files/${userId}?sort=${sort}&page=${page}&per_page=${per_page}`, {
     next: { revalidate: 10, tags: ['getUserPublicFiles'] },
     method: 'GET',

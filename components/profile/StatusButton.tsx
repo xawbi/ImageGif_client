@@ -4,6 +4,7 @@ import { delFile } from "@/api/file";
 import { FileDTO } from "@/api/dto/file.dto";
 import { useModalProfilePost } from "@/store/useModalProfilePost";
 import Link from "next/link";
+import { useDelBanLoad } from "@/store/useDelBanLoad";
 
 interface UserFileProps {
   file: FileDTO;
@@ -13,11 +14,13 @@ interface UserFileProps {
 const StatusButton: FC<UserFileProps> = ({ file, favorites }) => {
   const setPostModal = useModalProfilePost(state => state.setPostModal);
   const host = process.env.NEXT_PUBLIC_IMAGEGIF_HOST
+  const { setBlock } = useDelBanLoad()
 
   const handleRemoveFile = async () => {
     if (file) {
       if (typeof window !== "undefined" && window.confirm("Are you sure you want to remove this file?")) {
         await delFile(file.id);
+        setBlock()
       }
     }
   }

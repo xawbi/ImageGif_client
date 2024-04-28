@@ -9,7 +9,7 @@ export async function revalidateUserFiles() {
   revalidateTag('getUserFiles')
 }
 
-export async function getUserFiles(type: string, page: number, sort?: string, per_page = 10) {
+export async function getUserFiles(type: string, page: number, sort?: string, per_page = 100) {
   const token = cookies().get("_token")?.value
   const res = await fetch(`${host}/files?type=${type}&sort=${sort}&page=${page}&per_page=${per_page}`, {
     method: 'GET',

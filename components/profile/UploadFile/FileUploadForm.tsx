@@ -4,6 +4,7 @@ import CustomFileSelector from "./CustomFileSelector";
 import ImagePreview from "./ImagePreview";
 import { revalidateProfile, revalidateUserFiles } from "@/api/file";
 import { useShowSnackbar } from "@/store/useShowSnackbar";
+import { useDelBanLoad } from "@/store/useDelBanLoad";
 
 interface ChooseFileBtnProps {
   handleCloseUploadForm: () => void;
@@ -15,6 +16,7 @@ const FileUploadForm: FC<ChooseFileBtnProps> = ({ handleCloseUploadForm }) => {
   const [dragVisible, setDragVisible] = useState(true);
   const [uploading, setUploading] = useState(false);
   const { setShowSnackbar } = useShowSnackbar()
+  const { setBlock } = useDelBanLoad()
 
   const handleFileSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -101,9 +103,10 @@ const FileUploadForm: FC<ChooseFileBtnProps> = ({ handleCloseUploadForm }) => {
           console.error(`Error uploading file ${i + 1}:`, error);
         }
       }
+      await revalidateUserFiles();
+      setBlock()
       setUploading(false);
       handleCloseUploadForm();
-      await revalidateUserFiles();
   }
 
   async function uploadFile(e: React.FormEvent<HTMLFormElement>) {

@@ -5,6 +5,7 @@ import { FileDTO } from "@/api/dto/file.dto";
 import { updateReject } from "@/api/admin";
 import { useRouter } from "next/navigation";
 import { postFavorites } from "@/api/favorite";
+import { useDelBanLoad } from "@/store/useDelBanLoad";
 
 interface PublicFileProps {
   user?: UserDTO;
@@ -14,6 +15,7 @@ interface PublicFileProps {
 
 export const BanAndFavoriteButtons: FC<PublicFileProps> = ({ user, file, favorites }) => {
   const router = useRouter();
+  const { setBlock } = useDelBanLoad()
   const [favoriteClicked, setFavoriteClicked] = useState(
     user && file && file.favorites && file.favorites.some((el) => el.user.id === user.id && el.file.id === file.id)
   );
@@ -25,6 +27,7 @@ export const BanAndFavoriteButtons: FC<PublicFileProps> = ({ user, file, favorit
   const handleFavorite = async (fileId: number) => {
     if (user) {
       await postFavorites(fileId);
+      setBlock()
       setFavoriteClicked(!favoriteClicked);
     } else {
       router.push(`/gallery/${file.id}`);

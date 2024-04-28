@@ -7,8 +7,8 @@ import DropdownSortBtn from "@/components/DropdownSortBtn";
 import { cookies } from "next/headers";
 import SearchPost from "@/components/public/SearchPost";
 import LoadMore from "@/components/load-more";
-import { checkAdmin, checkBan } from "@/api/checkVerify";
-import { notFound, redirect } from "next/navigation";
+import { checkBan } from "@/api/checkVerify";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
   if (await checkBan()) redirect('/ban')
