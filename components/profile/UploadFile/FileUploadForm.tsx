@@ -2,7 +2,7 @@
 import React, { FC, useEffect, useState } from "react";
 import CustomFileSelector from "./CustomFileSelector";
 import ImagePreview from "./ImagePreview";
-import { revalidateProfile, revalidateUserFiles } from "@/api/file";
+import { revalidateUserFiles } from "@/api/file";
 import { useShowSnackbar } from "@/store/useShowSnackbar";
 import { useDelBanLoad } from "@/store/useDelBanLoad";
 

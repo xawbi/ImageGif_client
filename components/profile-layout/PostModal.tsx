@@ -6,6 +6,7 @@ import { updateUserRestricted } from "@/api/file";
 import { useStore } from "@/store/useStore";
 import { useModalProfilePost } from "@/store/useModalProfilePost";
 import { UserDTO } from "@/api/dto/user.dto";
+import { useDelBanLoad } from "@/store/useDelBanLoad";
 
 interface ProfileLayoutProps {
   user: UserDTO;
@@ -19,6 +20,7 @@ const PostModal: FC<ProfileLayoutProps> = ({ user }) => {
   const checkModal = modalState?.checkModal;
   const fileUrl = file && process.env.NEXT_PUBLIC_HOST + "/uploads/" + `${file.user?.id}/` + file.fileName;
   const downloadFileUrl = file && process.env.NEXT_PUBLIC_HOST + "/public/download/" + `${file.user?.id}/` + file.fileName;
+  const { setBlock } = useDelBanLoad()
 
   const handleRestricted = async (fileId: number | undefined) => {
     if (postName.trim().length !== 0 && fileId) {
@@ -27,9 +29,8 @@ const PostModal: FC<ProfileLayoutProps> = ({ user }) => {
         postDescription: postDescription.trim().length == 0 ? null : postDescription.trim()
       };
 
-      console.log(obj, fileId);
-
       await updateUserRestricted(fileId, obj);
+      setBlock()
       closeModal();
     }
   };

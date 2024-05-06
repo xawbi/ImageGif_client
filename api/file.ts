@@ -36,7 +36,7 @@ export async function updateUserRestricted(id: number, obj: PostFileDTO ) {
     },
     body: JSON.stringify(obj)
   })
-  revalidatePath('/profile')
+  revalidateTag('getUserFiles')
   if (!res.ok) {
     console.error(res.status, res.statusText)
   } else {

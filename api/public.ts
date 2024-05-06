@@ -13,7 +13,6 @@ export async function revalidateUserPublicFiles() {
 }
 
 export async function updateView(fileId: number) {
-  console.log(`${host}/public/file/${fileId}/updateView`)
   const res = await fetch(`${host}/public/file/${fileId}/updateView`, {
     method: 'POST',
     headers: {

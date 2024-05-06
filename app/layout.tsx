@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "ImageGif",
-  description: "Gallery of pictures and gifs"
+  description: "Upload your images and gifs, share them with users, rate them, download them and leave comments. ImageGif loves you"
 };
 
 export default function RootLayout({ children }: {
@@ -21,6 +21,10 @@ export default function RootLayout({ children }: {
     <head>
       <link rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+      <link rel='icon' href='/images/icon.ico' sizes='any' />
+      <title>ImageGif</title>
+      <meta name="description" content="Upload your images and gifs, share them with users, rate them, download them and leave comments. ImageGif loves you" key="desc" />
+      <meta name="keywords" content="imagegif, ImageGIf, image, gif, картинки, гифки, best gifs, best images, best gif, best image, gifs, images, каринка, гифка" />
       <Script async src="https://www.googletagmanager.com/gtag/js?id=G-HWZ2ZY2C73"></Script>
       <Script id='google-analytics'>
         {
