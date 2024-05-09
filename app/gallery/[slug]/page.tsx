@@ -1,20 +1,16 @@
 import { FileDTO } from "@/api/dto/file.dto";
 import { getFile, getPublicComments, getPublicCommentsLength } from "@/api/public";
-import dynamic from "next/dynamic";
 import Image from "next/image";
 import FileButtons from "@/components/public/file/FileButtons";
 import { SetScroll } from "@/components/public/ScrollComponents";
 import { UserDTO } from "@/api/dto/user.dto";
 import { getUser } from "@/api/user";
 import { CommentLengthType, CommentType } from "@/api/dto/comment.dto";
-const FileComment = dynamic(() => import("@/components/public/file/FileComment"));
 import InputComment from "@/components/public/file/InputComment";
 import defaultChat from "@/public/defaultChat.png";
 import { formatDistanceToNow } from "date-fns";
 import CircleAvatar from "@/components/profile-layout/Avatar/CircleAvatar";
 import Link from "next/link";
-import { checkBan } from "@/api/checkVerify";
-import { redirect } from "next/navigation";
 import LoadMoreComments from "@/components/public/file/LoadMoreComments";
 
 export type Props = {
@@ -26,7 +22,7 @@ export type Props = {
 export async function generateMetadata({ params: { slug } }: Props) {
   const file: FileDTO = await getFile(+slug);
   return {
-    title: file.postName + " - " + "ImageGif",
+    title: file.postName,
     description: file.postDescription
   };
 }

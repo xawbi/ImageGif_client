@@ -4,6 +4,7 @@ import Image from "next/image";
 import StatusButton from "@/components/profile/StatusButton";
 import { UserDTO } from "@/api/dto/user.dto";
 import MasonryClient from "@/components/MasonryClient";
+import Link from "next/link";
 
 interface ProfileProps {
   files: FileDTO[]
@@ -11,6 +12,9 @@ interface ProfileProps {
 }
 
 const UserFiles: FC<ProfileProps> = ({files, user}) => {
+
+  const host = process.env.NEXT_PUBLIC_IMAGEGIF_HOST
+  //href={`${host}/gallery/${file.id}`}
   return (
     <>
       <MasonryClient filesLength={20}>
@@ -20,6 +24,8 @@ const UserFiles: FC<ProfileProps> = ({files, user}) => {
               <div key={file.id} className={`flex justify-center mb-3 cursor-pointer border-2 border-gray-500 ${file.reject && 'hover:border-red-500'} group transform hover:scale-[1.02] sm:hover:scale-[1.04] transition-transform duration-250 rounded`}>
                 <StatusButton file={file}/>
                 {file.restricted === 'public' &&
+                  <>
+                    <Link href={`${host}/gallery/${file.id}`} className="absolute w-full h-full z-10" scroll={false}/>
                     <div
                       className={`ml-0.5 text-white absolute truncate overflow-hidden whitespace-nowrap top-1 left-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300`}>
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
@@ -32,14 +38,15 @@ const UserFiles: FC<ProfileProps> = ({files, user}) => {
                       <p className="text-sm inline-block ml-0.5"
                          style={{ textShadow: "1px 0 1px #000, 0 1px 1px #000, -1px 0 1px #000, 0 -1px 1px #000" }}>{file.views}</p>
                     </div>
+                  </>
                 }
-                <Image width={file.width}
-                       height={file.height}
-                       src={fileUrl}
-                       alt={`${file.fileName}`}
-                       loading={"lazy"}
-                       className="min-w-[150px] min-h-[150px] justify-center rounded"
-                />
+                  <Image width={file.width}
+                         height={file.height}
+                         src={fileUrl}
+                         alt={`${file.fileName}`}
+                         loading={"lazy"}
+                         className="min-w-[150px] min-h-[150px] justify-center rounded"
+                  />
               </div>
             )
         })}

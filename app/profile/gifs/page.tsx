@@ -1,10 +1,8 @@
 import {redirect} from "next/navigation";
 import { checkBan, checkVerify } from "@/api/checkVerify";
 import {FileDTO} from "@/api/dto/file.dto";
-import UserFiles from "@/components/profile/UserFiles";
 import {getUserFiles} from "@/api/file";
 import ChooseFileBtn from "@/components/profile/UploadFile/ChooseFileBtn";
-import MasonryClient from "@/components/MasonryClient";
 import { cookies } from "next/headers";
 import DropdownSortBtn from "@/components/DropdownSortBtn";
 import React from "react";

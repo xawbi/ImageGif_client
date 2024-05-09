@@ -16,7 +16,7 @@ const SearchPost: FC = () => {
   const searchPost = async (searchValue: string) => {
     const posts = await getSearchPost(searchValue);
     setSearchPostData(posts);
-    setIsOpen(posts.length > 0);
+    setIsOpen(posts && posts.length > 0);
   }
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const SearchPost: FC = () => {
   }
 
   const handleInputClick = () => {
-    if (searchPostData.length > 0 && !isOpen) {
+    if (searchPostData && searchPostData.length > 0 && !isOpen) {
       setIsOpen(true);
     }
   }
@@ -53,7 +53,7 @@ const SearchPost: FC = () => {
             onClick={handleInputClick}
           />
         </div>
-        {searchPostData.length > 0 && isOpen &&
+        {isOpen &&
           <>
             {isOpen && <InvisibleOverlay onClick={closeSearch} z={10} />}
             <div

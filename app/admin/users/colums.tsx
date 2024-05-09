@@ -13,6 +13,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import { banUser, updateUserRole } from "@/api/admin";
 import { getUser } from "@/api/user";
+import { useEffect, useState } from "react";
+import { format } from "date-fns";
 
 export const columns: ColumnDef<UserDTO>[] = [
   {
@@ -117,12 +119,14 @@ export const columns: ColumnDef<UserDTO>[] = [
           CreateAt
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      );
+      )
     },
     cell: ({ row }) => {
-      const date = new Date(row.getValue("createAt"));
-      const formatted = date.toLocaleDateString();
-      return <div className="font-medium">{formatted}</div>;
+      const dateString: string = row.getValue("createAt")
+      const [datePart] = dateString.split('T');
+      const [year, month, day] = datePart.split('-');
+      const formattedDate = `${day}.${month}.${year}`;
+      return <div className="font-medium">{formattedDate}</div>
     }
   },
   {
