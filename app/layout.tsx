@@ -1,10 +1,11 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
 import Header from "@/components/Header";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 import TanstackProvider from "@/components/providers/TanstackProvider";
 import Script from "next/script";
 import { Metadata } from "next";
+import { YandexMetrika } from "@/app/YandexMetrika";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,23 +35,9 @@ export default function RootLayout({ children }: {
           gtag("config", "G-HWZ2ZY2C73");`
         }
       </Script>
-      <Script id="metrika-counter" strategy="afterInteractive">
-        {
-          `(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-          m[i].l=1*new Date();
-          for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-          k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-          (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
- 
-          ym(97214134, "init", {
-            defer: true,
-            clickmap:true,
-            trackLinks:true,
-            accurateTrackBounce:true,
-            webvisor:true
-           });`
-        }
-      </Script>
+      <Suspense>
+        <YandexMetrika/>
+      </Suspense>
     </head>
     <body className={inter.className}>
     <div className="xl:px-40 lg:px-30 md:px-20 sm:px-0">
