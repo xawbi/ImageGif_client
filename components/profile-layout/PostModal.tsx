@@ -1,5 +1,5 @@
 "use client";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { FileDTO } from "@/api/dto/file.dto";
 import Image from "next/image";
 import { updateUserRestricted } from "@/api/file";
@@ -40,10 +40,6 @@ const PostModal: FC<ProfileLayoutProps> = ({ user }) => {
     setPostName("");
     setPostDescription("");
   };
-
-  useEffect(() => {
-    (modalState?.postModal && checkModal !== "admin") ? document.body.style.overflow = "hidden" : document.body.style.overflow = "";
-  }, [modalState?.postModal, checkModal]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPostName(e.target.value);

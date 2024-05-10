@@ -93,7 +93,6 @@ const FileUploadForm: FC<ChooseFileBtnProps> = ({ handleCloseUploadForm }) => {
           });
           if (res.ok) {
             const data = await res.json();
-            console.log(`File ${i + 1} uploaded successfully. Response:`, data);
           } else {
             console.error(`Error uploading file ${i + 1}:`, res.status, res.statusText);
             res.statusText === 'Payload Too Large' ? setShowSnackbar('Max upload size 5mb') : setShowSnackbar('Invalid file type')

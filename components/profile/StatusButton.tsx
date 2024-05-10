@@ -3,7 +3,6 @@ import { FC } from "react";
 import { delFile } from "@/api/file";
 import { FileDTO } from "@/api/dto/file.dto";
 import { useModalProfilePost } from "@/store/useModalProfilePost";
-import Link from "next/link";
 import { useDelBanLoad } from "@/store/useDelBanLoad";
 
 interface UserFileProps {

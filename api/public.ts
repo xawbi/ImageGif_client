@@ -19,7 +19,6 @@ export async function updateView(fileId: number) {
       'Content-Type': 'application/json'
     }
   })
-  console.log(res)
   if (!res.ok) {
     console.error(res.status, res.statusText)
   } else {

@@ -1,4 +1,3 @@
-import {FC} from 'react'
 import {FileDTO} from "@/api/dto/file.dto";
 import Image from "next/image";
 import StatusButton from "@/components/profile/StatusButton";
@@ -11,10 +10,8 @@ interface ProfileProps {
   user?: UserDTO
 }
 
-const UserFiles: FC<ProfileProps> = ({files, user}) => {
+function UserFiles({files}: ProfileProps) {
 
-  const host = process.env.NEXT_PUBLIC_IMAGEGIF_HOST
-  //href={`${host}/gallery/${file.id}`}
   return (
     <>
       <MasonryClient filesLength={20}>
@@ -25,7 +22,7 @@ const UserFiles: FC<ProfileProps> = ({files, user}) => {
                 <StatusButton file={file}/>
                 {file.restricted === 'public' &&
                   <>
-                    <Link href={`${host}/gallery/${file.id}`} className="absolute w-full h-full z-10" scroll={false}/>
+                    <Link href={`/gallery/${file.id}`} className="absolute w-full h-full z-10" scroll={false}/>
                     <div
                       className={`ml-0.5 text-white absolute truncate overflow-hidden whitespace-nowrap top-1 left-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300`}>
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"

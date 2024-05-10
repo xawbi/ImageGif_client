@@ -13,8 +13,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import { banUser, updateUserRole } from "@/api/admin";
 import { getUser } from "@/api/user";
-import { useEffect, useState } from "react";
-import { format } from "date-fns";
+import { DropdownMenuComponent } from "@/app/admin/users/DropdownMenuComponent";
 
 export const columns: ColumnDef<UserDTO>[] = [
   {
@@ -133,7 +132,6 @@ export const columns: ColumnDef<UserDTO>[] = [
     id: "actions",
     cell: ({ row }) => {
       const user = row.original;
-
       const makeAndBanFunc = async () => {
         const me = await getUser();
         if (me.id !== user.id) {

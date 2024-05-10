@@ -16,7 +16,6 @@ export async function postRating(ratingObj: RatingDto) {
   })
   if (res.ok) {
     const data = await res.json()
-    console.log('Данные успешно отправлены на сервер:', data)
   } else {
     console.error('Ошибка при отправке данных на сервер:', res.status, res.statusText)
   }

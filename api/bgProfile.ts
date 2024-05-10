@@ -43,7 +43,6 @@ export async function postBgId() {
   })
   if (res.ok) {
     revalidateTag('getBgId')
-    console.log('Данные успешно отправлены на сервер:')
   } else {
     console.error('Ошибка при отправке данных на сервер:', res.status, res.statusText)
   }

@@ -3,9 +3,8 @@ import { UserDTO } from "@/api/dto/user.dto";
 import { getUser, getUserPublic } from "@/api/user";
 import { redirect } from "next/navigation";
 import React from "react";
-import { getPublicFiles, getUserPublicFiles } from "@/api/public";
+import { getPublicFiles } from "@/api/public";
 import LoadMore from "@/components/load-more";
-import { checkBan } from "@/api/checkVerify";
 
 export type Props = {
   params: {
@@ -14,13 +13,13 @@ export type Props = {
   }
 }
 
-export async function generateMetadata({ params: { slug, username } }: Props) {
+export async function generateMetadata({ params: { slug } }: Props) {
   const userPublic: UserDTO = await getUserPublic(+slug);
   if (!userPublic) {
     redirect("/error");
   }
   return {
-    title: userPublic.username + " - " + "ImageGif"
+    title: userPublic.username
   };
 }
 

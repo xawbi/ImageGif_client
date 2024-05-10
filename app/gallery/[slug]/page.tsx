@@ -12,6 +12,7 @@ import { formatDistanceToNow } from "date-fns";
 import CircleAvatar from "@/components/profile-layout/Avatar/CircleAvatar";
 import Link from "next/link";
 import LoadMoreComments from "@/components/public/file/LoadMoreComments";
+import { redirect } from "next/navigation";
 
 export type Props = {
   params: {
@@ -21,15 +22,18 @@ export type Props = {
 
 export async function generateMetadata({ params: { slug } }: Props) {
   const file: FileDTO = await getFile(+slug);
+  if (!file) {
+    redirect("/error")
+  }
   return {
-    title: file.postName,
-    description: file.postDescription
+    title: file.postName ? file.postName + ' - ImageGif' : 'ImageGif',
+    description: file.postDescription !== null ? file.postDescription : 'post'
   };
 }
 
 export default async function PostPage({ params: { slug } }: Props) {
-  const file: FileDTO = await getFile(+slug);
-  const comments: CommentType[] = await getPublicComments(+slug, 1, 16);
+  const file: FileDTO = await getFile(+slug)
+  const comments: CommentType[] = await getPublicComments(+slug, 1, 16)
   const { totalComments, totalMainComments }: CommentLengthType = await getPublicCommentsLength(+slug)
   const user: UserDTO = await getUser();
   const fileUrl = process.env.NEXT_PUBLIC_HOST + "/uploads/" + `${file.user.id}/` + file.fileName;
