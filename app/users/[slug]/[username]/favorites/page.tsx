@@ -18,9 +18,6 @@ export type Props = {
 
 export async function generateMetadata({ params: { slug, username } }: Props) {
   const userPublic: UserDTO = await getUserPublic(+slug[0])
-  if (userPublic && +slug !== userPublic.id) {
-    redirect('/error')
-  }
   return {
     title: userPublic.username + ' - ' + 'ImageGif',
   }

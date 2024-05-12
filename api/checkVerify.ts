@@ -6,7 +6,7 @@ export function checkVerify() {
   const token = cookies().get("_token")?.value
   if (token !== undefined) {
     try {
-      return jwt.verify(token, process.env.NEXT_PUBLIC_SECRET_KEY  as Secret | GetPublicKeyOrSecret);
+      return jwt.verify(token, process.env.SECRET_KEY as Secret | GetPublicKeyOrSecret);
     } catch (error) {
       return null
     }

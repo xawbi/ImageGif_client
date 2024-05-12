@@ -1,6 +1,7 @@
 'use server'
 import { cookies } from "next/headers";
 import { RatingDto } from "@/api/dto/rating.dto";
+import { revalidateTag } from "next/cache";
 
 const host: string | undefined = process.env.NEXT_PUBLIC_HOST
 
@@ -15,7 +16,7 @@ export async function postRating(ratingObj: RatingDto) {
     body: JSON.stringify(ratingObj)
   })
   if (res.ok) {
-    const data = await res.json()
+    return null
   } else {
     console.error('Ошибка при отправке данных на сервер:', res.status, res.statusText)
   }

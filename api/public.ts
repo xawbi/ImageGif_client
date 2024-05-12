@@ -1,6 +1,7 @@
 'use server'
 
 import { revalidateTag } from "next/cache";
+import { notFound } from "next/navigation";
 
 const host = process.env.NEXT_PUBLIC_HOST
 
@@ -73,6 +74,7 @@ export async function getFile(id: number) {
   })
   if (!res.ok) {
     console.error(res.status, res.statusText);
+    notFound()
   } else {
     return res.json();
   }

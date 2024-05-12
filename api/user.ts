@@ -1,5 +1,6 @@
 'use server'
 import {cookies} from "next/headers";
+import { notFound } from "next/navigation";
 
 const host = process.env.NEXT_PUBLIC_HOST
 
@@ -24,6 +25,7 @@ export async function getUserPublic(userId: number) {
   })
   if (!res.ok) {
     console.error(res.status, res.statusText)
+    notFound()
   } else {
     return res.json()
   }

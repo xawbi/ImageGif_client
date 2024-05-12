@@ -21,9 +21,7 @@ const AdminFiles: FC<AdminProps> = ({ file, user }) => {
   return (
     <>
       {modalState?.checkModal == 'admin' && <PostModal user={user}/>}
-      <div key={file.id}
-          className="relative overflow-hidden pb-[100%] mb-1 cursor-pointer border-2 border-gray-500 group transform hover:scale-105 transition-transform duration-250"
-      >
+      <div className="relative overflow-hidden pb-[100%] mb-1 cursor-pointer border-2 border-gray-500 group transform hover:scale-105 transition-transform duration-250">
         <AdminFilesButton file={file}/>
         <Image width={file.width}
                height={file.height}

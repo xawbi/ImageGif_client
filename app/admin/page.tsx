@@ -19,7 +19,7 @@ export default async function Admin() {
         {filesPending && filesPending.map((file) => {
           return (
             <>
-              <AdminFiles file={file} user={user}/>
+              <AdminFiles file={file} user={user} key={file.id}/>
             </>
           )
         })}

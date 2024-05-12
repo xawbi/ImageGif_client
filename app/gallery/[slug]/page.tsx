@@ -12,7 +12,7 @@ import { formatDistanceToNow } from "date-fns";
 import CircleAvatar from "@/components/profile-layout/Avatar/CircleAvatar";
 import Link from "next/link";
 import LoadMoreComments from "@/components/public/file/LoadMoreComments";
-import { redirect } from "next/navigation";
+import { Metadata, ResolvingMetadata } from "next";
 
 export type Props = {
   params: {
@@ -20,11 +20,8 @@ export type Props = {
   }
 }
 
-export async function generateMetadata({ params: { slug } }: Props) {
+export async function generateMetadata({ params: { slug } }: Props, parent: ResolvingMetadata): Promise<Metadata> {
   const file: FileDTO = await getFile(+slug);
-  if (!file) {
-    redirect("/error")
-  }
   return {
     title: file.postName ? file.postName + ' - ImageGif' : 'ImageGif',
     description: file.postDescription !== null ? file.postDescription : 'post'

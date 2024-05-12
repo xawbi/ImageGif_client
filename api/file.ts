@@ -17,7 +17,6 @@ export async function getUserFiles(type: string, page: number, sort?: string, pe
       'Authorization': `Bearer ${token}`,
       'Content-Type': 'application/json'
     },
-    next: { tags: ['getUserFiles'] },
   })
   if (!res.ok) {
     console.error(res.status, res.statusText)
