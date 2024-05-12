@@ -6,7 +6,7 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ['localhost', 'imagegif.ru']
+    domains: ['localhost', 'imagegif.ru'],
   }
 }
 
