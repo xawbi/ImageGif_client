@@ -41,8 +41,7 @@ function UserFiles({files}: ProfileProps) {
                          height={file.height}
                          src={fileUrl}
                          alt={`${file.fileName}`}
-                         loading={index > 25 ? 'lazy' : undefined}
-                         priority={index < 26}
+                         loading={'lazy'}
                          className="min-w-[150px] min-h-[150px] justify-center rounded"
                          unoptimized={file.fileName.split('.').pop() === 'gif'}
                   />

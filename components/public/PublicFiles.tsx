@@ -36,8 +36,7 @@ function PublicFiles({ filesPublic, user, favorites }: HomeProps) {
                   height={file.height}
                   src={fileUrl}
                   alt={`${file.postName}`}
-                  loading={index > 25 ? 'lazy' : undefined}
-                  priority={index < 26}
+                  loading={'lazy'}
                   className="rounded-t min-w-[150px] min-h-[150px] justify-center"
                   unoptimized={file.fileName.split('.').pop() === 'gif'}
                 />
