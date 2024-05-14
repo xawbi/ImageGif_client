@@ -92,30 +92,32 @@ const LoadMore: FC<pageProps> = ({ selectedSortCookie, initialFilesPublic, user,
     await delay(300);
     const nextPage = pageLoaded + 1;
     const newFiles: FileDTO[] = await newFilesFunc(100, nextPage)
-    const newFilesAndInitial = [...initialFilesPublic, ...newFiles]
-    if (newFiles.length > 0 && hasMore) {
-      let updatedPostCache = { streamPage: 4 }
-      if (page === 'userPubic' || page === 'favoritesPubic' || page === 'public') {
-        const postCacheString = sessionStorage.getItem('postCache')
-        const postCache = postCacheString ? JSON.parse(postCacheString) : {}
-        const updatedPosts = postCache.posts ? [...postCache.posts] : []
-        newFilesAndInitial.forEach((newFile) => {
-          const existingPostIndex = updatedPosts.findIndex((post) => post.id === newFile.id)
-          if (existingPostIndex === -1) updatedPosts.push(newFile)
-        });
-        updatedPostCache = { ...postCache, posts: updatedPosts, streamPage: nextPage };
-      }
-      if (updatedPostCache.streamPage > 3) {
-        sessionStorage.removeItem('postCache');
-        setFiles((prevFiles: FileDTO[]) => [...prevFiles, ...newFiles])
-        setPageLoaded(nextPage);
+    if (newFiles) {
+      const newFilesAndInitial = [...initialFilesPublic, ...newFiles]
+      if (newFiles.length > 0 && hasMore) {
+        let updatedPostCache = { streamPage: 4 }
+        if (page === 'userPubic' || page === 'favoritesPubic' || page === 'public') {
+          const postCacheString = sessionStorage.getItem('postCache')
+          const postCache = postCacheString ? JSON.parse(postCacheString) : {}
+          const updatedPosts = postCache.posts ? [...postCache.posts] : []
+          newFilesAndInitial.forEach((newFile) => {
+            const existingPostIndex = updatedPosts.findIndex((post) => post.id === newFile.id)
+            if (existingPostIndex === -1) updatedPosts.push(newFile)
+          });
+          updatedPostCache = { ...postCache, posts: updatedPosts, streamPage: nextPage };
+        }
+        if (updatedPostCache.streamPage > 3) {
+          sessionStorage.removeItem('postCache');
+          setFiles((prevFiles: FileDTO[]) => [...prevFiles, ...newFiles])
+          setPageLoaded(nextPage);
+        } else {
+          sessionStorage.setItem('postCache', JSON.stringify(updatedPostCache));
+          setFiles((prevFiles: FileDTO[]) => [...prevFiles, ...newFiles.filter((file) => !prevFiles.some((prevFile) => prevFile.id === file.id))]);
+          setPageLoaded(nextPage);
+        }
       } else {
-        sessionStorage.setItem('postCache', JSON.stringify(updatedPostCache));
-        setFiles((prevFiles: FileDTO[]) => [...prevFiles, ...newFiles.filter((file) => !prevFiles.some((prevFile) => prevFile.id === file.id))]);
-        setPageLoaded(nextPage);
+        setHasMore(false);
       }
-    } else {
-      setHasMore(false);
     }
   }
 

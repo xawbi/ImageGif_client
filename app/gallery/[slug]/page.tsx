@@ -49,6 +49,7 @@ export default async function PostPage({ params: { slug } }: Props) {
                 alt={`${file.fileName}`}
                 loading="eager"
                 className="object-contain w-full max-h-[calc(100svh-180px)]"
+                unoptimized={file.fileName.split('.').pop() === 'gif'}
               />
             </div>
             <div className="flex justify-around bg-gray-900 py-1">
@@ -85,7 +86,14 @@ export default async function PostPage({ params: { slug } }: Props) {
             <InputComment user={user} file={file} />
             {totalComments === 0 &&
               <div className="text-[#132637] text-center my-20">
-                <Image alt="chat" src={defaultChat} width={100} height={100} className="mx-auto w-auto h-auto" />
+                <Image
+                  alt="chat"
+                  src={defaultChat}
+                  width={100}
+                  height={100}
+                  className="mx-auto w-auto h-auto"
+                  unoptimized={file.fileName.split('.').pop() === 'gif'}
+                />
                 <p className="text-2xl font-medium">Be the first to comment</p>
               </div>
             }

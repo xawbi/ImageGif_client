@@ -21,8 +21,8 @@ function PublicFiles({ filesPublic, user, favorites }: HomeProps) {
 
   return (
     <>
-      <MasonryClient filesLength={20}>
-      {filesPublic && filesPublic.map((file) => {
+      <MasonryClient filesLength={25}>
+      {filesPublic && filesPublic.map((file, index) => {
         const fileUrl = process.env.NEXT_PUBLIC_HOST + "/uploads/" + `${file.user.id}/` + file.fileName;
         return (
           <UpdateViewsButton key={file.id} fileId={file.id}>
@@ -36,8 +36,10 @@ function PublicFiles({ filesPublic, user, favorites }: HomeProps) {
                   height={file.height}
                   src={fileUrl}
                   alt={`${file.postName}`}
-                  loading={"lazy"}
+                  loading={index > 25 ? 'lazy' : undefined}
+                  priority={index < 26}
                   className="rounded-t min-w-[150px] min-h-[150px] justify-center"
+                  unoptimized={file.fileName.split('.').pop() === 'gif'}
                 />
               </Link>
               <p

@@ -5,7 +5,6 @@ import Image from "next/image";
 import AdminFilesButton from "@/components/admin/AdminFilesButton";
 import PostModal from "@/components/profile-layout/PostModal";
 import { UserDTO } from "@/api/dto/user.dto";
-import { getUser } from "@/api/user";
 import { useStore } from "@/store/useStore";
 import { useModalProfilePost } from "@/store/useModalProfilePost";
 
@@ -30,6 +29,7 @@ const AdminFiles: FC<AdminProps> = ({ file, user }) => {
                sizes='100svh'
                loading={"lazy"}
                className="absolute rounded-sm w-full h-full object-cover overflow-hidden"
+               unoptimized={file.fileName.split('.').pop() === 'gif'}
         />
         <p title={`${file.fileName}`}
            className="absolute truncate overflow-hidden whitespace-nowrap left-0 bottom-0 right-0 bg-black text-white text-center py-1 px-2 pr-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 border-t-2 border-gray-500">

@@ -6,7 +6,19 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ['localhost', 'imagegif.ru'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'imagegif.ru',
+        pathname: '**',
+      },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        pathname: '**',
+      },
+    ],
+
   }
 }
 

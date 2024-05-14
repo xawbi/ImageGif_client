@@ -13,7 +13,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import { banUser, updateUserRole } from "@/api/admin";
 import { getUser } from "@/api/user";
-import { DropdownMenuComponent } from "@/app/admin/users/DropdownMenuComponent";
 
 export const columns: ColumnDef<UserDTO>[] = [
   {
@@ -118,38 +117,39 @@ export const columns: ColumnDef<UserDTO>[] = [
           CreateAt
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
-      )
+      );
     },
     cell: ({ row }) => {
-      const dateString: string = row.getValue("createAt")
-      const [datePart] = dateString.split('T');
-      const [year, month, day] = datePart.split('-');
+      const dateString: string = row.getValue("createAt");
+      const [datePart] = dateString.split("T");
+      const [year, month, day] = datePart.split("-");
       const formattedDate = `${day}.${month}.${year}`;
-      return <div className="font-medium">{formattedDate}</div>
+      return <div className="font-medium">{formattedDate}</div>;
     }
   },
   {
     id: "actions",
     cell: ({ row }) => {
       const user = row.original;
-      const makeAndBanFunc = async () => {
-        const me = await getUser();
-        if (me.id !== user.id) {
-          return <>
-            <DropdownMenuItem className={`cursor-pointer ${!user.ban && "text-red-500"}`}
-                              onClick={async () => await banUser([user.id])}>{user.ban ? "Unban user" : "Ban user"}</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={async () => {
-                await updateUserRole(user.id, user.role === "user" ? "admin" : "user");
-              }}
-              className="cursor-pointer"
-            >
-              {user.role === "user" ? "Make admin" : "Make user"}
-            </DropdownMenuItem>
-          </>;
+      // const makeAndBanFunc = async () => {
+      //   const me = await getUser();
+      //   if (me.id !== user.id) {
+      //     return <>
+      //
+      //     </>;
+      //   }
+      // };
+
+      let cookie
+      if (typeof window !== "undefined") {
+        let cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)_token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        if (!cookieValue) {
+          return;
         }
-      };
+        const base64Url = cookieValue.split(".")[1];
+        const base64 = base64Url.replace("-", "+").replace("_", "/");
+        cookie = JSON.parse(window.atob(base64));
+      }
 
       return (
         <DropdownMenu>
@@ -169,7 +169,21 @@ export const columns: ColumnDef<UserDTO>[] = [
             <Link href={`/users/${user.id}/${user.username}`}>
               <DropdownMenuItem className="cursor-pointer">Go to user</DropdownMenuItem>
             </Link>
-            {makeAndBanFunc()}
+            {cookie && cookie.id !== user.id &&
+              <>
+                <DropdownMenuItem className={`cursor-pointer ${!user.ban && "text-red-500"}`}
+                                  onClick={async () => await banUser([user.id])}>{user.ban ? "Unban user" : "Ban user"}</DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={async () => {
+                    await updateUserRole(user.id, user.role === "user" ? "admin" : "user");
+                  }}
+                  className="cursor-pointer"
+                >
+                  {user.role === "user" ? "Make admin" : "Make user"}
+                </DropdownMenuItem>
+              </>
+            }
           </DropdownMenuContent>
         </DropdownMenu>
       );

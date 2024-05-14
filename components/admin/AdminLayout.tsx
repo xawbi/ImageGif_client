@@ -13,10 +13,10 @@ const AdminLayout: FC = () => {
   return (
     <>
       <ul className="flex rounded-b-2xl justify-center flex-wrap">
-      {navItems.map((link) => {
+      {navItems.map((link, index) => {
           const isActive = pathName === link.href;
           return (
-            <li key={link.label} className="mt-2">
+            <li key={index} className="mt-2">
               <Link
                 href={link.href}
                 className={`text-xs min-[500px]:text-sm text-white ${isActive ? "border-b-2 border-white" : ""} hover:text-gray-200 p-3 rounded-sm`}

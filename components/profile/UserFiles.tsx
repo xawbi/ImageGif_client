@@ -15,7 +15,7 @@ function UserFiles({files}: ProfileProps) {
   return (
     <>
       <MasonryClient filesLength={20}>
-        {files && files.map((file) => {
+        {files && files.map((file, index) => {
           const fileUrl = process.env.NEXT_PUBLIC_HOST + '/uploads/' + `${file.user.id}/` + file.fileName;
           return (
               <div key={file.id} className={`flex justify-center mb-3 cursor-pointer border-2 border-gray-500 ${file.reject && 'hover:border-red-500'} group transform hover:scale-[1.02] sm:hover:scale-[1.04] transition-transform duration-250 rounded`}>
@@ -41,8 +41,10 @@ function UserFiles({files}: ProfileProps) {
                          height={file.height}
                          src={fileUrl}
                          alt={`${file.fileName}`}
-                         loading={"lazy"}
+                         loading={index > 25 ? 'lazy' : undefined}
+                         priority={index < 26}
                          className="min-w-[150px] min-h-[150px] justify-center rounded"
+                         unoptimized={file.fileName.split('.').pop() === 'gif'}
                   />
               </div>
             )
