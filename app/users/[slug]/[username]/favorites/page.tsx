@@ -2,7 +2,7 @@ import { FavoritesDTO, FileDTO } from "@/api/dto/file.dto";
 import MasonryClient from "@/components/MasonryClient";
 import { UserDTO } from "@/api/dto/user.dto";
 import { getUser, getUserPublic } from "@/api/user";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import React from "react";
 import PublicFiles from "@/components/public/PublicFiles";
 import { getFavoritesPublic } from "@/api/favorite";
@@ -29,7 +29,7 @@ export default async function userPage({ params: { slug } }: Props) {
   const user: UserDTO = await getUser()
 
   if (user && (userPublic.id === user.id)) redirect('/profile')
-  if (!userPublic.openFavorites) redirect('/error')
+  if (!userPublic.openFavorites) notFound()
 
   return (
     <>
