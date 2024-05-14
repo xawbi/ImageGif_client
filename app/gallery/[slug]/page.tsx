@@ -92,7 +92,7 @@ export default async function PostPage({ params: { slug } }: Props) {
                   width={100}
                   height={100}
                   className="mx-auto w-auto h-auto"
-                  unoptimized={file.fileName.split('.').pop() === 'gif'}
+                  priority
                 />
                 <p className="text-2xl font-medium">Be the first to comment</p>
               </div>
