@@ -17,7 +17,7 @@ export type Props = {
 }
 
 export default async function userPage({ params: { slug } }: Props) {
-  const favoritesFilesPublic: FileDTO[] = await getFavoritesPublic(+slug[0], 1)
+  const favoritesFilesPublic: FileDTO[] = await getFavoritesPublic(+slug, 1)
   const userPublic: UserDTO = await getUserPublic(+slug)
   const user: UserDTO = await getUser()
 
