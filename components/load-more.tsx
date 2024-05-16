@@ -82,7 +82,7 @@ const LoadMore: FC<pageProps> = ({ selectedSortCookie, initialFilesPublic, user,
   }
 
   const newFuncInitialFiles = async () => {
-    let newInitialFiles: FileDTO[] =  await newFilesFunc(pageLoaded * 100, 1)
+    let newInitialFiles: FileDTO[] =  await newFilesFunc(pageLoaded * 50, 1)
     setFiles(newInitialFiles)
   }
 
@@ -91,7 +91,7 @@ const LoadMore: FC<pageProps> = ({ selectedSortCookie, initialFilesPublic, user,
   const loadMoreFiles = async () => {
     await delay(300);
     const nextPage = pageLoaded + 1;
-    const newFiles: FileDTO[] = await newFilesFunc(100, nextPage)
+    const newFiles: FileDTO[] = await newFilesFunc(50, nextPage)
     if (newFiles) {
       const newFilesAndInitial = [...initialFilesPublic, ...newFiles]
       if (newFiles.length > 0 && hasMore) {
