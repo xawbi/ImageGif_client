@@ -16,20 +16,13 @@ export type Props = {
   }
 }
 
-export async function generateMetadata({ params: { slug, username } }: Props) {
-  const userPublic: UserDTO = await getUserPublic(+slug[0])
-  return {
-    title: userPublic.username + ' - ' + 'ImageGif',
-  }
-}
-
 export default async function userPage({ params: { slug } }: Props) {
   const favoritesFilesPublic: FileDTO[] = await getFavoritesPublic(+slug[0], 1)
   const userPublic: UserDTO = await getUserPublic(+slug)
   const user: UserDTO = await getUser()
 
   if (user && (userPublic.id === user.id)) redirect('/profile')
-  if (!userPublic.openFavorites) notFound()
+  if (userPublic && !userPublic.openFavorites) notFound()
 
   return (
     <>

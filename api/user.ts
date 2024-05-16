@@ -25,7 +25,6 @@ export async function getUserPublic(userId: number) {
   })
   if (!res.ok) {
     console.error(res.status, res.statusText)
-    notFound()
   } else {
     return res.json()
   }
