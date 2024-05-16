@@ -1,13 +1,10 @@
-import { FavoritesDTO, FileDTO } from "@/api/dto/file.dto";
-import MasonryClient from "@/components/MasonryClient";
+import { FileDTO } from "@/api/dto/file.dto";
 import { UserDTO } from "@/api/dto/user.dto";
 import { getUser, getUserPublic } from "@/api/user";
 import { notFound, redirect } from "next/navigation";
 import React from "react";
-import PublicFiles from "@/components/public/PublicFiles";
 import { getFavoritesPublic } from "@/api/favorite";
 import LoadMore from "@/components/load-more";
-import { checkBan } from "@/api/checkVerify";
 
 export type Props = {
   params: {
