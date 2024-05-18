@@ -3,10 +3,11 @@ import { FC } from "react";
 import { FileDTO } from "@/api/dto/file.dto";
 import Image from "next/image";
 import AdminFilesButton from "@/components/admin/AdminFilesButton";
-import PostModal from "@/components/profile-layout/PostModal";
 import { UserDTO } from "@/api/dto/user.dto";
 import { useStore } from "@/store/useStore";
 import { useModalProfilePost } from "@/store/useModalProfilePost";
+import dynamic from "next/dynamic";
+const PostModal = dynamic(() => import('@/components/profile-layout/PostModal'), { ssr: false })
 
 interface AdminProps {
   file: FileDTO;

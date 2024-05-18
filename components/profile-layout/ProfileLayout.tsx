@@ -9,11 +9,12 @@ import Link from "next/link";
 import { UserDTO } from "@/api/dto/user.dto";
 import { useModalProfilePost } from "@/store/useModalProfilePost";
 import { useStore } from "@/store/useStore";
-import PostModal from "@/components/profile-layout/PostModal";
 import Snackbar from "@/components/auth/snackbar/Snackbar";
 import { useShowSnackbar } from "@/store/useShowSnackbar";
 import CircleAvatar from "@/components/profile-layout/Avatar/CircleAvatar";
 import CloseFavorites from "@/components/profile-layout/CloseFavorites";
+import dynamic from "next/dynamic";
+const PostModal = dynamic(() => import('@/components/profile-layout/PostModal'), { ssr: false })
 
 interface LayoutProps {
   avatar: AvatarDto;
