@@ -88,7 +88,6 @@ export default function MasonryClient({ children, filesLength }: ComponentsProps
             : <div>Loading...</div>
           }
         </div>
-        <div className="hidden">{children}</div>
       </>}
       {isMounted &&
         <Masonry
