@@ -18,7 +18,7 @@ function UserFiles({files}: ProfileProps) {
         {files && files.map((file, index) => {
           const fileUrl = process.env.NEXT_PUBLIC_HOST + '/uploads/' + `${file.user.id}/` + file.fileName;
           return (
-              <div key={file.id} className={`flex justify-center mb-3 cursor-pointer border-2 border-gray-500 ${file.reject && 'hover:border-red-500'} group transform hover:scale-[1.02] sm:hover:scale-[1.04] transition-transform duration-250 rounded`}>
+              <div key={file.id} className={`flex justify-center mb-3 cursor-pointer border-2 border-gray-500 ${file.reject && 'hover:border-red-500'} group transform hover:scale-[1.02] md:hover:scale-[1.04] transition-transform duration-250 rounded`}>
                 <StatusButton file={file}/>
                 {file.restricted === 'public' &&
                   <>

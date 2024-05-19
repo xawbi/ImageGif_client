@@ -11,7 +11,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: 'ImageGif',
-  description: "Upload your images and gifs, share them with users, rate them, download them and leave comments. ImageGif loves you"
+  description: "Upload your images and gifs, share them with users, rate them, download them and leave comments. ImageGif loves you",
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=1'
 };
 
 export default function RootLayout({ children }: {

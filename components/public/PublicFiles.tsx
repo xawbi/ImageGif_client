@@ -27,7 +27,7 @@ function PublicFiles({ filesPublic, user, favorites }: HomeProps) {
         return (
           <UpdateViewsButton key={file.id} fileId={file.id}>
             <div
-              className={`mb-3 cursor-pointer border-2 border-gray-500 group transform hover:scale-[1.02] sm:hover:scale-[1.04] transition-transform duration-250 rounded`}
+              className={`mb-3 cursor-pointer border-2 border-gray-500 group transform hover:scale-[1.02] md:hover:scale-[1.04] transition-transform duration-250 rounded`}
             >
               <BanAndFavoriteButtons user={user} file={file} favorites={favorites} />
               <Link href={`${host}/gallery/${file.id}`} className="flex justify-center" scroll={false}>

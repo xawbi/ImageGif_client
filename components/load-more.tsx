@@ -149,7 +149,9 @@ const LoadMore: FC<pageProps> = ({ selectedSortCookie, initialFilesPublic, user,
 
   return (
     <>
-      {page !== 'profile' ? <PublicFiles filesPublic={files} user={user} favorites={page === 'favoritesPublic' ? 'public' : page === 'favoritesUser' ? 'user' : ''} /> : <UserFiles files={files} />}
+      {page !== 'profile' ?
+        <PublicFiles filesPublic={files} user={user} favorites={page === 'favoritesPublic' ? 'public' : page === 'favoritesUser' ? 'user' : ''} />
+        : <UserFiles files={files} />}
       {loading && (
         <div className='flex justify-center items-center p-4 col-span-1 sm:col-span-3' ref={ref}>
           <Spinner />

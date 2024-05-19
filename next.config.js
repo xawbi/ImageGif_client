@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  staticPageGenerationTimeout: 1000,
+  staticPageGenerationTimeout: 500,
   experimental: {
     serverActions: true,
     serverActionsBodySizeLimit: '10mb',
