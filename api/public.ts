@@ -29,7 +29,7 @@ export async function updateView(fileId: number) {
 
 export async function getPublicFiles(userId: string = '', allType: string = '', sort: string = '', page: number, per_page = 50) {
   const res = await fetch(`${host}/public/files?userId=${userId}&all=${allType}&sort=${sort}&page=${page}&per_page=${per_page}`, {
-    next: { tags: ['getPublicFiles'] },
+    next: { revalidate: 10, tags: ['getPublicFiles'] },
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
