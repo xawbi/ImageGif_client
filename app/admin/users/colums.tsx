@@ -131,14 +131,6 @@ export const columns: ColumnDef<UserDTO>[] = [
     id: "actions",
     cell: ({ row }) => {
       const user = row.original;
-      // const makeAndBanFunc = async () => {
-      //   const me = await getUser();
-      //   if (me.id !== user.id) {
-      //     return <>
-      //
-      //     </>;
-      //   }
-      // };
 
       let cookie
       if (typeof window !== "undefined") {

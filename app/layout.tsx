@@ -24,7 +24,6 @@ export default function RootLayout({ children }: {
       <link rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
       <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-      <link rel="icon" href="https://imagegif.ru/favicon.ico" type="image/x-icon" />
       <meta name="keywords"
             content="imagegif, ImageGIf, image, gif, картинки, гифки, best gifs, best images, best gif, best image, gifs, images, каринка, гифка, image gif, images gifs" />
       <Script async src="https://www.googletagmanager.com/gtag/js?id=G-HWZ2ZY2C73"></Script>
