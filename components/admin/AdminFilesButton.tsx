@@ -29,8 +29,11 @@ const AdminFilesButton: FC<AdminFilesProps> = ({file}) => {
                 d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
         </svg>
       </button>
+      {file.postDescription &&
+        <div className='absolute truncate overflow-hidden whitespace-nowrap top-3.5 left-12 bg-green-700 h-5 w-5 opacity-0 group-hover:opacity-100 z-50 transition duration-300 rounded-full border-2 border-white'/>
+      }
       <button onClick={() => handleRestricted([file.id])}
-              className="absolute truncate overflow-hidden whitespace-nowrap top-1 right-1 bg-black text-white text-center p-1 pt-[5px] px-[5px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 rounded border-2 border-gray-500">
+              className="absolute truncate overflow-hidden whitespace-nowrap top-1 right-1 bg-black text-white text-center p-1 pt-[5px] px-[5px] opacity-0 group-hover:opacity-100 transition duration-300 z-50 rounded border-2 border-gray-500 hover:text-fuchsia-600">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
              stroke="currentColor" className="inline-block w-6 h-6 mr-1 mb-1">
           <path strokeLinecap="round" strokeLinejoin="round"

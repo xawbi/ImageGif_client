@@ -68,10 +68,12 @@ const PostModal: FC<ProfileLayoutProps> = ({ user }) => {
               />
             }
             <div
-              className={`relative group transform ${(checkModal === "" || checkModal === "admin") && "bg-gradient-to-b from-[#000007] via-[#000007] to-[#00000f] my-4"}`}>
+              className={`relative group transform ${(checkModal === "") && "bg-gradient-to-b from-[#000007] via-[#000007] to-[#00000f] my-4"}`}>
               {checkModal === "admin" &&
                 <div className="whitespace-pre-line break-words mb-2">
-                  <h2>{file?.postName}</h2>
+                  <h2>user: {file?.user.username}</h2>
+                  <h2>email: {file?.user.email}</h2>
+                  <h2>postname: {file?.postName}</h2>
                 </div>
               }
               {file && fileUrl &&
@@ -81,7 +83,7 @@ const PostModal: FC<ProfileLayoutProps> = ({ user }) => {
                   src={fileUrl}
                   alt={`${file.fileName}`}
                   loading="lazy"
-                  className={`object-contain w-full ${checkModal == "" ? "max-h-[60svh]" : "max-h-[80svh] min-h-[30svh]"}`}
+                  className={`object-contain w-full ${checkModal == "" && "max-h-[60svh]"} ${checkModal == "admin" && "max-h-[50svh]"} ${checkModal == "user" && "max-h-[80svh]"} min-h-[30svh]`}
                   onClick={() => checkModal != "" && closeModal()}
                 />
               }
