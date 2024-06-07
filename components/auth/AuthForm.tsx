@@ -100,7 +100,7 @@ const AuthForm: FC = () => {
   return (
     <>
       <div className="w-96 mx-auto flex items-center justify-center mt-10">
-        <div className="max-w-[400px] w-full mx-auto rounded-lg bg-gray-900 p-8 px-8 border border-gray-500">
+        <div className="max-w-[400px] w-full mx-auto rounded-lg bg-[#081635] p-8 px-8 border border-gray-500">
           <div className="flex items-center justify-center">
             <button
               className={`py-2 px-4 text-base font-medium text-white bg-transparent border-b-2 border-transparent ${

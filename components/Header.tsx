@@ -23,7 +23,7 @@ export default async function Header() {
 
   return (
     <>
-      <header className="bg-gray-900 px-6 flex justify-between items-center sticky top-0 z-10">
+      <header className="bg-[#081635] px-6 flex justify-between items-center sticky top-0 z-10">
         <Navigation navLinks={navItems} />
       </header>
     </>

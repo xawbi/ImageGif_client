@@ -38,8 +38,8 @@ const Navigation: FC<PropsHeader> = ({ navLinks }) => {
           return (
             <li key={index} className='flex items-center'>
               <Link href={link.href} onClick={() => setLinkClicked(true)}
-                    className={`text-white ${isActive && "bg-gray-800"} hover:text-gray-200 text-20px p-3 rounded-sm`}>
-                <span style={isActive ? { textShadow: '0 0.5px 0.5px rgb(162 28 175), 0.5px 0.5px 0px rgb(162 28 175)' } : undefined}>{link.label}</span>
+                    className={`text-white hover:text-gray-200 p-3 rounded-sm`}>
+                <span style={isActive ? { textShadow: '0 1px 8px rgb(172, 28, 175), 1px 1px 8px rgb(172, 28, 175)' } : undefined}>{link.label}</span>
               </Link>
             </li>
           )
