@@ -9,6 +9,7 @@ import SearchPost from "@/components/public/SearchPost";
 import LoadMore from "@/components/load-more";
 import { checkBan } from "@/api/checkVerify";
 import { redirect } from "next/navigation";
+import Footer from "@/components/Footer/Footer";
 
 export default async function Home() {
   if (await checkBan()) redirect('/ban')
@@ -23,6 +24,7 @@ export default async function Home() {
         <DropdownSortBtn selectedSortCookie={selectedSortCookie} pageType="public" />
       </div>
       <LoadMore page={'public'} selectedSortCookie={selectedSortCookie} initialFilesPublic={filesPublic} user={user} />
+      <Footer/>
     </>
   );
 }
