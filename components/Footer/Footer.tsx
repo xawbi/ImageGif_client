@@ -26,7 +26,7 @@ export default function Footer() {
     <>
       {isAtTop && mounted &&
         <footer
-          className={`h-10 w-full bg-gray-900 flex items-center sticky bottom-0 z-10 justify-center ${
+          className={`h-10 w-full bg-gray-900 flex items-center sticky bottom-0 z-10 justify-center rounded-t-md ${
             isAtTop && styles.footerEnter
           }`}
         >

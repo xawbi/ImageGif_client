@@ -41,7 +41,7 @@ export default function RootLayout({ children }: {
       </Suspense>
     </head>
     <body className={inter.className}>
-    <div className="relative xl:px-40 lg:px-30 md:px-20 sm:px-0">
+    <div className="xl:px-40 lg:px-30 md:px-20 sm:px-0">
       <TanstackProvider>
         <Header />
         {children}
