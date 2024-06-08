@@ -7,8 +7,7 @@ import { useEffect, useState } from "react";
 import styles from './styles.module.css'
 
 export default function Footer() {
-  const [isAtTop, setIsAtTop] = useState(true);
-  const [mounted, setMounted] = useState(false)
+  const [isAtTop, setIsAtTop] = useState(true)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,14 +16,13 @@ export default function Footer() {
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      setMounted(true)
     };
 
   }, []);
 
   return (
     <>
-      {isAtTop && mounted &&
+      {isAtTop &&
         <footer
           className={`h-10 w-full bg-gray-900 flex items-center sticky bottom-0 z-10 justify-center rounded-t-md ${
             isAtTop && styles.footerEnter
