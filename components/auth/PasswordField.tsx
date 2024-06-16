@@ -4,9 +4,10 @@ import React, { FC, useState } from "react";
 interface PropsRegLogTab {
   handleChangePassword: (event: any) => void
   passwordValue: string
+  name?: string
 }
 
-const PasswordField: FC<PropsRegLogTab> = ({handleChangePassword, passwordValue}) => {
+const PasswordField: FC<PropsRegLogTab> = ({handleChangePassword, passwordValue, name}) => {
   const [showPassword, setShowPassword] = useState(false)
 
   const togglePasswordVisibility = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -18,15 +19,27 @@ const PasswordField: FC<PropsRegLogTab> = ({handleChangePassword, passwordValue}
     if (e.key === 'Enter') {
       e.preventDefault();
     }
-  };
+  }
+
+  let passwordObj = {
+    name: 'password',
+    placeholder: 'Password'
+  }
+  if (name === 'newPassword') {
+    passwordObj.name = 'newPassword'
+    passwordObj.placeholder = 'new password'
+  } else if (name === 'confirmNewPassword') {
+    passwordObj.name = 'confirmNewPassword'
+    passwordObj.placeholder = 'confirm new password'
+  }
 
   return (
     <div className="relative">
       <input
-        name="password"
+        name={passwordObj.name}
         type={showPassword ? 'text' : 'password'}
         className="py-2 px-2 text-base font-medium text-white bg-transparent border-b-2 border-transparent focus:outline-none focus:border-gray-300"
-        placeholder="Password"
+        placeholder={passwordObj.placeholder}
         value={passwordValue}
         onChange={handleChangePassword}
         onKeyDown={handleKeyDown}

@@ -2,6 +2,7 @@
 import { ChangeEvent, FC, useState } from "react";
 import PasswordField from "@/components/auth/PasswordField";
 import Snackbar from "@/components/auth/snackbar/Snackbar";
+import Link from "next/link";
 
 interface PropsAuthForm {
   showSnackbar: string
@@ -31,7 +32,7 @@ const LoginTab: FC<PropsAuthForm> = ({showSnackbar, setShowSnackbar}) => {
           value={emailValue}
           onChange={handleChangeEmail}
         />
-        {emailValue && (<span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-sm text-gray-500">
+        {emailValue && (<span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-sm text-gray-400">
             Email
         </span>)}
       </div>
@@ -41,6 +42,9 @@ const LoginTab: FC<PropsAuthForm> = ({showSnackbar, setShowSnackbar}) => {
       <button type="submit" className='w-full mb-2 mt-10 py-2 border border-amber-50 rounded-lg hover:bg-blue-950 transition-colors'>
         SIGNIN
       </button>
+      <Link href={'/password/reset'} className='flex justify-center text-[14px] mt-3 text-gray-300 hover:text-white transition'>
+        Forgot Your Password?
+      </Link>
 
       {showSnackbar === 'emptyFields' && <Snackbar bg={'bg-red-900'} message={'There are empty fields.'} setShowSnackbar={setShowSnackbar}/>}
       {showSnackbar === 'errorAuthorize' && <Snackbar bg={'bg-red-900'} message={'Invalid email or password.'} setShowSnackbar={setShowSnackbar}/>}

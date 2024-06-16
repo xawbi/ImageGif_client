@@ -49,7 +49,7 @@ const RegisterTab: FC<PropsAuthForm> = ({activeTab, setActiveTab, showSnackbar, 
           value={usernameValue}
           onChange={handleChangeUsername}
         />
-        {usernameValue && (<span className="absolute right-2 top-11 transform -translate-y-1/2 text-sm text-gray-500">
+        {usernameValue && (<span className="absolute right-2 top-11 transform -translate-y-1/2 text-sm text-gray-400">
             Username
         </span>)}
       </div>
@@ -62,7 +62,7 @@ const RegisterTab: FC<PropsAuthForm> = ({activeTab, setActiveTab, showSnackbar, 
           value={emailValue}
           onChange={handleChangeEmail}
         />
-        {emailValue && (<span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-sm text-gray-500">
+        {emailValue && (<span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-sm text-gray-400">
             Email
         </span>)}
       </div>

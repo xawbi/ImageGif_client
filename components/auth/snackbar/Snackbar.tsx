@@ -20,11 +20,18 @@ const RenderSnackbar: FC<PropsLogRegTab> = ({bg, message, setShowSnackbar}) => {
 
   return (
     <>
-      <div className={`${bg} fixed bottom-0 left-0 mb-6 ml-6 border pl-4 border-gray-500 rounded shadow flex items-center z-50`}>
-        <span className="material-symbols-outlined mr-1">error</span>
+      <div className={`${bg} fixed bottom-6 left-6 py-1 pr-2 pl-2.5 border border-gray-500 rounded shadow flex items-center z-50`}>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+             strokeWidth={1.5} className="w-7 h-7 pr-1">
+          <path strokeLinecap="round" strokeLinejoin="round"
+                d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+        </svg>
         <p className="text-white">{message}</p>
-        <button onClick={() => setShowSnackbar('')} className="inline-block pr-4 pl-1.5 py-2">
-          <span className="material-symbols-outlined mt-1.5">close</span>
+        <button onClick={() => setShowSnackbar('')} className="inline-block py-2">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+               stroke="currentColor" strokeWidth={1.5} className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
         </button>
       </div>
     </>

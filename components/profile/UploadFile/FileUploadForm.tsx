@@ -59,12 +59,12 @@ const FileUploadForm: FC<ChooseFileBtnProps> = ({ handleCloseUploadForm }) => {
   const dragStartHandler = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setDrag(true);
-  };
+  }
 
   const dragLeaveHandler = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setDrag(false);
-  };
+  }
 
   const getCookie = (cookieName: string) => {
     const cookies = document.cookie.split(";");
@@ -75,7 +75,7 @@ const FileUploadForm: FC<ChooseFileBtnProps> = ({ handleCloseUploadForm }) => {
       }
     }
     return null;
-  };
+  }
 
   async function uploadFilesSequentially(files: File[], token: string | null, host: string | undefined) {
     setUploading(true);

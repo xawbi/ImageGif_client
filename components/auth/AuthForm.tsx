@@ -5,11 +5,9 @@ import RegisterTab from "@/components/auth/RegisterTab"
 import {setCookie} from "nookies";
 import {ActivateFormDTO, LoginFormDTO, RegistrationFormDTO} from "@/api/dto/auth.dto";
 import * as Api from '@/api'
-import {useRouter} from "next/navigation";
 
 const AuthForm: FC = () => {
 
-  const router = useRouter()
   const [activeTab, setActiveTab] = useState("login")
   const [showSnackbar, setShowSnackbar] = useState('')
 
@@ -60,7 +58,6 @@ const AuthForm: FC = () => {
         setShowSnackbar('successful')
         location.reload()
       } catch (e) {
-        console.log(e)
         setShowSnackbar('errorAuthorize')
       }
     } else if (activeTab === 'register' && formData.get('username') != '' && formData.get('email') != '' && formData.get('password') != '') {
@@ -73,7 +70,6 @@ const AuthForm: FC = () => {
         await Api.auth.register(RegisterObj)
         setActiveTab('active')
       } catch (e) {
-        console.log(e)
         setShowSnackbar('errorAuthorize')
       }
     } else if (activeTab === 'active' && formData.get('username') != '' && formData.get('email') != '' && formData.get('password') != '' && formData.get('activationCode') != '') {
@@ -100,7 +96,7 @@ const AuthForm: FC = () => {
   return (
     <>
       <div className="w-96 mx-auto flex items-center justify-center mt-10">
-        <div className="max-w-[400px] w-full mx-auto rounded-lg bg-[#081635] p-8 px-8 border border-gray-500">
+        <div className="max-w-[400px] w-full mx-auto rounded-lg bg-[#081642] p-8 px-8 border border-gray-500">
           <div className="flex items-center justify-center">
             <button
               className={`py-2 px-4 text-base font-medium text-white bg-transparent border-b-2 border-transparent ${

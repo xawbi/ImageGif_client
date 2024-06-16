@@ -5,7 +5,7 @@ import { UserDTO } from "@/api/dto/user.dto";
 import { columns } from "@/app/admin/users/colums";
 import { DataTable } from "@/app/admin/users/data-table";
 
-export default async function Admin() {
+export default async function UsersPage() {
   if (!await checkAdmin()) notFound()
   if (await checkBan()) redirect('/ban')
 

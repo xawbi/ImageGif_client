@@ -23,7 +23,7 @@ export default async function Header() {
 
   return (
     <>
-      <header className="bg-[#081635] px-6 flex justify-between items-center sticky top-0 z-10 rounded-b-md">
+      <header className="bg-[#081642] px-6 flex justify-between items-center sticky top-0 z-10 rounded-b-md" style={{boxShadow: '0px 5px 4px rgba(8, 22, 66, 0.7)'}}>
         <Navigation navLinks={navItems} />
       </header>
     </>
