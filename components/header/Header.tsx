@@ -1,4 +1,4 @@
-import Navigation from "@/components/Header/Navigation";
+import Navigation from "@/components/header/Navigation";
 import { checkAdmin, checkVerify } from "@/api/checkVerify";
 
 export default async function Header() {

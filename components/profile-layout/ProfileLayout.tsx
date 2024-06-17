@@ -24,7 +24,7 @@ interface LayoutProps {
 }
 
 const LayoutsInProfile: FC<LayoutProps> = ({ avatar, user, bgId, userPublic }) => {
-  const pathName = usePathname()
+  const pathName = decodeURI(usePathname())
   const modalState = useStore(useModalProfilePost, (state) => state)
   const showSnackbar = useStore(useShowSnackbar, (state) => state)
   const { setShowSnackbar } = useShowSnackbar()
@@ -109,7 +109,7 @@ const LayoutsInProfile: FC<LayoutProps> = ({ avatar, user, bgId, userPublic }) =
               <li key={index} className="mt-2">
                 <Link
                   href={link.href}
-                  className={`text-xs min-[500px]:text-sm text-white ${isActive ? "border-b-2 border-white" : ""} hover:text-gray-200 p-3 rounded-sm`}
+                  className={`text-xs min-[500px]:text-sm text-white ${isActive && "border-b-2 border-white"} hover:text-gray-200 p-3 rounded-sm`}
                 >
                   {link.label}
                   {link.label === "FAVORITES" && !userPublic &&

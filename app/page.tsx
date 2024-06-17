@@ -9,7 +9,7 @@ import SearchPost from "@/components/public/SearchPost";
 import LoadMore from "@/components/load-more";
 import { checkBan } from "@/api/checkVerify";
 import { redirect } from "next/navigation";
-import Footer from "@/components/Footer/Footer";
+import Footer from "@/components/footer/Footer";
 
 export default async function Page() {
   if (await checkBan()) redirect('/ban')
