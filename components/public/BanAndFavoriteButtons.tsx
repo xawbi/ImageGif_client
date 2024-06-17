@@ -18,11 +18,14 @@ export const BanAndFavoriteButtons: FC<PublicFileProps> = ({ user, file, favorit
   const { setBlock } = useDelBanLoad()
   const [favoriteClicked, setFavoriteClicked] = useState(
     user && file && file.favorites && file.favorites.some((el) => el.user.id === user.id && el.file.id === file.id)
-  );
+  )
+  const [bannedFiles, setBannedFiles] = useState<number[]>([])
 
   const handleBan = async (fileId: number[]) => {
-    await updateReject(fileId, "public");
-  };
+    await updateReject(fileId, "public")
+    let fileIdNum: number = fileId[0]
+    setBannedFiles([...bannedFiles, fileIdNum])
+  }
 
   const handleFavorite = async (fileId: number) => {
     if (user) {
@@ -32,7 +35,7 @@ export const BanAndFavoriteButtons: FC<PublicFileProps> = ({ user, file, favorit
     } else {
       router.push(`/gallery/${file.id}`);
     }
-  };
+  }
 
   return (
     <>
@@ -50,7 +53,7 @@ export const BanAndFavoriteButtons: FC<PublicFileProps> = ({ user, file, favorit
       </div>
       {user && user.role === "admin" && favorites !== 'user' &&
         <button onClick={() => handleBan([file.id])}
-                className="absolute truncate overflow-hidden whitespace-nowrap top-1 left-1 bg-black text-white text-center p-1 pt-[5px] px-[5px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50 rounded border-2 border-gray-500">
+                className={`absolute truncate overflow-hidden whitespace-nowrap top-1 left-1 bg-black text-white text-center p-1 pt-[5px] px-[5px] opacity-0 group-hover:opacity-100 border-2 border-gray-500 ${bannedFiles.includes(file.id) && 'border-red-700 opacity-100'} transition-opacity duration-300 z-50 rounded`}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                stroke="currentColor" className="w-6 h-6 mb-1 text-red-500">
             <path strokeLinecap="round" strokeLinejoin="round"
