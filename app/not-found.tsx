@@ -1,8 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
-import falling_man from "@/public/404/falling_man_for_404_page.webp";
+import falling_man from "@/public/errorImg/falling_man_for_404_page.webp";
 
 export default function NotFound() {
+
   return <>
     <div className="flex flex-col items-center">
       <p className="text-[40px] md:text-[50px] font-bold pt-5">404</p>
@@ -17,5 +18,5 @@ export default function NotFound() {
                unoptimized={true} />
       </div>
     </div>
-  </>;
+  </>
 }

@@ -11,7 +11,7 @@ import { checkBan } from "@/api/checkVerify";
 import { redirect } from "next/navigation";
 import Footer from "@/components/Footer/Footer";
 
-export default async function Home() {
+export default async function Page() {
   if (await checkBan()) redirect('/ban')
   const selectedSortCookie = cookies().get("selectedSortPublic")?.value;
   let filesPublic: FileDTO[] = await getPublicFiles('', '', selectedSortCookie, 1);
