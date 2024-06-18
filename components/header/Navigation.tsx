@@ -30,7 +30,7 @@ const Navigation: FC<PropsHeader> = ({ navLinks }) => {
       <Link href="/" className="flex items-center" onClick={() => setLinkClicked(true)}>
         <Image width={80} height={80} src={mainIco} alt=""
                className="w-[28px]" />
-        <span className="ml-1 text-xl">ImageGif</span>
+        <span className="ml-1 text-lg min-[450px]:text-xl">ImageGif</span>
       </Link>
       <ul className="flex items-center">
         {navLinks.map((link, index) => {
@@ -38,7 +38,7 @@ const Navigation: FC<PropsHeader> = ({ navLinks }) => {
           return (
             <li key={index} className='flex items-center'>
               <Link href={link.href} onClick={() => setLinkClicked(true)}
-                    className={`text-white hover:text-gray-200 p-3 rounded-sm`}>
+                    className={`text-white text-[15px] min-[450px]:text-[17px] hover:text-gray-200 p-2 min-[450px]:p-3 rounded-sm`}>
                 <span style={isActive ? { textShadow: '0 1px 3px rgb(172, 28, 175), 1px 1px 3px rgb(172, 28, 175)' } : undefined}>{link.label}</span>
               </Link>
             </li>
