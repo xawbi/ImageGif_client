@@ -4,7 +4,6 @@ const nextConfig = {
   experimental: {
     serverActions: true,
     serverActionsBodySizeLimit: '10mb',
-    appDir: true,
   },
   images: {
     remotePatterns: [
@@ -16,6 +15,11 @@ const nextConfig = {
       {
         protocol: 'http',
         hostname: 'localhost',
+        pathname: '**',
+      },
+      {
+        protocol: 'http',
+        hostname: '176.109.100.227',
         pathname: '**',
       },
     ],
