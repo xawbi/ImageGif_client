@@ -38,7 +38,7 @@ const AdminFiles: FC<AdminProps> = ({ file, user }) => {
         </p>
       </div>
     </>
-  );
-};
+  )
+}
 
 export default AdminFiles;
